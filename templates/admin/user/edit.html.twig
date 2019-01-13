@@ -1,0 +1,38 @@
+{% extends 'admin/user/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-admin-user-edit">
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+            <h1>{{ user }}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ path('app_admin_user_show',{uuid:user.uuid}) }}" class="btn btn-outline-secondary">
+                        <span class="fa fa-list"></span>
+                        {{ 'action.back'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.enabled) }}
+        {{ form_row(form.roles,{attr:{'data-client-location-url':path('app_admin_user_client_select'),class:'js-user-form-roles'}}) }}
+        <div class="js-client-location-target">
+            {% if form.client is defined %}
+                {{ form_row(form.client) }}
+            {% endif %}
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">
+                <span class="fa fa-save"></span>
+                {{ 'action.save'|trans }}
+            </button>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

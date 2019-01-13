@@ -169,6 +169,18 @@
         <source>action.delete</source>
         <target>Supprimer</target>
       </trans-unit>
+      <trans-unit id="qor2gCD" resname="notification.user_added">
+        <source>notification.user_added</source>
+        <target>L'utilisateur est ajouté.</target>
+      </trans-unit>
+      <trans-unit id="zDJVB3f" resname="notification.user_updated">
+        <source>notification.user_updated</source>
+        <target>L'utilisateur est modifié.</target>
+      </trans-unit>
+      <trans-unit id="QfDhTj5" resname="notification.user_removed">
+        <source>notification.user_removed</source>
+        <target>L'utilisateur est supprimé.</target>
+      </trans-unit>
       <trans-unit id="2orqhMK" resname="notification.client_updated">
         <source>notification.client_updated</source>
         <target>Le client est modifié.</target>
@@ -412,6 +424,30 @@
       <trans-unit id="CIXyKo9" resname="invoice_number">
         <source>invoice_number</source>
         <target>N° facture</target>
+      </trans-unit>
+      <trans-unit id="dbYJOrp" resname="field.roles">
+        <source>field.roles</source>
+        <target>Rôles</target>
+      </trans-unit>
+      <trans-unit id="t4m1FLM" resname="action.delete_user">
+        <source>action.delete_user</source>
+        <target>Supprimer l'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="aHw5Vzp" resname="confirmation.delete_user">
+        <source>confirmation.delete_user</source>
+        <target>Je souhaite supprimer définitivement cet utilisateur</target>
+      </trans-unit>
+      <trans-unit id="NGooIBs" resname="danger_zone">
+        <source>danger_zone</source>
+        <target>Zone dangereuse</target>
+      </trans-unit>
+      <trans-unit id="B0O3V7M" resname="title.user_add">
+        <source>title.user_add</source>
+        <target>Ajouter un utilisateur</target>
+      </trans-unit>
+      <trans-unit id="S_Kzpw_" resname="field.confirmation">
+        <source>field.confirmation</source>
+        <target>Confirmation</target>
       </trans-unit>
     </body>
   </file>

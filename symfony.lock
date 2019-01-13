@@ -179,6 +179,12 @@
             "ref": "f7895777cd673fcefbc321a9063077a24e5df646"
         }
     },
+    "rollerworks/password-strength-bundle": {
+        "version": "v2.0.3"
+    },
+    "rollerworks/password-strength-validator": {
+        "version": "v1.1.4"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {

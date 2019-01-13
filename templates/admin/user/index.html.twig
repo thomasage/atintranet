@@ -4,11 +4,21 @@
 
     <div id="page-admin-user-index">
 
-        <h1>{{ 'menu.admin.user'|trans }}</h1>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1>{{ 'menu.admin.user'|trans }}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ path('app_admin_user_new') }}" class="btn btn-outline-primary">
+                        <span class="fa fa-plus"></span>
+                        {{ 'action.add'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <div class="list-group mt-4">
             {% for user in users %}
-                <a href="{{ path('app_admin_user_show',{user:user.uuid}) }}"
+                <a href="{{ path('app_admin_user_show',{uuid:user.uuid}) }}"
                    class="list-group-item list-group-item-action">
                     <div class="d-flex flex-column flex-sm-row justify-content-between">
                         <div>

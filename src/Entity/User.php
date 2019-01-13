@@ -114,6 +114,13 @@ class User implements UserInterface
         return $this->uuid;
     }
 
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -132,14 +139,17 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        if (!in_array('ROLE_CLIENT', $this->roles, true)) {
+            $this->client = null;
+        }
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -224,13 +234,6 @@ class User implements UserInterface
     public function setClient(?Client $client): self
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
 
         return $this;
     }

@@ -4,6 +4,7 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('admin', './assets/js/admin.js')
     .addEntry('client', './assets/js/client.js')
     .addEntry('invoice', './assets/js/invoice.js')
     .addEntry('stat-time-chart', './assets/js/stat-time-chart.js')
