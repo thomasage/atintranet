@@ -1,0 +1,75 @@
+{#{%- block _invoice_details_widget -%}#}
+    {#{% if prototype is defined %}#}
+        {#{%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}#}
+    {#{% endif %}#}
+    {#<tbody {{ block('widget_attributes') }}>#}
+    {#{%- for child in form -%}#}
+        {#{{ form_row(child) }}#}
+    {#{%- endfor -%}#}
+    {#</tbody>#}
+{#{%- endblock -%}#}
+
+{#{%- block _invoice_details_entry_row -%}#}
+    {#<tr id="{{ id }}">#}
+        {#<td class="designation">{{ form_widget(form.designation) }}</td>#}
+        {#<td class="quantity">{{ form_widget(form.quantity) }}</td>#}
+        {#<td class="amount_unit">{{ form_widget(form.amountUnit) }}</td>#}
+        {#<td class="tax_rate">{{ form_widget(form.taxRate) }}</td>#}
+        {#<td class="amount_including_tax">{{ form_widget(form.amountIncludingTax) }}</td>#}
+        {#<td class="action">#}
+            {#<a href="#" class="btn btn-danger js-detail-delete">#}
+                {#<span class="fa fa-trash"></span>#}
+            {#</a>#}
+        {#</td>#}
+    {#</tr>#}
+{#{%- endblock -%}#}
+
+{#{%- block _invoice_details_entry_row -%}#}
+    {#<div id="{{ id }}">#}
+        {#{{ form_widget(form) }}#}
+        {#<div class="btn-group btn-group-sm mt-2">#}
+            {#<a href="#" class="btn btn-outline-info js-detail-copy">#}
+                {#<span class="fa fa-copy"></span>#}
+                {#{{ 'action.duplicate'|trans }}#}
+            {#</a>#}
+            {#<a href="#" class="btn btn-outline-danger js-detail-delete">#}
+                {#<span class="fa fa-trash"></span>#}
+                {#{{ 'action.delete'|trans }}#}
+            {#</a>#}
+        {#</div>#}
+    {#</div>#}
+{#{%- endblock -%}#}
+
+{%- block _invoice_details_entry_row -%}
+    <div id="{{ id }}" class="row mt-4 mt-lg-2">
+        <div class="col-12 col-lg-5">{{ form_widget(form.designation) }}</div>
+        <div class="col-12 col-lg-6">
+            <div class="row mt-2 mt-lg-0">
+                {% for c,child in form if 'designation'!=c %}
+                    <div class="col-12 col-lg-{% if 'quantity'==c %}2{% elseif 'amountIncludingTax'==c %}4{% else %}3{% endif %}">
+                        <div class="row">
+                            <div class="col-5 d-lg-none">
+                                <label class="col-form-label text-truncate" for="{{ child.vars.id }}">
+                                    {{ child.vars.label|trans }}
+                                </label>
+                            </div>
+                            <div class="col-7 col-lg-12">
+                                {{ form_widget(child) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-1 mt-2 mt-lg-0">
+            <div class="btn-group btn-group-sm">
+                <a href="#" class="btn btn-outline-info">
+                    <span class="fa fa-copy"></span>
+                </a>
+                <a href="#" class="btn btn-outline-danger">
+                    <span class="fa fa-trash"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+{%- endblock -%}

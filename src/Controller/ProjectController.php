@@ -1,0 +1,102 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Entity\Project;
+use App\Form\Type\ProjectType;
+use App\Repository\ProjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+/**
+ * @Route("/project")
+ * @IsGranted("ROLE_ADMIN")
+ */
+class ProjectController extends AbstractController
+{
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param Project $project
+     * @return Response
+     *
+     * @Route("/{project}/edit",
+     *     name="app_project_edit",
+     *     methods={"GET", "POST"},
+     *     requirements={"project"})
+     *
+     * @ParamConverter("project")
+     */
+    public function edit(Request $request, EntityManagerInterface $em,TranslatorInterface $translator, Project $project): Response
+    {
+        $formEdit = $this->createForm(ProjectType::class, $project);
+        $formEdit->handleRequest($request);
+
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
+
+            $em->flush();
+
+            $this->addFlash('success',$translator->trans('notification.project_updated'));
+
+            return $this->redirectToRoute('app_project_show', ['project' => $project->getUuid()]);
+
+        }
+
+        return $this->render(
+            'project/edit.html.twig',
+            [
+                'formEdit' => $formEdit->createView(),
+                'project' => $project,
+            ]
+        );
+    }
+
+    /**
+     * @param ProjectRepository $repository
+     * @return Response
+     *
+     * @Route("/",
+     *     name="app_project_index",
+     *     methods={"GET"})
+     */
+    public function index(ProjectRepository $repository): Response
+    {
+        $projects = $repository->findBy([], ['name' => 'ASC']);
+
+        return $this->render(
+            'project/index.html.twig',
+            [
+                'projects' => $projects,
+            ]
+        );
+    }
+
+    /**
+     * @param Project $project
+     * @return Response
+     *
+     * @Route("/{project}",
+     *     name="app_project_show",
+     *     methods={"GET"},
+     *     requirements={"project"})
+     *
+     * @ParamConverter("project")
+     */
+    public function show(Project $project): Response
+    {
+        return $this->render(
+            'project/show.html.twig',
+            [
+                'project' => $project,
+            ]
+        );
+    }
+}

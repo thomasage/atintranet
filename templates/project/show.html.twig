@@ -1,0 +1,36 @@
+{% extends 'project/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-project-show">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1 text-truncate mb-0">{{ project.name }}</h2>
+            <div class="btn-group">
+                <a href="{{ path('app_project_index') }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
+                </a>
+                <a href="{{ path('app_project_edit',{project:project.uuid}) }}" class="btn btn-primary">
+                    <span class="fa fa-pencil"></span>
+                    <span class="d-none d-sm-inline">{{ 'action.edit'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-2">{{ 'field.client'|trans }}</div>
+            <div class="col-10">
+                <a href="{{ path('app_client_show',{client:project.client.uuid}) }}">
+                    {{ project.client }}
+                </a>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">{{ 'field.name'|trans }}</div>
+            <div class="col-10">{{ project.name }}</div>
+        </div>
+
+    </div>
+
+{% endblock %}

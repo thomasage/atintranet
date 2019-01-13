@@ -1,0 +1,28 @@
+{% extends 'client/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-client-index">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1">List of clients</h2>
+            <div>
+                <a href="{{ path('app_client_new') }}" class="btn btn-outline-primary">
+                    <span class="fa fa-plus"></span>
+                    {{ 'action.add'|trans }}
+                </a>
+            </div>
+        </div>
+
+        <div class="list-group mt-4">
+            {% for client in clients %}
+                <a href="{{ path('app_client_show',{client:client.uuid}) }}"
+                   class="list-group-item list-group-item-action">
+                    {{ client.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

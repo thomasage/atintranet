@@ -1,0 +1,29 @@
+{% extends 'project/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-project-index">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1">{{ 'menu.projects'|trans }}</h2>
+            <div>
+                <a href="#" class="btn btn-outline-primary">
+                    <span class="fa fa-plus"></span>
+                    {{ 'action.add'|trans }}
+                </a>
+            </div>
+        </div>
+
+        <div class="list-group mt-4">
+            {% for project in projects %}
+                <a href="{{ path('app_project_show',{project:project.uuid}) }}"
+                   class="list-group-item list-group-item-action">
+                    {{ project.name }}
+                    <div class="small">{{ project.client.name }}</div>
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

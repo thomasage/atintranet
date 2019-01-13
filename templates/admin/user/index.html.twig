@@ -1,0 +1,49 @@
+{% extends 'admin/user/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-admin-user-index">
+
+        <h1>{{ 'menu.admin.user'|trans }}</h1>
+
+        <div class="list-group mt-4">
+            {% for user in users %}
+                <a href="{{ path('app_admin_user_show',{user:user.uuid}) }}"
+                   class="list-group-item list-group-item-action">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between">
+                        <div>
+                            <div><strong>{{ user.username }}</strong></div>
+                            {% if user.client %}
+                                <div class="small">{{ user.client }}</div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for role in user.roles %}
+                                {% set class='secondary' %}
+                                {% if 'ROLE_ADMIN'==role %}
+                                    {% set class='danger' %}
+                                {% elseif 'ROLE_CLIENT'==role %}
+                                    {% set class='info' %}
+                                {% endif %}
+                                <span class="badge badge-{{ class }}">{{ role|trans }}</span>
+                            {% endfor %}
+                            {% if user.enabled==true %}
+                                <span class="badge badge-success">
+                                <span class="fa fa-check"></span>
+                                {{ 'field.enabled'|trans }}
+                            </span>
+                            {% else %}
+                                <span class="badge badge-warning">
+                                <span class="fa fa-times"></span>
+                                {{ 'field.disabled'|trans }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'stat/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-stat-report-time">
+
+        <h1 class="mb-4">{{ 'menu.stat.monthly_report'|trans }}</h1>
+
+        <div class="list-group">
+            {% for report in reports %}
+                <a href="{{ path('app_stat_report_time',{client:report.client_uuid.toString,month:report.report_date}) }}"
+                   class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ report.report_date }}
+                        </div>
+                        <div class="col-6">
+                            {{ report.client_name }}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

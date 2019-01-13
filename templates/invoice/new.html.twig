@@ -1,0 +1,50 @@
+{% extends 'invoice/base.html.twig' %}
+
+{% form_theme formEdit 'invoice/_fields.html.twig' %}
+
+{% block body %}
+
+    <div id="page-invoice-new">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1">{{ 'title.invoice_add'|trans }}</h2>
+            <div>
+                <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    {{ 'action.back'|trans }}
+                </a>
+            </div>
+        </div>
+
+        {{ form_start(formEdit,{attr:{class:'mt-4'}}) }}
+
+        {{ form_row(formEdit.client) }}
+        {{ form_row(formEdit.issueDate) }}
+        {{ form_row(formEdit.dueDate) }}
+        {{ form_row(formEdit.currency) }}
+        {{ form_row(formEdit.comment) }}
+        {{ form_row(formEdit.commentInternal) }}
+
+        <h2 class="mb-4 mt-5">{{ formEdit.address.vars.label|trans }}</h2>
+
+        {{ form_widget(formEdit.address) }}
+
+        <h2 class="mb-4 mt-5">{{ formEdit.details.vars.label|trans }}</h2>
+
+        {{ form_widget(formEdit.details) }}
+
+        <div class="mt-5">
+            <button type="submit" class="btn btn-success">
+                <span class="fa fa-save"></span>
+                {{ 'action.save'|trans }}
+            </button>
+            <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+                <span class="fa fa-undo"></span>
+                {{ 'action.cancel'|trans }}
+            </a>
+        </div>
+        {{ form_end(formEdit) }}
+
+    </div>
+
+{% endblock %}

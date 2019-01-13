@@ -1,0 +1,52 @@
+{% extends 'invoice/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-invoice-index">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1">List of invoices</h2>
+            <div>
+                <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-primary">
+                    <span class="fa fa-plus"></span>
+                    {{ 'action.add'|trans }}
+                </a>
+            </div>
+        </div>
+
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>{{ 'field.number'|trans }}</th>
+                <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
+                <th class="d-none d-md-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th>{{ 'field.amount_including_tax'|trans }}</th>
+                <th class="d-none d-sm-table-cell">{{ 'field.amount_paid'|trans }}</th>
+                <th class="d-none d-sm-table-cell">{{ 'field.client'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for invoice in invoices %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
+                            {{ invoice.number }}
+                        </a>
+                    </td>
+                    <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
+                    <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
+                    <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
+                    <td class="d-none d-sm-table-cell">{{ invoice.amountPaid|localizedcurrency(invoice.currency) }}</td>
+                    <td class="d-none d-sm-table-cell">
+                        <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">
+                            {{ invoice.client }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

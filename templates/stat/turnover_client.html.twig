@@ -1,0 +1,32 @@
+{% extends 'stat/base.html.twig' %}
+
+{% form_theme formSearch 'bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block body %}
+
+    <div id="page-stat-turnover-client">
+
+        <h1>{{ 'menu.stat.turnover_by_client'|trans }}</h1>
+
+        {{ form_start(formSearch,{attr:{class:'mt-4'}}) }}
+        {{ form_widget(formSearch) }}
+        <div>
+            <button type="submit" class="btn btn-primary">
+                <span class="fa fa-search"></span>
+                {{ 'action.search'|trans }}
+            </button>
+        </div>
+        {{ form_end(formSearch) }}
+
+        <div class="chart mt-4"
+             id="chart-turnover-client"
+             data-series="{{ data['series']|json_encode }}"></div>
+
+    </div>
+
+{% endblock %}
+
+ {% block javascripts %}
+     {{ parent() }}
+     {{ encore_entry_script_tags('stat-turnover-client') }}
+ {% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'stat/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-stat-turnover-period">
+
+        <h1>{{ 'menu.stat.turnover_by_period'|trans }}</h1>
+
+        <nav class="nav nav-pills mt-4">
+            <a href="{{ path('app_stat_turnover_period',{period:'m'}) }}"
+               class="nav-link{% if 'm'==period %} active{% endif %}">
+                {{ 'last_x_months'|transchoice(12) }}
+            </a>
+            <a href="{{ path('app_stat_turnover_period',{period:'y'}) }}"
+               class="nav-link{% if 'y'==period %} active{% endif %}">
+                {{ 'last_x_years'|transchoice(10) }}
+            </a>
+        </nav>
+
+        {% if 0!=data['series']|length %}
+
+            <div class="chart mt-4"
+                 id="chart-turnover"
+                 data-categories="{{ data['categories']|json_encode }}"
+                 data-series="{{ data['series']|json_encode }}"></div>
+
+        {% else %}
+
+            <p class="mt-5">{{ 'no_results_for_your_search'|trans }}</p>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+ {% block javascripts %}
+     {{ parent() }}
+     {{ encore_entry_script_tags('stat-turnover-period') }}
+ {% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'tracker/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-tracker-index">
+
+        <h1>{{ 'menu.tracker'|trans }}</h1>
+
+        <table class="table table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>{{ 'field.name'|trans }}</th>
+                <th>{{ 'field.project'|trans }}</th>
+                <th>{{ 'field.client'|trans }}</th>
+                <th>{{ 'field.date'|trans }}</th>
+                <th>{{ 'field.start'|trans }}</th>
+                <th>{{ 'field.stop'|trans }}</th>
+                <th>{{ 'field.duration'|trans }}</th>
+                <th>{{ 'field.expected'|trans }}</th>
+                <th>{{ 'field.on_site'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.project }}</td>
+                    <td>{{ task.project.client }}</td>
+                    <td>{{ task.start|localizeddate('short','none') }}</td>
+                    <td>{{ task.start|localizeddate('none','short') }}</td>
+                    <td>{{ task.stop|localizeddate('none','short') }}</td>
+                    <td>{{ task.duration|localizedduration('short') }}</td>
+                    <td class="text-center">
+                        {% if task.expected %}
+                            <span class="fa fa-calendar"></span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if task.onSite %}
+                            <span class="fa fa-building"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

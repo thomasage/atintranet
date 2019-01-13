@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="tpyeTyd" resname="field.username">
+        <source>field.username</source>
+        <target>Identifiant</target>
+      </trans-unit>
+      <trans-unit id="utzcVoZ" resname="field.password">
+        <source>field.password</source>
+        <target>Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="TBjJltp" resname="field.remember_me">
+        <source>field.remember_me</source>
+        <target>Se souvenir de moi</target>
+      </trans-unit>
+      <trans-unit id="uJxPe9E" resname="action.login">
+        <source>action.login</source>
+        <target>Ouvrir une session</target>
+      </trans-unit>
+      <trans-unit id="GyNiJAi" resname="menu.home">
+        <source>menu.home</source>
+        <target>Accueil</target>
+      </trans-unit>
+      <trans-unit id="5kxNYmo" resname="menu.clients">
+        <source>menu.clients</source>
+        <target>Clients</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout">
+        <source>menu.logout</source>
+        <target>Déconnexion</target>
+      </trans-unit>
+      <trans-unit id="ItBX3Jh" resname="menu.tracker">
+        <source>menu.tracker</source>
+        <target>Temps passés</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Ajouter</target>
+      </trans-unit>
+      <trans-unit id="Eb7Ygpo" resname="action.back">
+        <source>action.back</source>
+        <target>Retour</target>
+      </trans-unit>
+      <trans-unit id="ovKkXwU" resname="action.edit">
+        <source>action.edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="oj3PCUw" resname="menu.stat">
+        <source>menu.stat</source>
+        <target>Statistiques</target>
+      </trans-unit>
+      <trans-unit id="0rpZ80h" resname="last_x_days">
+        <source>last_x_days</source>
+        <target>Aujourd'hui|%count% derniers jours</target>
+      </trans-unit>
+      <trans-unit id="g.AlT2e" resname="last_x_weeks">
+        <source>last_x_weeks</source>
+        <target>Cette semaine|%count% dernières semaines</target>
+      </trans-unit>
+      <trans-unit id="CdX7M21" resname="last_x_months">
+        <source>last_x_months</source>
+        <target>Ce mois|%count% derniers mois</target>
+      </trans-unit>
+      <trans-unit id="KZ61bU8" resname="last_x_years">
+        <source>last_x_years</source>
+        <target>Cette année|%count% dernières années</target>
+      </trans-unit>
+      <trans-unit id="Z1qVUrL" resname="menu.stat.turnover_by_client">
+        <source>menu.stat.turnover_by_client</source>
+        <target>Chiffre d'affaires par client</target>
+      </trans-unit>
+      <trans-unit id="wvvYSw_" resname="menu.admin">
+        <source>menu.admin</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="fDI3zIK" resname="menu.admin.user">
+        <source>menu.admin.user</source>
+        <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="uoCnbFo" resname="no_results_for_your_search">
+        <source>no_results_for_your_search</source>
+        <target>Aucun résultat pour votre recherche</target>
+      </trans-unit>
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
+        <source>ROLE_ADMIN</source>
+        <target>Administrateur</target>
+      </trans-unit>
+      <trans-unit id="XUci4IO" resname="ROLE_CLIENT">
+        <source>ROLE_CLIENT</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
+        <source>ROLE_USER</source>
+        <target>Utilisateur</target>
+      </trans-unit>
+      <trans-unit id="GAGKLLt" resname="field.enabled">
+        <source>field.enabled</source>
+        <target>Actif</target>
+      </trans-unit>
+      <trans-unit id="Sy1CcRG" resname="field.disabled">
+        <source>field.disabled</source>
+        <target>Inactif</target>
+      </trans-unit>
+      <trans-unit id="AHhQ6Bz" resname="field.name">
+        <source>field.name</source>
+        <target>Libellé</target>
+      </trans-unit>
+      <trans-unit id="vx4Lm7i" resname="field.project">
+        <source>field.project</source>
+        <target>Projet</target>
+      </trans-unit>
+      <trans-unit id="yjlR8EI" resname="field.client">
+        <source>field.client</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="b6PmQNx" resname="field.start">
+        <source>field.start</source>
+        <target>Début</target>
+      </trans-unit>
+      <trans-unit id="1c5DksW" resname="field.stop">
+        <source>field.stop</source>
+        <target>Fin</target>
+      </trans-unit>
+      <trans-unit id="r1EuC3R" resname="field.duration">
+        <source>field.duration</source>
+        <target>Durée</target>
+      </trans-unit>
+      <trans-unit id="zezGq0m" resname="field.date">
+        <source>field.date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="Ovaudy8" resname="menu.invoices">
+        <source>menu.invoices</source>
+        <target>Factures</target>
+      </trans-unit>
+      <trans-unit id="WB7UNTN" resname="field.issue_date">
+        <source>field.issue_date</source>
+        <target>Date d'émission</target>
+      </trans-unit>
+      <trans-unit id="Gl3fWIh" resname="field.due_date">
+        <source>field.due_date</source>
+        <target>Date d'échéance</target>
+      </trans-unit>
+      <trans-unit id="23MYiQ3" resname="field.number">
+        <source>field.number</source>
+        <target>Numéro</target>
+      </trans-unit>
+      <trans-unit id="vTYQ9Vq" resname="field.amount_excluding_tax">
+        <source>field.amount_excluding_tax</source>
+        <target>Montant H.T.</target>
+      </trans-unit>
+      <trans-unit id="odDw0du" resname="action.search">
+        <source>action.search</source>
+        <target>Chercher</target>
+      </trans-unit>
+      <trans-unit id="m_bQOfb" resname="menu.stat.turnover_by_period">
+        <source>menu.stat.turnover_by_period</source>
+        <target>Chiffres d'affaire par période</target>
+      </trans-unit>
+      <trans-unit id="VeK3x4U" resname="field.code">
+        <source>field.code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="hTKWQ6g" resname="action.delete">
+        <source>action.delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="2orqhMK" resname="notification.client_updated">
+        <source>notification.client_updated</source>
+        <target>Le client est modifié.</target>
+      </trans-unit>
+      <trans-unit id="UVoxuhF" resname="notification.project_updated">
+        <source>notification.project_updated</source>
+        <target>Le projet est modifié.</target>
+      </trans-unit>
+      <trans-unit id=".NuLF.M" resname="notification.invoice_updated">
+        <source>notification.invoice_updated</source>
+        <target>La facture est modifiée.</target>
+      </trans-unit>
+      <trans-unit id="eSzPfN3" resname="notification.invoice_locked">
+        <source>notification.invoice_locked</source>
+        <target>La facture %number% est verrouillée.</target>
+      </trans-unit>
+      <trans-unit id="QBzZboj" resname="notification.invoice_unlocked">
+        <source>notification.invoice_unlocked</source>
+        <target>La facture %number% est déverrouillée.</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save">
+        <source>action.save</source>
+        <target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="Qj1ElaL" resname="action.cancel">
+        <source>action.cancel</source>
+        <target>Annuler</target>
+      </trans-unit>
+      <trans-unit id="9q.0nBt" resname="field.postcode">
+        <source>field.postcode</source>
+        <target>Code postal</target>
+      </trans-unit>
+      <trans-unit id="AWGQqMe" resname="field.city">
+        <source>field.city</source>
+        <target>Ville</target>
+      </trans-unit>
+      <trans-unit id="JYn0dJ." resname="field.country">
+        <source>field.country</source>
+        <target>Pays</target>
+      </trans-unit>
+      <trans-unit id="qEqRW5_" resname="field.address">
+        <source>field.address</source>
+        <target>Adresse</target>
+      </trans-unit>
+      <trans-unit id="1N6PErw" resname="primary_address">
+        <source>primary_address</source>
+        <target>Adresse principale</target>
+      </trans-unit>
+      <trans-unit id="UWgC9SK" resname="invoicing_address">
+        <source>invoicing_address</source>
+        <target>Adresse de facturation</target>
+      </trans-unit>
+      <trans-unit id="iiKp8uq" resname="title.invoice_add">
+        <source>title.invoice_add</source>
+        <target>Ajouter une facture</target>
+      </trans-unit>
+      <trans-unit id="fcXZ4IH" resname="field.currency">
+        <source>field.currency</source>
+        <target>Devise</target>
+      </trans-unit>
+      <trans-unit id="uFYQ.qu" resname="field.internal_comment">
+        <source>field.internal_comment</source>
+        <target>Commentaire interne</target>
+      </trans-unit>
+      <trans-unit id="ruLHOJf" resname="field.comment">
+        <source>field.comment</source>
+        <target>Commentaire</target>
+      </trans-unit>
+      <trans-unit id="y6ELpGV" resname="field.credit">
+        <source>field.credit</source>
+        <target>Facture d'avoir</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes">
+        <source>yes</source>
+        <target>oui</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no">
+        <source>no</source>
+        <target>non</target>
+      </trans-unit>
+      <trans-unit id="dGILheE" resname="field.details">
+        <source>field.details</source>
+        <target>Détails</target>
+      </trans-unit>
+      <trans-unit id="jUEFyTp" resname="title.invoice_edit">
+        <source>title.invoice_edit</source>
+        <target>Modifier une facture</target>
+      </trans-unit>
+      <trans-unit id="MBLYGnj" resname="field.designation">
+        <source>field.designation</source>
+        <target>Désignation</target>
+      </trans-unit>
+      <trans-unit id="AsvlArV" resname="field.quantity">
+        <source>field.quantity</source>
+        <target>Quantité</target>
+      </trans-unit>
+      <trans-unit id=".9VvwhV" resname="field.amount_unit">
+        <source>field.amount_unit</source>
+        <target>Prix unitaire</target>
+      </trans-unit>
+      <trans-unit id="pdV2Czl" resname="field.tax_rate">
+        <source>field.tax_rate</source>
+        <target>Taux T.V.A.</target>
+      </trans-unit>
+      <trans-unit id="zi8L0NK" resname="field.amount_including_tax">
+        <source>field.amount_including_tax</source>
+        <target>Montant T.T.C.</target>
+      </trans-unit>
+      <trans-unit id="F1NvUmQ" resname="field.tax_amount">
+        <source>field.tax_amount</source>
+        <target>Montant T.V.A.</target>
+      </trans-unit>
+      <trans-unit id="em9USV2" resname="menu.stat.time">
+        <source>menu.stat.time</source>
+        <target>Temps passés</target>
+      </trans-unit>
+      <trans-unit id="bTP_3ih" resname="action.build">
+        <source>action.build</source>
+        <target>Construire</target>
+      </trans-unit>
+      <trans-unit id="NVWiGL3" resname="field.month">
+        <source>field.month</source>
+        <target>Mois</target>
+      </trans-unit>
+      <trans-unit id="dht62K1" resname="summary">
+        <source>summary</source>
+        <target>Résumé</target>
+      </trans-unit>
+      <trans-unit id="wjJlZaG" resname="field.hours">
+        <source>field.hours</source>
+        <target>Heures</target>
+      </trans-unit>
+      <trans-unit id="kVnXdB9" resname="field.year">
+        <source>field.year</source>
+        <target>Année</target>
+      </trans-unit>
+      <trans-unit id="2ISTwmP" resname="field.from_start">
+        <source>field.from_start</source>
+        <target>Depuis le début</target>
+      </trans-unit>
+      <trans-unit id="Bacay8k" resname="field.task">
+        <source>field.task</source>
+        <target>Tâche</target>
+      </trans-unit>
+      <trans-unit id="tcTV2.D" resname="field.hourly_rate">
+        <source>field.hourly_rate</source>
+        <target>Taux horaire</target>
+      </trans-unit>
+      <trans-unit id="11QVHHt" resname="field.budget">
+        <source>field.budget</source>
+        <target>Budget</target>
+      </trans-unit>
+      <trans-unit id="X2Z3UHP" resname="menu.stat.monthly_report">
+        <source>menu.stat.monthly_report</source>
+        <target>Rapport mensuel</target>
+      </trans-unit>
+      <trans-unit id="FUeUWwO" resname="field.expected">
+        <source>field.expected</source>
+        <target>Prévu</target>
+      </trans-unit>
+      <trans-unit id="FkA3ynu" resname="field.on_site">
+        <source>field.on_site</source>
+        <target>Sur site</target>
+      </trans-unit>
+      <trans-unit id="z3ZZH9k" resname="menu.stat.time_chart">
+        <source>menu.stat.time_chart</source>
+        <target>Temps passés</target>
+      </trans-unit>
+      <trans-unit id="E4WsFmf" resname="menu.projects">
+        <source>menu.projects</source>
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="4zNpWMB" resname="title.client_add">
+        <source>title.client_add</source>
+        <target>Ajouter un client</target>
+      </trans-unit>
+      <trans-unit id="ULhCsyk" resname="informations">
+        <source>informations</source>
+        <target>Informations</target>
+      </trans-unit>
+      <trans-unit id=".WuG0zr" resname="last_invoices">
+        <source>last_invoices</source>
+        <target>Dernières factures</target>
+      </trans-unit>
+      <trans-unit id="Ty0yIrX" resname="field.vat_number">
+        <source>field.vat_number</source>
+        <target>N° T.V.A.</target>
+      </trans-unit>
+      <trans-unit id="rGPo__a" resname="field.account_number">
+        <source>field.account_number</source>
+        <target>N° compte</target>
+      </trans-unit>
+      <trans-unit id="XBUoa5V" resname="field.active">
+        <source>field.active</source>
+        <target>Actif</target>
+      </trans-unit>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="I5Kr6hX" resname="field.amount_paid">
+        <source>field.amount_paid</source>
+        <target>Montant payé</target>
+      </trans-unit>
+      <trans-unit id="v4M3LhA" resname="action.print">
+        <source>action.print</source>
+        <target>Imprimer</target>
+      </trans-unit>
+      <trans-unit id="4SgvAU3" resname="action.unlock">
+        <source>action.unlock</source>
+        <target>Déverrouiller</target>
+      </trans-unit>
+      <trans-unit id="63sGSBx" resname="action.lock">
+        <source>action.lock</source>
+        <target>Verrouiller</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target>Facture</target>
+      </trans-unit>
+      <trans-unit id="7MSHOha" resname="credit">
+        <source>credit</source>
+        <target>Avoir</target>
+      </trans-unit>
+      <trans-unit id="JxLSm0F" resname="field.closed">
+        <source>field.closed</source>
+        <target>Clôturé</target>
+      </trans-unit>
+      <trans-unit id="Em3At3q" resname="field.locked">
+        <source>field.locked</source>
+        <target>Verrouillé</target>
+      </trans-unit>
+      <trans-unit id="NmAxWpr" resname="page">
+        <source>page</source>
+        <target>Page</target>
+      </trans-unit>
+      <trans-unit id="J5QLeU_" resname="bank_coordinates">
+        <source>bank_coordinates</source>
+        <target>Coordonnées bancaires</target>
+      </trans-unit>
+      <trans-unit id="CIXyKo9" resname="invoice_number">
+        <source>invoice_number</source>
+        <target>N° facture</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

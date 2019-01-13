@@ -1,0 +1,70 @@
+{% extends 'client/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-client-show">
+
+        <div class="d-flex flex-row align-items-center mt-5">
+            <h2 class="flex-grow-1 text-truncate mb-0">{{ client.name }}</h2>
+            <div class="btn-group">
+                <a href="{{ path('app_client_index') }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
+                </a>
+                <a href="{{ path('app_client_edit',{uuid:client.uuid}) }}" class="btn btn-primary">
+                    <span class="fa fa-pencil"></span>
+                    <span class="d-none d-sm-inline">{{ 'action.edit'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
+                <legend>{{ 'informations'|trans }}</legend>
+                {% if client.code|length>0 %}
+                    <div class="mb-2">{{ 'field.code'|trans }} : {{ client.code }}</div>
+                {% endif %}
+                <div class="small">Created at {{ client.createdAt|localizeddate('short','short') }}</div>
+                <div class="small">Last update at {{ client.updatedAt|localizeddate('short','short') }}</div>
+            </fieldset>
+
+            <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
+                <legend>{{ 'primary_address'|trans }}</legend>
+                <div>{{ client.addressPrimary.name }}</div>
+                <div>{{ client.addressPrimary.address }}</div>
+                <div>{{ client.addressPrimary.postcode }} {{ client.addressPrimary.city }}</div>
+                <div>{{ client.addressPrimary.country|localizedcountry }}</div>
+            </fieldset>
+
+            <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
+                <legend>{{ 'last_invoices'|trans }}</legend>
+                {% for invoice in client.invoices|slice(0,3) %}
+                    <div class="row mb-1">
+                        <div class="col-4">{{ invoice.issueDate|localizeddate('short','none') }}</div>
+                        <div class="col-4">
+                            <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
+                                {{ invoice.number }}
+                            </a>
+                        </div>
+                        <div class="col-4">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
+                <legend>{{ 'projects'|trans }}</legend>
+                {% for project in client.projects %}
+                    <div class="mb-1">
+                        <a href="{{ path('app_project_show',{project:project.uuid}) }}">
+                            {{ project.name }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+        </div>
+
+    </div>
+
+{% endblock %}
