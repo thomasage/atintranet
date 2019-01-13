@@ -16,7 +16,7 @@
 
         <div class="list-group mt-4">
             {% for client in clients %}
-                <a href="{{ path('app_client_show',{client:client.uuid}) }}"
+                <a href="{{ path('app_client_show',{uuid:client.uuid}) }}"
                    class="list-group-item list-group-item-action">
                     {{ client.name }}
                 </a>
