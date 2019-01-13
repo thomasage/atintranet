@@ -42,20 +42,20 @@
             <div class="flex-grow-1 mt-4">
                 <h3>{{ 'informations'|trans }}</h3>
                 <div class="row mt-1">
-                    <div class="col-3">{{ 'field.number'|trans }}</div>
-                    <div class="col-9">{{ invoice.number }}</div>
+                    <div class="col-4">{{ 'field.number'|trans }}</div>
+                    <div class="col-8">{{ invoice.number }}</div>
                 </div>
                 <div class="row mt-1">
-                    <div class="col-3">{{ 'field.issue_date'|trans }}</div>
-                    <div class="col-9">{{ invoice.issueDate|localizeddate('full','none') }}</div>
+                    <div class="col-4 text-truncate">{{ 'field.issue_date'|trans }}</div>
+                    <div class="col-8">{{ invoice.issueDate|localizeddate('full','none') }}</div>
                 </div>
                 <div class="row mt-1">
-                    <div class="col-3">{{ 'field.due_date'|trans }}</div>
-                    <div class="col-9">{{ invoice.dueDate|localizeddate('full','none') }}</div>
+                    <div class="col-4 text-truncate">{{ 'field.due_date'|trans }}</div>
+                    <div class="col-8">{{ invoice.dueDate|localizeddate('full','none') }}</div>
                 </div>
                 <div class="row mt-1">
-                    <div class="col-3">{{ 'field.closed'|trans }}</div>
-                    <div class="col-9">
+                    <div class="col-4">{{ 'field.closed'|trans }}</div>
+                    <div class="col-8">
                         {% if invoice.closed==true %}
                             <strong class="text-success">
                                 <span class="fa fa-check-square-o"></span>
@@ -70,8 +70,8 @@
                     </div>
                 </div>
                 <div class="row mt-1">
-                    <div class="col-3">{{ 'field.locked'|trans }}</div>
-                    <div class="col-9">
+                    <div class="col-4">{{ 'field.locked'|trans }}</div>
+                    <div class="col-8">
                         {% if invoice.locked==true %}
                             <strong class="text-success">
                                 <span class="fa fa-lock"></span>
@@ -87,14 +87,14 @@
                 </div>
                 {% if invoice.comment|length>0 %}
                     <div class="row">
-                        <div class="col-3">{{ 'field.comment'|trans }}</div>
-                        <div class="col-9">{{ invoice.comment }}</div>
+                        <div class="col-4 text-truncate">{{ 'field.comment'|trans }}</div>
+                        <div class="col-8">{{ invoice.comment }}</div>
                     </div>
                 {% endif %}
                 {% if invoice.commentInternal|length>0 %}
                     <div class="row">
-                        <div class="col-3">{{ 'field.internal_comment'|trans }}</div>
-                        <div class="col-9">{{ invoice.commentInternal }}</div>
+                        <div class="col-4 text-truncate">{{ 'field.internal_comment'|trans }}</div>
+                        <div class="col-8">{{ invoice.commentInternal }}</div>
                     </div>
                 {% endif %}
             </div>
@@ -123,19 +123,27 @@
             </thead>
             <tfoot class="text-nowrap">
             <tr>
-                <th colspan="4" class="text-right">{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th colspan="1" class="text-right d-sm-none">{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th colspan="3" class="text-right d-none d-sm-table-cell d-md-none">{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th colspan="4" class="text-right d-none d-md-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
                 <th class="text-right">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</th>
             </tr>
             <tr>
-                <th colspan="4" class="text-right">{{ 'field.tax_amount'|trans }}</th>
+                <th colspan="1" class="text-right d-sm-none">{{ 'field.tax_amount'|trans }}</th>
+                <th colspan="3" class="text-right d-none d-sm-table-cell d-md-none">{{ 'field.tax_amount'|trans }}</th>
+                <th colspan="4" class="text-right d-none d-md-table-cell">{{ 'field.tax_amount'|trans }}</th>
                 <th class="text-right">{{ invoice.taxAmount|localizedcurrency(invoice.currency) }}</th>
             </tr>
             <tr>
-                <th colspan="4" class="text-right">{{ 'field.amount_including_tax'|trans }}</th>
+                <th colspan="1" class="text-right d-sm-none">{{ 'field.amount_including_tax'|trans }}</th>
+                <th colspan="3" class="text-right d-none d-sm-table-cell d-md-none">{{ 'field.amount_including_tax'|trans }}</th>
+                <th colspan="4" class="text-right d-none d-md-table-cell">{{ 'field.amount_including_tax'|trans }}</th>
                 <th class="text-right">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</th>
             </tr>
             <tr>
-                <th colspan="4" class="text-right">{{ 'field.amount_paid'|trans }}</th>
+                <th colspan="1" class="text-right d-sm-none">{{ 'field.amount_paid'|trans }}</th>
+                <th colspan="3" class="text-right d-none d-sm-table-cell d-md-none">{{ 'field.amount_paid'|trans }}</th>
+                <th colspan="4" class="text-right d-none d-md-table-cell">{{ 'field.amount_paid'|trans }}</th>
                 <th class="text-right">{{ invoice.amountPaid|localizedcurrency(invoice.currency) }}</th>
             </tr>
             </tfoot>
