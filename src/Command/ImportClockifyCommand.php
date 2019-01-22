@@ -96,8 +96,6 @@ class ImportClockifyCommand extends Command
 
             $io->section(sprintf('Workspace %s', $workspace->id));
 
-            $io->note('Fetch projects');
-
             $response = $guzzleClient->get(sprintf('workspaces/%s/projects/', $workspace->id));
             if (200 !== $response->getStatusCode()) {
                 $io->error(sprintf('Unable to fetch projects (%d)', $response->getStatusCode()));
