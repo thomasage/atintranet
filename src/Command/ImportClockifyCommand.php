@@ -128,8 +128,6 @@ class ImportClockifyCommand extends Command
                         ->setName($p->client->name);
                     $this->em->persist($client);
 
-                    $this->em->flush();
-
                 }
 
                 $project = $repoProject->findOneBy(['client' => $client, 'externalReference' => $p->id]);
@@ -140,12 +138,12 @@ class ImportClockifyCommand extends Command
                         ->setExternalReference($p->id)
                         ->setName($p->name);
                     $this->em->persist($project);
-                    $this->em->flush();
                 }
 
                 $response = $guzzleClient->get(sprintf('workspaces/%s/timeEntries/project/%s', $workspace->id, $p->id));
                 if (200 !== $response->getStatusCode()) {
                     $io->error(sprintf('Unable to fetch time entries (%d)', $response->getStatusCode()));
+                    $this->em->flush();
 
                     return 1;
                 }
@@ -169,7 +167,7 @@ class ImportClockifyCommand extends Command
                             ->setStart(new \DateTime($timeEntry->timeInterval->start))
                             ->setStop(new \DateTime($timeEntry->timeInterval->end));
 
-                        if(is_array($timeEntry->tags)) {
+                        if (is_array($timeEntry->tags)) {
                             foreach ($timeEntry->tags as $tag) {
                                 if ('On site' === $tag->name) {
                                     $task->setOnSite(true);
@@ -184,6 +182,8 @@ class ImportClockifyCommand extends Command
                     } catch (\Exception $e) {
 
                         $io->error(sprintf('Unable to create task: %s', $e));
+
+                        $this->em->flush();
 
                         return 1;
 
