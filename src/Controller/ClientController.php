@@ -22,27 +22,6 @@ class ClientController extends AbstractController
 {
     /**
      * @param Request $request
-     * @param Client $client
-     * @return Response
-     *
-     * @Route("/{uuid}",
-     *     name="app_client_delete",
-     *     methods={"DELETE"},
-     *     requirements={"uuid"})
-     */
-    public function delete(Request $request, Client $client): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($client);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('app_client_index');
-    }
-
-    /**
-     * @param Request $request
      * @param EntityManagerInterface $em
      * @param TranslatorInterface $translator
      * @param Client $client
@@ -69,7 +48,7 @@ class ClientController extends AbstractController
 
             $this->addFlash('success', $translator->trans('notification.client_updated'));
 
-            return $this->redirectToRoute('app_client_show', ['client' => $client->getUuid()]);
+            return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
 
         }
 

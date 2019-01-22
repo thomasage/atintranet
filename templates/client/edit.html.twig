@@ -7,7 +7,7 @@
         <div class="d-flex flex-row align-items-center mt-5">
             <h2 class="flex-grow-1 text-truncate mb-0">{{ client.name }}</h2>
             <div class="btn-group">
-                <a href="{{ path('app_client_show',{client:client.uuid}) }}" class="btn btn-outline-secondary">
+                <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="btn btn-outline-secondary">
                     <span class="fa fa-undo"></span>
                     <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
                 </a>
@@ -36,7 +36,7 @@
                 <span class="fa fa-save"></span>
                 {{ 'action.save'|trans }}
             </button>
-            <a href="{{ path('app_client_show',{client:client.uuid}) }}" class="btn btn-outline-secondary">
+            <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="btn btn-outline-secondary">
                 <span class="fa fa-undo"></span>
                 {{ 'action.cancel'|trans }}
             </a>
