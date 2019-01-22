@@ -179,6 +179,9 @@
             "ref": "f7895777cd673fcefbc321a9063077a24e5df646"
         }
     },
+    "roave/security-advisories": {
+        "version": "dev-master"
+    },
     "rollerworks/password-strength-bundle": {
         "version": "v2.0.3"
     },
