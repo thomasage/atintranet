@@ -1,5 +1,6 @@
 {
   "name": "thomasage/atintranet",
+  "description": "A small intranet",
   "type": "project",
   "license": "proprietary",
   "require": {
