@@ -40,6 +40,7 @@
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.0",
     "fzaninotto/faker": "^1.8",
+    "roave/security-advisories": "dev-master",
     "symfony/debug-pack": "*",
     "symfony/maker-bundle": "^1.0",
     "symfony/profiler-pack": "*",
