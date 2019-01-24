@@ -6,13 +6,15 @@
 
     <div id="page-invoice-edit">
 
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1 text-truncate mb-0">{{ 'title.invoice_edit'|trans }}</h2>
-            <div class="ml-2">
-                <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-list"></span>
-                    <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
-                </a>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1>{{ 'title.invoice_edit'|trans }}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0 mt-2 mt-md-0">
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
+                        <span class="fa fa-undo"></span>
+                        {{ 'action.back'|trans }}
+                    </a>
+                </div>
             </div>
         </div>
 

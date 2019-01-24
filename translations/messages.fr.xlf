@@ -449,6 +449,10 @@
         <source>field.confirmation</source>
         <target>Confirmation</target>
       </trans-unit>
+      <trans-unit id="FuCyk5C" resname="field.status">
+        <source>field.status</source>
+        <target>Statut</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
