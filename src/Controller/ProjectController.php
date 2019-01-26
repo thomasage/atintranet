@@ -8,7 +8,6 @@ use App\Form\Type\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,15 +27,17 @@ class ProjectController extends AbstractController
      * @param Project $project
      * @return Response
      *
-     * @Route("/{project}/edit",
+     * @Route("/{uuid}/edit",
      *     name="app_project_edit",
      *     methods={"GET", "POST"},
-     *     requirements={"project"})
-     *
-     * @ParamConverter("project")
+     *     requirements={"uuid"})
      */
-    public function edit(Request $request, EntityManagerInterface $em,TranslatorInterface $translator, Project $project): Response
-    {
+    public function edit(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        Project $project
+    ): Response {
         $formEdit = $this->createForm(ProjectType::class, $project);
         $formEdit->handleRequest($request);
 
@@ -44,7 +45,7 @@ class ProjectController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success',$translator->trans('notification.project_updated'));
+            $this->addFlash('success', $translator->trans('notification.project_updated'));
 
             return $this->redirectToRoute('app_project_show', ['project' => $project->getUuid()]);
 
@@ -83,12 +84,10 @@ class ProjectController extends AbstractController
      * @param Project $project
      * @return Response
      *
-     * @Route("/{project}",
+     * @Route("/{uuid}",
      *     name="app_project_show",
      *     methods={"GET"},
-     *     requirements={"project"})
-     *
-     * @ParamConverter("project")
+     *     requirements={"uuid"})
      */
     public function show(Project $project): Response
     {

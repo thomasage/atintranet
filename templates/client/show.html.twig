@@ -56,7 +56,7 @@
                 <legend>{{ 'projects'|trans }}</legend>
                 {% for project in client.projects %}
                     <div class="mb-1">
-                        <a href="{{ path('app_project_show',{project:project.uuid}) }}">
+                        <a href="{{ path('app_project_show',{uuid:project.uuid}) }}">
                             {{ project.name }}
                         </a>
                     </div>

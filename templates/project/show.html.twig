@@ -11,7 +11,7 @@
                     <span class="fa fa-list"></span>
                     <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
                 </a>
-                <a href="{{ path('app_project_edit',{project:project.uuid}) }}" class="btn btn-primary">
+                <a href="{{ path('app_project_edit',{uuid:project.uuid}) }}" class="btn btn-primary">
                     <span class="fa fa-pencil"></span>
                     <span class="d-none d-sm-inline">{{ 'action.edit'|trans }}</span>
                 </a>
@@ -21,7 +21,7 @@
         <div class="row mt-5">
             <div class="col-2">{{ 'field.client'|trans }}</div>
             <div class="col-10">
-                <a href="{{ path('app_client_show',{client:project.client.uuid}) }}">
+                <a href="{{ path('app_client_show',{uuid:project.client.uuid}) }}">
                     {{ project.client }}
                 </a>
             </div>
