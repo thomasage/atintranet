@@ -29,11 +29,6 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User|null $user */
-        $user = $options['data'] ?? null;
-
-        $roles = $user ? $user->getRoles() : [];
-
         $builder
             ->add(
                 'username',
