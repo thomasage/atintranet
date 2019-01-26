@@ -453,6 +453,10 @@
         <source>field.status</source>
         <target>Statut</target>
       </trans-unit>
+      <trans-unit id="eMrMEEZ" resname="notification.export_failed">
+        <source>notification.export_failed</source>
+        <target>Impossible de créer l'export</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -78,16 +78,12 @@ class User implements UserInterface
 
     /**
      * User constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
-        try {
-            $this->uuid = Uuid::uuid4();
-        } catch (\Exception $e) {
-            exit('Unable to generate UUID');
-        }
-
         $this->enabled = true;
+        $this->uuid = Uuid::uuid4();
     }
 
     /**
@@ -168,7 +164,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
         // Not needed when using the "bcrypt" algorithm in security.yaml
     }
@@ -176,7 +172,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
     }

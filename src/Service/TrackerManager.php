@@ -6,9 +6,9 @@ namespace App\Service;
 use App\Entity\Client;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
+use App\Entity\Task;
 use App\Repository\TaskRepository;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -54,19 +54,21 @@ class TrackerManager implements ServiceSubscriberInterface
     /**
      * @param \DateTime $month
      * @param Client $client
+     * @return bool
      */
-    public function export(\DateTime $month, Client $client): void
+    public function export(\DateTime $month, Client $client): bool
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
         $repository = $this->container->get(TaskRepository::class);
         $translator = $this->container->get(TranslatorInterface::class);
 
+        /** @var Task[] $details */
         $details = $repository->detailByClientAndMonth($client, $month);
         $summary = $repository->summaryByClientAndMonth($client, $month);
 
         $request = $this->container->get(RequestStack::class)->getCurrentRequest();
         if (!$request instanceof Request) {
-            return;
+            return false;
         }
 
         $formatter = new \IntlDateFormatter($request->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::NONE);
@@ -206,13 +208,12 @@ class TrackerManager implements ServiceSubscriberInterface
             $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
 
-        } catch (Exception $e) {
+            return true;
 
-            echo $e;
-            exit();
+        } catch (\Exception $e) {
+
+            return false;
 
         }
-
-        exit('a');
     }
 }

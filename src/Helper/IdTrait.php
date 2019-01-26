@@ -31,24 +31,20 @@ trait IdTrait
 
     /**
      * IdTrait constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
-        try {
-            $this->uuid = Uuid::uuid4();
-        } catch (\Exception $e) {
-            exit('Unable to generate UUID');
-        }
+        $this->uuid = Uuid::uuid4();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __clone()
     {
         $this->id = null;
-        try {
-            $this->uuid = Uuid::uuid4();
-        } catch (\Exception $e) {
-            exit('Unable to generate UUID');
-        }
+        $this->uuid = Uuid::uuid4();
     }
 
     /**

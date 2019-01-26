@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class StatController
@@ -27,6 +28,7 @@ class StatController extends AbstractController
      * @param TaskRepository $taskRepository
      * @param ClientRepository $clientRepository
      * @param TrackerManager $tm
+     * @param TranslatorInterface $translator
      * @return Response
      *
      * @Route("/report/time",
@@ -37,7 +39,8 @@ class StatController extends AbstractController
         Request $request,
         TaskRepository $taskRepository,
         ClientRepository $clientRepository,
-        TrackerManager $tm
+        TrackerManager $tm,
+        TranslatorInterface $translator
     ): Response {
 
         if ($request->query->has('client') && $request->query->has('month')) {
@@ -49,7 +52,13 @@ class StatController extends AbstractController
 
             $month = \DateTime::createFromFormat('Y-m-d H:i:s', $request->query->get('month').'-01 00:00:00');
 
-            $tm->export($month, $client);
+            if (!$tm->export($month, $client)) {
+
+                $this->addFlash('danger', $translator->trans('notification.export_failed'));
+
+                return $this->redirectToRoute('app_stat_report_time');
+
+            }
 
         }
 
