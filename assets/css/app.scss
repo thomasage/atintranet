@@ -31,39 +31,55 @@ label.required:after {
   color: red;
 }
 
-#page-invoice-edit {
-
-  //#invoice_details > div {
-  //
-  //  padding: 1em;
-  //  border: 1px silver dashed;
-  //
-  //  &:nth-child(odd) {
-  //    background-color: rgb(250, 250, 250);
-  //  }
-  //
-  //  &:nth-child(n+2) {
-  //    border-top: 0;
-  //  }
-  //
-  //}
-  //
-  //#invoice_total {
-  //
-  //  margin-bottom: 1em;
-  //  margin-top: -1px;
-  //  padding: 1em 1em 0 1em;
-  //  border: 3px black double;
-  //
-  //}
-
-}
-
 #page-stat-time-data {
 
   tr[data-total="1"]:hover > td {
     background-color: aliceblue;
     cursor: pointer;
+  }
+
+}
+
+#invoice_details_table {
+
+  [id$="_designation"] {
+    width: 300px;
+  }
+
+  [id$="_amountUnit"],
+  [id$="_quantity"],
+  [id$="_taxRate"] {
+    max-width: 100px;
+    text-align: right;
+  }
+
+  [id$="_amountExcludingTax"],
+  [id$="_amountIncludingTax"],
+  [id$="_taxAmount"] {
+    max-width: 150px;
+    text-align: right;
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+
+  #invoice_details {
+
+    tr {
+
+      > td {
+        padding-bottom: 0.3em;
+        padding-top: 0;
+        border: 0;
+      }
+
+      &:nth-of-type(n+2) > td:first-child {
+        margin-top: 1em;
+      }
+
+    }
+
   }
 
 }

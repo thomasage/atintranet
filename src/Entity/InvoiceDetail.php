@@ -122,10 +122,10 @@ class InvoiceDetail
     }
 
     /**
-     * @param Invoice $invoice
+     * @param Invoice|null $invoice
      * @return InvoiceDetail
      */
-    public function setInvoice(Invoice $invoice): self
+    public function setInvoice(?Invoice $invoice): self
     {
         $this->invoice = $invoice;
 

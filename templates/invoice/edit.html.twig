@@ -6,15 +6,13 @@
 
     <div id="page-invoice-edit">
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1>{{ 'title.invoice_edit'|trans }}</h1>
-            <div class="btn-toolbar mb-2 mb-md-0 mt-2 mt-md-0">
-                <div class="btn-group btn-group-sm">
-                    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
-                        <span class="fa fa-undo"></span>
-                        {{ 'action.back'|trans }}
-                    </a>
-                </div>
+        <div class="d-flex flex-column flex-md-row justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h2><strong>{{ invoice.type|trans }} {{ invoice.number }}</strong></h2>
+            <div class="btn-group mt-2 mt-md-0 mb-2">
+                <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-undo"></span>
+                    {{ 'action.back'|trans }}
+                </a>
             </div>
         </div>
 
@@ -34,103 +32,111 @@
 
         <h2 class="mb-4 mt-5 text-truncate">{{ formEdit.details.vars.label|trans }}</h2>
 
-        {#<div id="details">#}
-        {#<table class="table">#}
-        {#<thead>#}
-        {#<tr>#}
-        {#<th>{{ 'field.designation'|trans }}</th>#}
-        {#<th>{{ 'field.quantity'|trans }}</th>#}
-        {#<th>{{ 'field.amount_unit'|trans }}</th>#}
-        {#<th>{{ 'field.tax_rate'|trans }}</th>#}
-        {#<th>{{ 'field.amount_including_tax'|trans }}</th>#}
-        {#<th></th>#}
-        {#</tr>#}
-        {#</thead>#}
-        {#<tfoot>#}
-        {#<tr>#}
-        {#<th colspan="4" class="text-right">#}
-        {#<label class="col-form-label">{{ formEdit.amountExcludingTax.vars.label|trans }}</label>#}
-        {#</th>#}
-        {#<th class="amount">{{ form_widget(formEdit.amountExcludingTax) }}</th>#}
-        {#<th></th>#}
-        {#</tr>#}
-        {#<tr>#}
-        {#<th colspan="4" class="text-right">#}
-        {#<label class="col-form-label">{{ formEdit.taxAmount.vars.label|trans }}</label>#}
-        {#</th>#}
-        {#<th class="amount">{{ form_widget(formEdit.taxAmount) }}</th>#}
-        {#<th></th>#}
-        {#</tr>#}
-        {#<tr>#}
-        {#<th colspan="4" class="text-right">#}
-        {#<label class="col-form-label">{{ formEdit.amountIncludingTax.vars.label|trans }}</label>#}
-        {#</th>#}
-        {#<th class="amount">{{ form_widget(formEdit.amountIncludingTax) }}</th>#}
-        {#<th></th>#}
-        {#</tr>#}
-        {#</tfoot>#}
-        {#{{ form_widget(formEdit.details) }}#}
-        {#</table>#}
+        <table class="table" id="invoice_details_table">
+            <thead>
+            <tr class="d-none d-lg-table-row">
+                <th>{{ 'field.designation'|trans }}</th>
+                <th>{{ 'field.quantity'|trans }}</th>
+                <th>{{ 'field.amount_unit'|trans }}</th>
+                <th>{{ 'field.tax_rate'|trans }}</th>
+                <th>{{ 'field.amount_including_tax'|trans }}</th>
+                <th>
+                    <a href="#" class="btn btn-outline-primary btn-block btn-sm js-detail-add">
+                        <span class="fa fa-plus"></span>
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th colspan="4" class="text-right">
+                    <label class="col-form-label">
+                        {{ formEdit.amountExcludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th>{{ form_widget(formEdit.amountExcludingTax) }}</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-right pt-0 border-0">
+                    <label class="col-form-label">
+                        {{ formEdit.taxAmount.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.taxAmount) }}</th>
+                <th class="pt-0 border-0"></th>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-right pt-0 border-0">
+                    <label class="col-form-label">
+                        {{ formEdit.amountIncludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.amountIncludingTax) }}</th>
+                <th class="pt-0 border-0"></th>
+            </tr>
+            </tfoot>
+            {{ form_widget(formEdit.details) }}
+        </table>
+
+        {#<div class="row d-none d-lg-flex bg-dark text-white pb-2 pt-2 mb-3">#}
+        {#<div class="col-5">{{ 'field.designation'|trans }}</div>#}
+        {#<div class="col-6">#}
+        {#<div class="row">#}
+        {#<div class="col-2">{{ 'field.quantity'|trans }}</div>#}
+        {#<div class="col-3">{{ 'field.amount_unit'|trans }}</div>#}
+        {#<div class="col-3">{{ 'field.tax_rate'|trans }}</div>#}
+        {#<div class="col-4">{{ 'field.amount_including_tax'|trans }}</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#<div class="col-1"></div>#}
         {#</div>#}
 
-        <div class="row d-none d-lg-flex bg-dark text-white pb-2 pt-2 mb-3">
-            <div class="col-5">{{ 'field.designation'|trans }}</div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-2">{{ 'field.quantity'|trans }}</div>
-                    <div class="col-3">{{ 'field.amount_unit'|trans }}</div>
-                    <div class="col-3">{{ 'field.tax_rate'|trans }}</div>
-                    <div class="col-4">{{ 'field.amount_including_tax'|trans }}</div>
-                </div>
-            </div>
-            <div class="col-1"></div>
-        </div>
+        {#{{ form_widget(formEdit.details) }}#}
 
-        {{ form_widget(formEdit.details) }}
+        {#<div class="mt-4">#}
+        {#<a href="#" class="btn btn-primary js-detail-add">#}
+        {#<span class="fa fa-plus"></span>#}
+        {#{{ 'action.add'|trans }}#}
+        {#</a>#}
+        {#</div>#}
 
-        <div class="mt-4">
-            <a href="#" class="btn btn-primary js-detail-add">
-                <span class="fa fa-plus"></span>
-                {{ 'action.add'|trans }}
-            </a>
-        </div>
-
-        <div class="row mt-4 mt-lg-2">
-            <div class="col-12 col-lg-6 offset-lg-5">
-                <div class="row">
-                    <div class="col-5 col-lg-8 text-right">
-                        <label class="col-form-label" for="{{ formEdit.amountExcludingTax.vars.id }}">
-                            {{ formEdit.amountExcludingTax.vars.label|trans }}
-                        </label>
-                    </div>
-                    <div class="col-7 col-lg-4">{{ form_widget(formEdit.amountExcludingTax) }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-12 col-lg-6 offset-lg-5">
-                <div class="row">
-                    <div class="col-5 col-lg-8 text-right">
-                        <label class="col-form-label" for="{{ formEdit.taxAmount.vars.id }}">
-                            {{ formEdit.taxAmount.vars.label|trans }}
-                        </label>
-                    </div>
-                    <div class="col-7 col-lg-4">{{ form_widget(formEdit.taxAmount) }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-12 col-lg-6 offset-lg-5">
-                <div class="row">
-                    <div class="col-5 col-lg-8 text-right">
-                        <label class="col-form-label" for="{{ formEdit.amountIncludingTax.vars.id }}">
-                            {{ formEdit.amountIncludingTax.vars.label|trans }}
-                        </label>
-                    </div>
-                    <div class="col-7 col-lg-4">{{ form_widget(formEdit.amountIncludingTax) }}</div>
-                </div>
-            </div>
-        </div>
+        {#<div class="row mt-4 mt-lg-2">#}
+        {#<div class="col-12 col-lg-6 offset-lg-5">#}
+        {#<div class="row">#}
+        {#<div class="col-5 col-lg-8 text-right">#}
+        {#<label class="col-form-label" for="{{ formEdit.amountExcludingTax.vars.id }}">#}
+        {#{{ formEdit.amountExcludingTax.vars.label|trans }}#}
+        {#</label>#}
+        {#</div>#}
+        {#<div class="col-7 col-lg-4">{{ form_widget(formEdit.amountExcludingTax) }}</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#<div class="row mt-2">#}
+        {#<div class="col-12 col-lg-6 offset-lg-5">#}
+        {#<div class="row">#}
+        {#<div class="col-5 col-lg-8 text-right">#}
+        {#<label class="col-form-label" for="{{ formEdit.taxAmount.vars.id }}">#}
+        {#{{ formEdit.taxAmount.vars.label|trans }}#}
+        {#</label>#}
+        {#</div>#}
+        {#<div class="col-7 col-lg-4">{{ form_widget(formEdit.taxAmount) }}</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#<div class="row mt-2">#}
+        {#<div class="col-12 col-lg-6 offset-lg-5">#}
+        {#<div class="row">#}
+        {#<div class="col-5 col-lg-8 text-right">#}
+        {#<label class="col-form-label" for="{{ formEdit.amountIncludingTax.vars.id }}">#}
+        {#{{ formEdit.amountIncludingTax.vars.label|trans }}#}
+        {#</label>#}
+        {#</div>#}
+        {#<div class="col-7 col-lg-4">{{ form_widget(formEdit.amountIncludingTax) }}</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
 
         <div class="mt-5">
             <button type="submit" class="btn btn-success">
