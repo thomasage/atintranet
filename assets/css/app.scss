@@ -31,6 +31,20 @@ label.required:after {
   color: red;
 }
 
+#page-admin-user-index {
+
+  .badge_role_admin {
+    color: #fff;
+    background-color: #dc3545;
+  }
+
+  .badge_role_client {
+    color: #fff;
+    background-color: #17a2b8;
+  }
+
+}
+
 #page-stat-time-data {
 
   tr[data-total="1"]:hover > td {

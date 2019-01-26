@@ -29,24 +29,18 @@
                         </div>
                         <div>
                             {% for role in user.roles %}
-                                {% set class='secondary' %}
-                                {% if 'ROLE_ADMIN'==role %}
-                                    {% set class='danger' %}
-                                {% elseif 'ROLE_CLIENT'==role %}
-                                    {% set class='info' %}
-                                {% endif %}
-                                <span class="badge badge-{{ class }}">{{ role|trans }}</span>
+                                <span class="badge badge-secondary badge_{{ role|lower }}">{{ role|trans }}</span>
                             {% endfor %}
                             {% if user.enabled==true %}
                                 <span class="badge badge-success">
-                                <span class="fa fa-check"></span>
-                                {{ 'field.enabled'|trans }}
-                            </span>
+                                    <span class="fa fa-check"></span>
+                                    {{ 'field.enabled'|trans }}
+                                </span>
                             {% else %}
                                 <span class="badge badge-warning">
-                                <span class="fa fa-times"></span>
-                                {{ 'field.disabled'|trans }}
-                            </span>
+                                    <span class="fa fa-times"></span>
+                                    {{ 'field.disabled'|trans }}
+                                </span>
                             {% endif %}
                         </div>
                     </div>
