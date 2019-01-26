@@ -213,7 +213,7 @@ class ImportTogglCommand extends Command
                         ->setStart(new \DateTime($timeEntry->start))
                         ->setStop(new \DateTime($timeEntry->stop));
 
-                    if (isset($timeEntries->tags)) {
+                    if (isset($timeEntry->tags)) {
                         foreach ($timeEntry->tags as $tag) {
                             if ('On site' === $tag) {
                                 $task->setOnSite(true);

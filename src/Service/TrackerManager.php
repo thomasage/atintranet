@@ -62,6 +62,7 @@ class TrackerManager implements ServiceSubscriberInterface
     public function export(\DateTime $month, Client $client): ?Response
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+        /** @var TaskRepository $repository */
         $repository = $this->container->get(TaskRepository::class);
         $translator = $this->container->get(TranslatorInterface::class);
 
@@ -91,17 +92,23 @@ class TrackerManager implements ServiceSubscriberInterface
             $sheet->getColumnDimension('B')->setWidth(15);
             $sheet->getColumnDimension('C')->setWidth(15);
             $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(15);
+            $sheet->getColumnDimension('F')->setWidth(15);
+            $sheet->getColumnDimension('G')->setWidth(15);
 
             $sheet->setCellValue('A1', $translator->trans('field.project'));
             $sheet->setCellValue('B1', $translator->trans('field.hours'));
             $sheet->setCellValue('B2', ucfirst($formatter->format($month)));
-            $sheet->setCellValue('C2', $month->format('Y'));
-            $sheet->setCellValue('D2', $translator->trans('field.from_start'));
+            $sheet->setCellValue('D2', $month->format('Y'));
+            $sheet->setCellValue('F2', $translator->trans('field.from_start'));
             $sheet->mergeCells('A1:A2');
-            $sheet->mergeCells('B1:D1');
+            $sheet->mergeCells('B1:G1');
+            $sheet->mergeCells('B2:C2');
+            $sheet->mergeCells('D2:E2');
+            $sheet->mergeCells('F2:G2');
 
-            $sheet->getStyle('A1:D2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A1:D2')->getFont()->setBold(true);
+            $sheet->getStyle('A1:G2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1:G2')->getFont()->setBold(true);
 
             $rownum = 2;
             foreach ($summary as $d) {
@@ -109,20 +116,51 @@ class TrackerManager implements ServiceSubscriberInterface
                 $rownum++;
                 $sheet->setCellValue('A'.$rownum, $d['project_name']);
                 $sheet->setCellValue('B'.$rownum, $d['task_duration_month']);
-                $sheet->setCellValue('C'.$rownum, $d['task_duration_year']);
-                $sheet->setCellValue('D'.$rownum, $d['task_duration_total']);
+                $sheet->setCellValue('D'.$rownum, $d['task_duration_year']);
+                $sheet->setCellValue('F'.$rownum, $d['task_duration_total']);
 
             }
 
             $rownum++;
+            $lastrow = $rownum;
             $sheet->setCellValue('B'.$rownum, '=SUM(B3:B'.($rownum - 1).')');
-            $sheet->setCellValue('C'.$rownum, '=SUM(C3:C'.($rownum - 1).')');
             $sheet->setCellValue('D'.$rownum, '=SUM(D3:D'.($rownum - 1).')');
+            $sheet->setCellValue('F'.$rownum, '=SUM(F3:F'.($rownum - 1).')');
+
+            $rownum = 2;
+            foreach ($summary as $d) {
+
+                $rownum++;
+                $sheet->setCellValue('C'.$rownum, sprintf('=B%d/B%d', $rownum, $lastrow));
+                $sheet->setCellValue('E'.$rownum, sprintf('=D%d/D%d', $rownum, $lastrow));
+                $sheet->setCellValue('G'.$rownum, sprintf('=F%d/F%d', $rownum, $lastrow));
+
+            }
 
             $sheet
-                ->getStyle('B3:D'.$rownum)
+                ->getStyle('B3:B'.$lastrow)
                 ->getNumberFormat()
                 ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+            $sheet
+                ->getStyle('C3:C'.$lastrow)
+                ->getNumberFormat()
+                ->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
+            $sheet
+                ->getStyle('D3:D'.$lastrow)
+                ->getNumberFormat()
+                ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+            $sheet
+                ->getStyle('E3:E'.$lastrow)
+                ->getNumberFormat()
+                ->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
+            $sheet
+                ->getStyle('F3:F'.$lastrow)
+                ->getNumberFormat()
+                ->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+            $sheet
+                ->getStyle('G3:G'.$lastrow)
+                ->getNumberFormat()
+                ->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
 
             $sheet = $spreadsheet->createSheet();
             $sheet->setTitle($translator->trans('field.details'));
@@ -149,13 +187,14 @@ class TrackerManager implements ServiceSubscriberInterface
             $rownum = 1;
             foreach ($details as $detail) {
 
-                /**
-                 * @var Project $project
-                 */
+                /** @var \DateTime $date */
+                $date = $detail->getStart();
+                $date = $date->format('Y-m-d');
+                /** @var Project $project */
                 $project = $detail->getProject();
                 $rate = $project->getRateOfDate($detail->getStart());
 
-                if (isset($coordinates[$project->getId()][$detail->getName()][$detail->getOnSite()])) {
+                if (isset($coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()])) {
 
                     /**
                      * @var Cell $cell
@@ -163,7 +202,7 @@ class TrackerManager implements ServiceSubscriberInterface
                     $cell = $sheet->getCell(
                         sprintf(
                             'D%d',
-                            $coordinates[$project->getId()][$detail->getName()][$detail->getOnSite()]
+                            $coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()]
                         )
                     );
                     $cell->setValue(sprintf('%s+%f', $cell->getValue(), $detail->getDuration() / 3600));
@@ -185,7 +224,7 @@ class TrackerManager implements ServiceSubscriberInterface
                 }
                 $sheet->setCellValue('F'.$rownum, sprintf('=D%d*E%d', $rownum, $rownum));
 
-                $coordinates[$project->getId()][$detail->getName()][$detail->getOnSite()] = $rownum;
+                $coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()] = $rownum;
 
             }
 
