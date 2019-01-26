@@ -5,6 +5,7 @@ namespace App\Repository;
 
 use App\Entity\Invoice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -84,7 +85,7 @@ class InvoiceRepository extends ServiceEntityRepository
                 $interval = 'P1M';
                 $format = 'Y-m';
             }
-            $start->setTime(0, 0, 0);
+            $start->setTime(0, 0);
             $stop->setTime(23, 59, 59);
 
             foreach (new \DatePeriod($start, new \DateInterval($interval), $stop) as $d) {
@@ -153,5 +154,40 @@ class InvoiceRepository extends ServiceEntityRepository
             ->addOrderBy('i.number', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return string|null
+     */
+    public function findNextNumber(Invoice $invoice): ?string
+    {
+        try {
+
+            $result = $this
+                ->createQueryBuilder('invoice')
+                ->select('MAX( invoice.number ) number')
+                ->andWhere('invoice.issueDate LIKE :month')
+                ->andWhere('invoice.type = :type')
+                ->setParameter(':month', $invoice->getIssueDate()->format('Y-m').'-%')
+                ->setParameter(':type', $invoice->getType())
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            if (null === $result) {
+                return sprintf('%s001', $invoice->getIssueDate()->format('ym'));
+            }
+
+            return sprintf(
+                '%s%s',
+                substr($result, 0, 4),
+                str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT)
+            );
+
+        } catch (NonUniqueResultException $e) {
+
+            return null;
+
+        }
     }
 }

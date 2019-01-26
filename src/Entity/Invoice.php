@@ -149,6 +149,10 @@ class Invoice
      */
     private $details;
 
+    /**
+     * Invoice constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -158,16 +162,11 @@ class Invoice
         $this->closed = false;
         $this->currency = 'EUR';
         $this->details = new ArrayCollection();
+        $this->dueDate = new \DateTime('+1 month');
+        $this->issueDate = new \DateTime();
         $this->locked = false;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
-
-        try {
-            $this->dueDate = new \DateTime('+1 month');
-            $this->issueDate = new \DateTime();
-        } catch (\Exception $e) {
-            // Nothing to do
-        }
     }
 
     /**

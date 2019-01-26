@@ -6,11 +6,11 @@
 
     <div id="page-invoice-new">
 
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1">{{ 'title.invoice_add'|trans }}</h2>
-            <div>
+        <div class="d-flex flex-column flex-md-row justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h2>{{ 'title.invoice_add'|trans }}</h2>
+            <div class="btn-group mt-2 mt-md-0 mb-2">
                 <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-list"></span>
+                    <span class="fa fa-undo"></span>
                     {{ 'action.back'|trans }}
                 </a>
             </div>
@@ -18,6 +18,7 @@
 
         {{ form_start(formEdit,{attr:{class:'mt-4'}}) }}
 
+        {{ form_row(formEdit.number) }}
         {{ form_row(formEdit.client) }}
         {{ form_row(formEdit.issueDate) }}
         {{ form_row(formEdit.dueDate) }}
@@ -25,13 +26,58 @@
         {{ form_row(formEdit.comment) }}
         {{ form_row(formEdit.commentInternal) }}
 
-        <h2 class="mb-4 mt-5">{{ formEdit.address.vars.label|trans }}</h2>
+        <h2 class="mb-4 mt-5 text-truncate">{{ formEdit.address.vars.label|trans }}</h2>
 
         {{ form_widget(formEdit.address) }}
 
-        <h2 class="mb-4 mt-5">{{ formEdit.details.vars.label|trans }}</h2>
+        <h2 class="mb-4 mt-5 text-truncate">{{ formEdit.details.vars.label|trans }}</h2>
 
-        {{ form_widget(formEdit.details) }}
+        <table class="table" id="invoice_details_table">
+            <thead>
+            <tr class="d-none d-lg-table-row">
+                <th>{{ 'field.designation'|trans }}</th>
+                <th>{{ 'field.quantity'|trans }}</th>
+                <th>{{ 'field.amount_unit'|trans }}</th>
+                <th>{{ 'field.tax_rate'|trans }}</th>
+                <th>{{ 'field.amount_including_tax'|trans }}</th>
+                <th>
+                    <a href="#" class="btn btn-outline-primary btn-block btn-sm js-detail-add">
+                        <span class="fa fa-plus"></span>
+                    </a>
+                </th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th colspan="4" class="text-right">
+                    <label class="col-form-label">
+                        {{ formEdit.amountExcludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th>{{ form_widget(formEdit.amountExcludingTax) }}</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-right pt-0 border-0">
+                    <label class="col-form-label">
+                        {{ formEdit.taxAmount.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.taxAmount) }}</th>
+                <th class="pt-0 border-0"></th>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-right pt-0 border-0">
+                    <label class="col-form-label">
+                        {{ formEdit.amountIncludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.amountIncludingTax) }}</th>
+                <th class="pt-0 border-0"></th>
+            </tr>
+            </tfoot>
+            {{ form_widget(formEdit.details) }}
+        </table>
 
         <div class="mt-5">
             <button type="submit" class="btn btn-success">

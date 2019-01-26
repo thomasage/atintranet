@@ -94,6 +94,7 @@ class InvoiceDetail
 
     /**
      * InvoiceDetail constructor.
+     * @throws \Exception
      */
     public function __construct()
     {

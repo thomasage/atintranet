@@ -131,20 +131,28 @@ class InvoiceController extends AbstractController
     /**
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
      * @return Response
      *
+     * @throws \Exception
      * @Route("/new",
      *     name="app_invoice_new",
      *     methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
-        $formEdit = $this->createForm(InvoiceType::class);
+        $invoice = new Invoice();
+        $formEdit = $this->createForm(InvoiceType::class, $invoice);
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
 
-            dd($formEdit->getData());
+            $em->persist($invoice);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.invoice_added'));
+
+            return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
 
         }
 

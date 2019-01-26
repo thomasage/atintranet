@@ -457,6 +457,10 @@
         <source>notification.export_failed</source>
         <target>Impossible de créer l'export</target>
       </trans-unit>
+      <trans-unit id="5ODSxhK" resname="notification.invoice_added">
+        <source>notification.invoice_added</source>
+        <target>La facture est créée</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -49,14 +49,6 @@ class InvoiceDetailType extends AbstractType
                     'required' => true,
                 ]
             )
-//            ->add(
-//                'amountExcludingTax',
-//                MoneyType::class,
-//                [
-//                    'disabled' => true,
-//                    'label' => 'field.amount_excluding_tax',
-//                ]
-//            )
             ->add(
                 'taxRate',
                 PercentType::class,
@@ -65,14 +57,6 @@ class InvoiceDetailType extends AbstractType
                     'required' => true,
                 ]
             )
-//            ->add(
-//                'taxAmount',
-//                MoneyType::class,
-//                [
-//                    'disabled' => true,
-//                    'label' => 'field.tax_amount',
-//                ]
-//            )
             ->add(
                 'amountIncludingTax',
                 MoneyType::class,
