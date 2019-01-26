@@ -86,7 +86,6 @@ class ImportTogglCommand extends Command
         $response = $guzzleClient->get('workspaces');
         if (200 !== $response->getStatusCode()) {
             $io->error(sprintf('Unable to fetch workspace (%d)', $response->getStatusCode()));
-            $this->em->flush();
 
             return 1;
         }
@@ -100,7 +99,6 @@ class ImportTogglCommand extends Command
             $response = $guzzleClient->get(sprintf('workspaces/%d/clients', $workspace->id));
             if (200 !== $response->getStatusCode()) {
                 $io->error(sprintf('Unable to fetch clients (%d)', $response->getStatusCode()));
-                $this->em->flush();
 
                 return 1;
             }
@@ -132,10 +130,17 @@ class ImportTogglCommand extends Command
 
             }
 
+        }
+
+        $this->em->flush();
+
+        foreach ($workspaces as $workspace) {
+
+            $io->section(sprintf('Workspace #%d "%s"', $workspace->id, $workspace->name));
+
             $response = $guzzleClient->get(sprintf('workspaces/%d/projects', $workspace->id));
             if (200 !== $response->getStatusCode()) {
                 $io->error(sprintf('Unable to fetch projects (%d)', $response->getStatusCode()));
-                $this->em->flush();
 
                 return 1;
             }
@@ -152,7 +157,6 @@ class ImportTogglCommand extends Command
                     $localClient = $repoClient->findOneBy(['externalReference' => $project->cid]);
                     if (!$localClient instanceof Client) {
                         $io->error(sprintf('Unable to find client "%d"', $project->cid));
-                        $this->em->flush();
 
                         return 1;
                     }
@@ -172,12 +176,13 @@ class ImportTogglCommand extends Command
 
         }
 
+        $this->em->flush();
+
         $start = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', mktime(0, 0, 0, (int)date('n'), 1)));
 
         $response = $guzzleClient->get(sprintf('time_entries?start_date=%s', urlencode($start->format('c'))));
         if (200 !== $response->getStatusCode()) {
             $io->error(sprintf('Unable to fetch time_entries (%d)', $response->getStatusCode()));
-            $this->em->flush();
 
             return 1;
         }
@@ -194,7 +199,6 @@ class ImportTogglCommand extends Command
                 $localProject = $repoProject->findOneBy(['externalReference' => $timeEntry->pid]);
                 if (!$localProject instanceof Project) {
                     $io->error(sprintf('Unable to find project "%d"', $timeEntry->pid));
-                    $this->em->flush();
 
                     return 1;
                 }
@@ -226,7 +230,6 @@ class ImportTogglCommand extends Command
                 } catch (\Exception $e) {
 
                     $io->error(sprintf('Unable to create task: %s', $e));
-                    $this->em->flush();
 
                     return 1;
 
@@ -235,109 +238,6 @@ class ImportTogglCommand extends Command
             }
 
         }
-
-//        $workspaces = json_decode($response->getBody()->getContents());
-//
-//        foreach ($workspaces as $workspace) {
-//
-//            $io->section(sprintf('Workspace %s', $workspace->id));
-//
-//            $response = $guzzleClient->get(sprintf('workspaces/%s/projects/', $workspace->id));
-//            if (200 !== $response->getStatusCode()) {
-//                $io->error(sprintf('Unable to fetch projects (%d)', $response->getStatusCode()));
-//
-//                return 1;
-//            }
-//
-//            $projects = json_decode($response->getBody()->getContents());
-//
-//            foreach ($projects as $p) {
-//
-//                $io->writeln(sprintf('Project "%s"', $p->name));
-//
-//                $client = $repoClient->findOneBy(['externalReference' => $p->client->id]);
-//                if (!$client instanceof Client) {
-//
-//                    $address = new Address();
-//                    $address
-//                        ->setCity('-')
-//                        ->setName($p->client->name)
-//                        ->setPostcode('-');
-//                    $this->em->persist($address);
-//
-//                    $client = new Client();
-//                    $client
-//                        ->setAddressPrimary($address)
-//                        ->setExternalReference($p->client->id)
-//                        ->setName($p->client->name);
-//                    $this->em->persist($client);
-//
-//                }
-//
-//                $project = $repoProject->findOneBy(['client' => $client, 'externalReference' => $p->id]);
-//                if (!$project instanceof Project) {
-//                    $project = new Project();
-//                    $project
-//                        ->setClient($client)
-//                        ->setExternalReference($p->id)
-//                        ->setName($p->name);
-//                    $this->em->persist($project);
-//                }
-//
-//                $response = $guzzleClient->get(sprintf('workspaces/%s/timeEntries/project/%s', $workspace->id, $p->id));
-//                if (200 !== $response->getStatusCode()) {
-//                    $io->error(sprintf('Unable to fetch time entries (%d)', $response->getStatusCode()));
-//                    $this->em->flush();
-//
-//                    return 1;
-//                }
-//
-//                $timeEntries = json_decode($response->getBody()->getContents());
-//
-//                foreach ($timeEntries as $timeEntry) {
-//
-//                    $task = $repoTask->findOneBy(['externalReference' => $timeEntry->id]);
-//                    if ($task instanceof Task) {
-//                        continue;
-//                    }
-//
-//                    try {
-//
-//                        $task = new Task();
-//                        $task
-//                            ->setExternalReference($timeEntry->id)
-//                            ->setName($timeEntry->description)
-//                            ->setProject($project)
-//                            ->setStart(new \DateTime($timeEntry->timeInterval->start))
-//                            ->setStop(new \DateTime($timeEntry->timeInterval->end));
-//
-//                        if (is_array($timeEntry->tags)) {
-//                            foreach ($timeEntry->tags as $tag) {
-//                                if ('On site' === $tag->name) {
-//                                    $task->setOnSite(true);
-//                                } elseif ('Unexpected' === $tag->name) {
-//                                    $task->setExpected(false);
-//                                }
-//                            }
-//                        }
-//
-//                        $this->em->persist($task);
-//
-//                    } catch (\Exception $e) {
-//
-//                        $io->error(sprintf('Unable to create task: %s', $e));
-//
-//                        $this->em->flush();
-//
-//                        return 1;
-//
-//                    }
-//
-//                }
-//
-//            }
-//
-//        }
 
         $this->em->flush();
 

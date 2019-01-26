@@ -14,8 +14,11 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -54,9 +57,9 @@ class TrackerManager implements ServiceSubscriberInterface
     /**
      * @param \DateTime $month
      * @param Client $client
-     * @return bool
+     * @return Response|null
      */
-    public function export(\DateTime $month, Client $client): bool
+    public function export(\DateTime $month, Client $client): ?Response
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
         $repository = $this->container->get(TaskRepository::class);
@@ -68,7 +71,7 @@ class TrackerManager implements ServiceSubscriberInterface
 
         $request = $this->container->get(RequestStack::class)->getCurrentRequest();
         if (!$request instanceof Request) {
-            return false;
+            return null;
         }
 
         $formatter = new \IntlDateFormatter($request->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::NONE);
@@ -201,18 +204,28 @@ class TrackerManager implements ServiceSubscriberInterface
 
             $spreadsheet->setActiveSheetIndex(0);
 
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="Document.xlsx"');
-            header('Cache-Control: max-age=0');
+            $response = new StreamedResponse(
+                function () use ($spreadsheet) {
+                    $writer = new Xlsx($spreadsheet);
+                    $writer->save('php://output');
+                    flush();
+                }
+            );
+            $response->headers->set(
+                'Content-Type',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            );
+            $response->headers->set(
+                'Content-Disposition',
+                HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, 'Document.xlsx')
+            );
+            $response->headers->set('Cache-Control', 'max-age=0');
 
-            $writer = new Xlsx($spreadsheet);
-            $writer->save('php://output');
-
-            return true;
+            return $response;
 
         } catch (\Exception $e) {
 
-            return false;
+            return null;
 
         }
     }

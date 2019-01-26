@@ -52,13 +52,15 @@ class StatController extends AbstractController
 
             $month = \DateTime::createFromFormat('Y-m-d H:i:s', $request->query->get('month').'-01 00:00:00');
 
-            if (!$tm->export($month, $client)) {
+            $response = $tm->export($month, $client);
 
+            if (null === $response) {
                 $this->addFlash('danger', $translator->trans('notification.export_failed'));
 
                 return $this->redirectToRoute('app_stat_report_time');
-
             }
+
+            return $response;
 
         }
 
