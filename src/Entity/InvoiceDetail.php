@@ -63,34 +63,7 @@ class InvoiceDetail
      *
      * @Assert\NotBlank()
      */
-    private $amountExcludingTax;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     *
-     * @Assert\NotBlank()
-     */
-    private $taxRate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="decimal", precision=15, scale=2)
-     *
-     * @Assert\NotBlank()
-     */
-    private $taxAmount;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="decimal", precision=15, scale=2)
-     *
-     * @Assert\NotBlank()
-     */
-    private $amountIncludingTax;
+    private $amountTotal;
 
     /**
      * InvoiceDetail constructor.
@@ -99,11 +72,9 @@ class InvoiceDetail
     public function __construct()
     {
         $this->IdTraitConstruct();
-        $this->amountExcludingTax = '0.0';
-        $this->amountIncludingTax = '0.0';
         $this->amountUnit = '0.0';
+        $this->amountTotal = '0.0';
         $this->quantity = 1.0;
-        $this->taxRate = 0.2;
     }
 
     /**
@@ -174,9 +145,7 @@ class InvoiceDetail
 
     private function updateAmounts(): void
     {
-        $this->amountExcludingTax = bcmul($this->amountUnit, (string)$this->quantity, 2);
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 2);
-        $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 2);
+        $this->amountTotal = bcmul($this->amountUnit, (string)$this->quantity, 2);
     }
 
     /**
@@ -200,78 +169,20 @@ class InvoiceDetail
     }
 
     /**
-     * @return float
-     */
-    public function getTaxRate(): float
-    {
-        return $this->taxRate;
-    }
-
-    /**
-     * @param float $taxRate
-     * @return InvoiceDetail
-     */
-    public function setTaxRate(float $taxRate): self
-    {
-        $this->taxRate = $taxRate;
-        $this->updateAmounts();
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getTaxAmount(): string
+    public function getAmountTotal(): string
     {
-        return $this->taxAmount;
+        return $this->amountTotal;
     }
 
     /**
-     * @param string $taxAmount
+     * @param string $amountTotal
      * @return InvoiceDetail
      */
-    public function setTaxAmount(string $taxAmount): self
+    public function setAmountTotal(string $amountTotal): self
     {
-        $this->taxAmount = $taxAmount;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAmountExcludingTax(): string
-    {
-        return $this->amountExcludingTax;
-    }
-
-    /**
-     * @param string $amountExcludingTax
-     * @return InvoiceDetail
-     */
-    public function setAmountExcludingTax(string $amountExcludingTax): self
-    {
-        $this->amountExcludingTax = $amountExcludingTax;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAmountIncludingTax(): string
-    {
-        return $this->amountIncludingTax;
-    }
-
-    /**
-     * @param string $amountIncludingTax
-     * @return InvoiceDetail
-     */
-    public function setAmountIncludingTax(string $amountIncludingTax): self
-    {
-        $this->amountIncludingTax = $amountIncludingTax;
+        $this->amountTotal = $amountTotal;
 
         return $this;
     }

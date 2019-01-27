@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="vTYQ9Vq" resname="field.amount_excluding_tax">
         <source>field.amount_excluding_tax</source>
-        <target>Montant H.T.</target>
+        <target>H.T.</target>
       </trans-unit>
       <trans-unit id="odDw0du" resname="action.search">
         <source>action.search</source>
@@ -279,19 +279,19 @@
       </trans-unit>
       <trans-unit id=".9VvwhV" resname="field.amount_unit">
         <source>field.amount_unit</source>
-        <target>Prix unitaire</target>
+        <target>P.U.</target>
       </trans-unit>
       <trans-unit id="pdV2Czl" resname="field.tax_rate">
         <source>field.tax_rate</source>
-        <target>Taux T.V.A.</target>
+        <target>% T.V.A.</target>
       </trans-unit>
       <trans-unit id="zi8L0NK" resname="field.amount_including_tax">
         <source>field.amount_including_tax</source>
-        <target>Montant T.T.C.</target>
+        <target>T.T.C.</target>
       </trans-unit>
       <trans-unit id="F1NvUmQ" resname="field.tax_amount">
         <source>field.tax_amount</source>
-        <target>Montant T.V.A.</target>
+        <target>T.V.A.</target>
       </trans-unit>
       <trans-unit id="em9USV2" resname="menu.stat.time">
         <source>menu.stat.time</source>

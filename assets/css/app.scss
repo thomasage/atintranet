@@ -54,46 +54,46 @@ label.required:after {
 
 }
 
-#invoice_details_table {
-
-  [id$="_designation"] {
-    width: 300px;
-  }
-
-  [id$="_amountUnit"],
-  [id$="_quantity"],
-  [id$="_taxRate"] {
-    max-width: 100px;
-    text-align: right;
-  }
-
-  [id$="_amountExcludingTax"],
-  [id$="_amountIncludingTax"],
-  [id$="_taxAmount"] {
-    max-width: 150px;
-    text-align: right;
-  }
-
-}
-
-@media screen and (max-width: 800px) {
-
-  #invoice_details {
-
-    tr {
-
-      > td {
-        padding-bottom: 0.3em;
-        padding-top: 0;
-        border: 0;
-      }
-
-      &:nth-of-type(n+2) > td:first-child {
-        margin-top: 1em;
-      }
-
-    }
-
-  }
-
-}
+//#invoice_details_table {
+//
+//  [id$="_designation"] {
+//    width: 300px;
+//  }
+//
+//  [id$="_amountUnit"],
+//  [id$="_quantity"],
+//  [id$="_taxRate"] {
+//    max-width: 100px;
+//    text-align: right;
+//  }
+//
+//  [id$="_amountExcludingTax"],
+//  [id$="_amountIncludingTax"],
+//  [id$="_taxAmount"] {
+//    max-width: 150px;
+//    text-align: right;
+//  }
+//
+//}
+//
+//@media screen and (max-width: 800px) {
+//
+//  #invoice_details {
+//
+//    tr {
+//
+//      > td {
+//        padding-bottom: 0.3em;
+//        padding-top: 0;
+//        border: 0;
+//      }
+//
+//      &:nth-of-type(n+2) > td:first-child {
+//        margin-top: 1em;
+//      }
+//
+//    }
+//
+//  }
+//
+//}

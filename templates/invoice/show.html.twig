@@ -107,39 +107,40 @@
 
         </div>
 
-        <table class="table mt-4 mb-0 mt-md-5">
+        <table class="table table-responsive-md mt-4 mb-0 mt-md-5" id="invoice_details">
             <thead class="text-truncate">
             <tr>
                 <th>{{ 'field.designation'|trans }}</th>
-                <th class="text-right d-none d-md-table-cell">{{ 'field.quantity'|trans }}</th>
-                <th class="text-right d-none d-md-table-cell">{{ 'field.amount_unit'|trans }}</th>
-                <th class="text-right d-none d-lg-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
-                <th class="text-right d-none d-md-table-cell">{{ 'field.tax_rate'|trans }}</th>
-                <th class="text-right d-none d-lg-table-cell">{{ 'field.tax_amount'|trans }}</th>
-                <th class="text-right">{{ 'field.amount_including_tax'|trans }}</th>
+                <th class="text-right">{{ 'field.quantity'|trans }}</th>
+                <th class="text-right">{{ 'field.amount_unit'|trans }}</th>
+                <th class="text-right">{{ 'field.amount_excluding_tax'|trans }}</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th></th>
-                <th class="d-none d-md-table-cell"></th>
-                <th class="d-none d-md-table-cell"></th>
-                <th class="text-right d-none d-lg-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</th>
-                <th class="d-none d-md-table-cell"></th>
-                <th class="text-right d-none d-lg-table-cell">{{ invoice.taxAmount|localizedcurrency(invoice.currency) }}</th>
-                <th class="text-right">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</th>
+                <th colspan="3" class="text-right">{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th class="text-right">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</th>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.tax_amount'|trans }} ({{ invoice.taxRate|localizednumber('percent') }})</th>
+                <th class="text-right border-0 pt-0">{{ invoice.taxAmount|localizedcurrency(invoice.currency) }}</th>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.amount_including_tax'|trans }}</th>
+                <th class="text-right border-0 pt-0">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</th>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.amount_paid'|trans }}</th>
+                <th class="text-right border-0 pt-0">{{ invoice.amountPaid|localizedcurrency(invoice.currency) }}</th>
             </tr>
             </tfoot>
-            <tbody>
+            <tbody class="text-nowrap">
             {% for detail in invoice.details %}
                 <tr>
                     <td>{{ detail.designation }}</td>
-                    <td class="text-right d-none d-md-table-cell">{{ detail.quantity }}</td>
-                    <td class="text-right d-none d-md-table-cell">{{ detail.amountUnit|localizedcurrency(invoice.currency) }}</td>
-                    <td class="text-right d-none d-lg-table-cell">{{ (detail.amountUnit*detail.quantity)|localizedcurrency(invoice.currency) }}</td>
-                    <td class="text-right d-none d-md-table-cell">{{ detail.taxRate|localizednumber('percent') }}</td>
-                    <td class="text-right d-none d-lg-table-cell">{{ detail.taxAmount|localizedcurrency(invoice.currency) }}</td>
-                    <td class="text-right">{{ detail.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
+                    <td class="text-right">{{ detail.quantity }}</td>
+                    <td class="text-right">{{ detail.amountUnit|localizedcurrency(invoice.currency) }}</td>
+                    <td class="text-right">{{ detail.amountTotal|localizedcurrency(invoice.currency) }}</td>
                 </tr>
             {% endfor %}
             </tbody>

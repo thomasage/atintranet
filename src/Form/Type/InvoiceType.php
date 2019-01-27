@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,6 +45,7 @@ class InvoiceType extends AbstractType
                 EntityType::class,
                 [
                     'class' => Client::class,
+                    'label' => 'field.client',
                     'query_builder' => function (ClientRepository $er): QueryBuilder {
                         return $er->createQueryBuilder('client')->addOrderBy('client.name', 'ASC');
                     },
@@ -107,6 +109,14 @@ class InvoiceType extends AbstractType
                 [
                     'disabled' => true,
                     'label' => 'field.amount_excluding_tax',
+                ]
+            )
+            ->add(
+                'taxRate',
+                PercentType::class,
+                [
+                    'label' => 'field.tax_rate',
+                    'required' => true,
                 ]
             )
             ->add(

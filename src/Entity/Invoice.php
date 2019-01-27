@@ -78,6 +78,13 @@ class Invoice
     private $amountExcludingTax;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(type="float"))
+     */
+    private $taxRate;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="decimal", precision=15, scale=2)
@@ -165,6 +172,7 @@ class Invoice
         $this->dueDate = new \DateTime('+1 month');
         $this->issueDate = new \DateTime();
         $this->locked = false;
+        $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
     }
@@ -451,14 +459,11 @@ class Invoice
     private function updateAmounts(): void
     {
         $this->amountExcludingTax = '0';
-        $this->taxAmount = '0';
-        $this->amountIncludingTax = '0';
-
         foreach ($this->details as $detail) {
-            $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountExcludingTax(), 2);
-            $this->taxAmount = bcadd($this->taxAmount, $detail->getTaxAmount(), 2);
-            $this->amountIncludingTax = bcadd($this->amountIncludingTax, $detail->getAmountIncludingTax(), 2);
+            $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 2);
         }
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate);
+        $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount);
     }
 
     /**
@@ -514,6 +519,25 @@ class Invoice
     public function setTaxAmount(string $taxAmount): self
     {
         $this->taxAmount = $taxAmount;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTaxRate(): float
+    {
+        return $this->taxRate;
+    }
+
+    /**
+     * @param float $taxRate
+     * @return Invoice
+     */
+    public function setTaxRate(float $taxRate): self
+    {
+        $this->taxRate = $taxRate;
 
         return $this;
     }

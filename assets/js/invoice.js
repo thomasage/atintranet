@@ -35,8 +35,10 @@ $(function () {
         },
         handleDetailsLinkDelete: function (e) {
             e.preventDefault();
-            $(e.target).closest('tr').fadeOut().remove();
-            scrollToElement(InvoiceApp.$detailsContainer.parent());
+            $(e.target).closest('div[id]').slideUp('normal', function () {
+                $(this).remove();
+                scrollToElement(InvoiceApp.$detailsContainer);
+            });
         },
         initialize: function ($detailsContainer, $detailsLinkAdd) {
             this.$detailsContainer = $detailsContainer;
@@ -48,21 +50,21 @@ $(function () {
             this.updateTotals();
         },
         updateTotals: function () {
-            let amountExcludingTax = 0;
-            let amountTax = 0;
-            let amountIncludingTax = 0;
-            let amountUnit, quantity, taxRate;
-            this.$detailsContainer.find('tr').each(function () {
-                amountUnit = parseFloat($(this).find('[id$="_amountUnit"]').val());
-                quantity = parseFloat($(this).find('[id$="_quantity"]').val());
-                taxRate = parseFloat($(this).find('[id$="_taxRate"]').val());
-                amountExcludingTax += amountUnit * quantity;
-                amountTax += amountUnit * quantity * taxRate / 100;
-                amountIncludingTax += amountUnit * quantity * (1 + taxRate / 100);
-            });
-            this.$detailsContainer.closest('table').find('#invoice_amountExcludingTax').val(amountExcludingTax.toFixed(2));
-            this.$detailsContainer.closest('table').find('#invoice_taxAmount').val(amountTax.toFixed(2));
-            this.$detailsContainer.closest('table').find('#invoice_amountIncludingTax').val(amountIncludingTax.toFixed(2));
+            // let amountExcludingTax = 0;
+            // let amountTax = 0;
+            // let amountIncludingTax = 0;
+            // let amountUnit, quantity, taxRate;
+            // this.$detailsContainer.find('tr').each(function () {
+            //     amountUnit = parseFloat($(this).find('[id$="_amountUnit"]').val());
+            //     quantity = parseFloat($(this).find('[id$="_quantity"]').val());
+            //     taxRate = parseFloat($(this).find('[id$="_taxRate"]').val());
+            //     amountExcludingTax += amountUnit * quantity;
+            //     amountTax += amountUnit * quantity * taxRate / 100;
+            //     amountIncludingTax += amountUnit * quantity * (1 + taxRate / 100);
+            // });
+            // this.$detailsContainer.closest('table').find('#invoice_amountExcludingTax').val(amountExcludingTax.toFixed(2));
+            // this.$detailsContainer.closest('table').find('#invoice_taxAmount').val(amountTax.toFixed(2));
+            // this.$detailsContainer.closest('table').find('#invoice_amountIncludingTax').val(amountIncludingTax.toFixed(2));
         }
     };
 

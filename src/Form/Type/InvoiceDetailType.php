@@ -7,7 +7,6 @@ use App\Entity\InvoiceDetail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,19 +49,11 @@ class InvoiceDetailType extends AbstractType
                 ]
             )
             ->add(
-                'taxRate',
-                PercentType::class,
-                [
-                    'label' => 'field.tax_rate',
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'amountIncludingTax',
+                'amountTotal',
                 MoneyType::class,
                 [
                     'disabled' => true,
-                    'label' => 'field.amount_including_tax',
+                    'label' => 'field.amount_excluding_tax',
                 ]
             );
     }
