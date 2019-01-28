@@ -160,12 +160,11 @@ class InvoicePDF extends \TCPDF
         // Headers of details
         $this->SetFont(self::FONT_FAMILY, '', 11);
         $this->SetY(90);
-        $this->Cell(90, 7, $this->translator->trans('field.designation'), 0, 0, 'L');
+        $this->Cell(110, 7, $this->translator->trans('field.designation'), 0, 0, 'L');
         $this->Cell(20, 7, $this->translator->trans('field.quantity'), 0, 0, 'R');
-        $this->Cell(25, 7, $this->translator->trans('field.amount_unit'), 0, 0, 'R');
+        $this->Cell(30, 7, $this->translator->trans('field.amount_unit'), 0, 0, 'R');
         $this->Cell(30, 7, $this->translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
-        $this->Cell(25, 7, $this->translator->trans('field.tax_rate'), 0, 1, 'R');
-        $this->Line(10, $this->GetY(), 200, $this->GetY());
+        $this->Line(10, $this->GetY() + 8, 200, $this->GetY() + 8);
 
         // Footer of details
         $this->SetY(225);
@@ -207,11 +206,11 @@ class InvoicePDF extends \TCPDF
                 if ($this->GetY() > 215) {
                     $this->AddPage();
                 }
-                $this->Cell(90, 6, $v, 0, 0, 'L');
+                $this->Cell(110, 6, $v, 0, 0, 'L');
                 if (0 === $k) {
                     $this->Cell(20, 6, $detail->getQuantity(), 0, 0, 'R');
                     $this->Cell(
-                        25,
+                        30,
                         6,
                         sprintf(
                             '%s %s',
@@ -227,19 +226,8 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountExcludingTax(), 2, '.', ' '),
+                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
-                        ),
-                        0,
-                        0,
-                        'R'
-                    );
-                    $this->Cell(
-                        25,
-                        6,
-                        sprintf(
-                            '%s %%',
-                            number_format($detail->getTaxRate() * 100, 2, '.', ' ')
                         ),
                         0,
                         0,
@@ -261,7 +249,7 @@ class InvoicePDF extends \TCPDF
 
         $this->SetFont(self::FONT_FAMILY, '', 11);
         $this->SetY(226);
-        $this->Cell(135, 7, $this->translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
+        $this->Cell(160, 7, $this->translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
         $this->Cell(
             30,
             7,
@@ -279,7 +267,18 @@ class InvoicePDF extends \TCPDF
             1,
             'R'
         );
-        $this->Cell(135, 7, $this->translator->trans('field.tax_amount'), 0, 0, 'R');
+        $this->Cell(
+            160,
+            7,
+            sprintf(
+                '%s %s%%',
+                $this->translator->trans('field.tax_amount'),
+                number_format($this->invoice->getTaxRate() * 100, 2, '.', ' ')
+            ),
+            0,
+            0,
+            'R'
+        );
         $this->Cell(
             30,
             7,
@@ -298,7 +297,7 @@ class InvoicePDF extends \TCPDF
             'R'
         );
         $this->SetFont(self::FONT_FAMILY, 'B', 12);
-        $this->Cell(135, 7, $this->translator->trans('field.amount_including_tax'), 0, 0, 'R');
+        $this->Cell(160, 7, $this->translator->trans('field.amount_including_tax'), 0, 0, 'R');
         $this->Cell(
             30,
             7,
