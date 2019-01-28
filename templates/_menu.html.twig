@@ -1,0 +1,77 @@
+{% set menuActive=menuActive|default(null) %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a href="{{ path('app_homepage') }}" class="navbar-brand">{{ application_name }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item{% if null==menuActive %} active{% endif %}">
+                <a href="{{ path('app_homepage') }}" class="nav-link">
+                    {{ 'menu.home'|trans }}
+                </a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item{% if 'client'==menuActive %} active{% endif %}">
+                    <a href="{{ path('app_client_index') }}" class="nav-link">
+                        {{ 'menu.clients'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item{% if 'project'==menuActive %} active{% endif %}">
+                    <a href="{{ path('app_project_index') }}" class="nav-link">
+                        {{ 'menu.projects'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item{% if 'tracker'==menuActive %} active{% endif %}">
+                    <a href="{{ path('app_tracker_index') }}" class="nav-link">
+                        {{ 'menu.tracker'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item{% if 'invoice'==menuActive %} active{% endif %}">
+                    <a href="{{ path('app_invoice_index') }}" class="nav-link">
+                        {{ 'menu.invoices'|trans }}
+                    </a>
+                </li>
+            {% endif %}
+            <li class="nav-item dropdown{% if 'stat'==menuActive %} active{% endif %}">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                   data-toggle="dropdown">
+                    {{ 'menu.stat'|trans }}
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ path('app_stat_time_chart') }}" class="dropdown-item">
+                        {{ 'menu.stat.time_chart'|trans }}
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_stat_turnover_client') }}" class="dropdown-item">
+                            {{ 'menu.stat.turnover_by_client'|trans }}
+                        </a>
+                        <a href="{{ path('app_stat_turnover_period') }}" class="dropdown-item">
+                            {{ 'menu.stat.turnover_by_period'|trans }}
+                        </a>
+                        <a href="{{ path('app_stat_report_time') }}" class="dropdown-item">
+                            {{ 'menu.stat.monthly_report'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown{% if 'admin'==menuActive %} active{% endif %}">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        {{ 'menu.admin'|trans }}
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('app_admin_user_index') }}" class="dropdown-item">
+                            {{ 'menu.admin.user'|trans }}
+                        </a>
+                    </div>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a href="{{ path('app_security_logout') }}" class="nav-link">
+                    {{ 'menu.logout'|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
