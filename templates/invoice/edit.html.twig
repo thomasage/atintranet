@@ -54,30 +54,59 @@
 
         <h2 class="mb-md-4 mt-5 text-truncate">{{ formEdit.details.vars.label|trans }}</h2>
 
-        {{ form_widget(formEdit.details) }}
-        <div class="mt-2">
-            <a href="#" class="btn btn-outline-primary js-detail-add">
-                <span class="fa fa-plus"></span>
-                {{ 'action.add'|trans }}
-            </a>
-        </div>
-
-        <div class="row border-top mt-4 pt-4 align-items-center">
-            <div class="col-4 col-md-1 offset-md-8 text-truncate">{{ formEdit.amountExcludingTax.vars.label|trans }}</div>
-            <div class="col-8 col-md-2">{{ form_widget(formEdit.amountExcludingTax) }}</div>
-        </div>
-        <div class="row mt-2 align-items-center">
-            <div class="col-4 col-md-1 offset-md-8 text-truncate">{{ formEdit.taxRate.vars.label|trans }}</div>
-            <div class="col-8 col-md-2">{{ form_widget(formEdit.taxRate) }}</div>
-        </div>
-        <div class="row mt-2 align-items-center">
-            <div class="col-4 col-md-1 offset-md-8 text-truncate">{{ formEdit.taxAmount.vars.label|trans }}</div>
-            <div class="col-8 col-md-2">{{ form_widget(formEdit.taxAmount) }}</div>
-        </div>
-        <div class="row mt-2 align-items-center mb-5">
-            <div class="col-4 col-md-1 offset-md-8 text-truncate">{{ formEdit.amountIncludingTax.vars.label|trans }}</div>
-            <div class="col-8 col-md-2">{{ form_widget(formEdit.amountIncludingTax) }}</div>
-        </div>
+        <table class="table mb-5" id="invoice_details_container">
+            <thead>
+            <tr>
+                <th>{{ 'field.designation'|trans }}</th>
+                <th>{{ 'field.quantity'|trans }}</th>
+                <th>{{ 'field.amount_unit'|trans }}</th>
+                <th>{{ 'field.amount_excluding_tax'|trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th rowspan="4">
+                    <a href="#" class="btn btn-outline-primary js-detail-add">
+                        <span class="fa fa-plus"></span>
+                        {{ 'action.add'|trans }}
+                    </a>
+                </th>
+                <th colspan="2" class="text-right">
+                    <label for="{{ formEdit.amountExcludingTax.vars.id }}" class="col-form-label">
+                        {{ formEdit.amountExcludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th>{{ form_widget(formEdit.amountExcludingTax) }}</th>
+                <th rowspan="4"></th>
+            </tr>
+            <tr>
+                <th colspan="2" class="pt-0 text-right border-0">
+                    <label for="{{ formEdit.taxRate.vars.id }}" class="col-form-label">
+                        {{ formEdit.taxRate.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.taxRate) }}</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="pt-0 text-right border-0">
+                    <label for="{{ formEdit.taxAmount.vars.id }}" class="col-form-label">
+                        {{ formEdit.taxAmount.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.taxAmount) }}</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="pt-0 text-right border-0">
+                    <label for="{{ formEdit.amountIncludingTax.vars.id }}" class="col-form-label">
+                        {{ formEdit.amountIncludingTax.vars.label|trans }}
+                    </label>
+                </th>
+                <th class="pt-0 border-0">{{ form_widget(formEdit.amountIncludingTax) }}</th>
+            </tr>
+            </tfoot>
+            {{ form_widget(formEdit.details) }}
+        </table>
 
         <div class="fixed-bottom bg-light border-top p-2 text-center">
             <button type="submit" class="btn btn-success">

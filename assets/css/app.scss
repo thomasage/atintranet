@@ -46,6 +46,31 @@ label.required:after {
 
 }
 
+#page-invoice-edit {
+
+  #invoice_details_container {
+
+    .actions {
+      width: 1px;
+    }
+
+    .amount_unit,
+    .amount_total {
+      width: 200px;
+    }
+
+    .input-group {
+      flex-wrap: nowrap;
+    }
+
+    .quantity {
+      width: 100px;
+    }
+
+  }
+
+}
+
 #page-stat-time-data {
 
   tr[data-total="1"]:hover > td {

@@ -2,10 +2,6 @@
     <label for="{{ id }}" class="{% if required %}required{% endif %}">{{ label|trans }}</label>
 {% endblock %}
 
-{% block _invoice_client_label %}
-    <label for="{{ id }}" class="{% if required %}required{% endif %}">{{ label|trans }}</label>
-{% endblock %}
-
 {%- block _invoice_client_row -%}
     <div class="mb-3 row align-items-center">
         <div class="col-12 col-md-4">
@@ -101,67 +97,28 @@
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
     {% endif %}
-    <div {{ block('widget_attributes') }}>
-        {%- for child in form -%}
-            {{ form_row(child) }}
-        {%- endfor -%}
-    </div>
+    <tbody {{ block('widget_attributes') }}>
+    {%- for child in form -%}
+        {{ form_row(child) }}
+    {%- endfor -%}
+    </tbody>
 {%- endblock -%}
 
 {%- block _invoice_details_entry_row -%}
-    <div id="{{ id }}" class="row mt-md-2">
-        <div class="col-12 col-md-6 mt-4 mt-md-0">
-            {{ form_widget(form.designation) }}
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12 col-md mt-2 mt-md-0">
-                    <div class="row align-items-center">
-                        <div class="col-4 text-truncate p-0 d-md-none">
-                            <label for="{{ form.quantity.vars.id }}" class="mt-1 mb-md-1 ml-3">
-                                {{ form.quantity.vars.label|trans }}
-                            </label>
-                        </div>
-                        <div class="col-8 col-md-12">
-                            {{ form_widget(form.quantity) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md mt-2 mt-md-0">
-                    <div class="row align-items-center">
-                        <div class="col-4 text-truncate p-0 d-md-none">
-                            <label for="{{ form.amountUnit.vars.id }}" class="mt-1 mb-md-1 ml-3">
-                                {{ form.amountUnit.vars.label|trans }}
-                            </label>
-                        </div>
-                        <div class="col-8 col-md-12">
-                            {{ form_widget(form.amountUnit) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md mt-2 mt-md-0">
-                    <div class="row align-items-center">
-                        <div class="col-4 text-truncate p-0 d-md-none">
-                            <label for="{{ form.amountTotal.vars.id }}" class="mt-1 mb-md-1 ml-3">
-                                {{ form.amountTotal.vars.label|trans }}
-                            </label>
-                        </div>
-                        <div class="col-8 col-md-12">
-                            {{ form_widget(form.amountTotal) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-auto mt-2 mt-md-0 align-self-end">
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-outline-info js-detail-copy">
-                            <span class="fa fa-copy"></span>
-                        </a>
-                        <a href="#" class="btn btn-outline-danger js-detail-delete">
-                            <span class="fa fa-trash"></span>
-                        </a>
-                    </div>
-                </div>
+    <tr id="{{ id }}">
+        <td class="designation">{{ form_widget(form.designation) }}</td>
+        <td class="quantity">{{ form_widget(form.quantity) }}</td>
+        <td class="amount_unit">{{ form_widget(form.amountUnit) }}</td>
+        <td class="amount_total">{{ form_widget(form.amountTotal) }}</td>
+        <td class="actions">
+            <div class="btn-group">
+                <a href="#" class="btn btn-outline-info js-detail-copy">
+                    <span class="fa fa-copy"></span>
+                </a>
+                <a href="#" class="btn btn-outline-danger js-detail-delete">
+                    <span class="fa fa-trash"></span>
+                </a>
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
 {% endblock %}
