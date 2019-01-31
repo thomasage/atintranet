@@ -29,9 +29,10 @@
             {% for invoice in invoices %}
                 <tr>
                     <td>
-                        <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
-                            {{ invoice.number }}
-                        </a>
+                        <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">{{ invoice.number }}</a>
+                        {% if invoice.locked %}
+                            <span class="fa fa-lock ml-1 text-success"></span>
+                        {% endif %}
                     </td>
                     <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
                     <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
