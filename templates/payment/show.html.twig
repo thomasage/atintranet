@@ -87,6 +87,41 @@
             </div>
         </div>
 
+        {% if payment.paymentInvoices|length>0 %}
+
+            <h4 class="mt-5 pb-2">{{ 'field.invoices'|trans }}</h4>
+
+            <table class="table mt-2">
+                <thead>
+                <tr>
+                    <th>{{ 'field.number'|trans }}</th>
+                    <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
+                    <th>{{ 'field.amount'|trans }}</th>
+                    <th class="d-none d-md-table-cell">{{ 'field.client'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for paymentInvoice in payment.paymentInvoices %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('app_invoice_show',{uuid:paymentInvoice.invoice.uuid}) }}">
+                                {{ paymentInvoice.invoice.type|trans }} {{ paymentInvoice.invoice.number }}
+                            </a>
+                        </td>
+                        <td class="d-none d-md-table-cell">{{ paymentInvoice.invoice.issueDate|localizeddate('short','none') }}</td>
+                        <td>{{ paymentInvoice.amount|localizedcurrency(payment.currency) }}</td>
+                        <td class="d-none d-md-table-cell">
+                            <a href="{{ path('app_client_show',{uuid:paymentInvoice.invoice.client.uuid}) }}">
+                                {{ paymentInvoice.invoice.client }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
+
         <h5 class="mt-5 pb-2 border-bottom">{{ 'danger_zone'|trans }}</h5>
 
         <div class="mt-4">

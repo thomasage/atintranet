@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Invoice;
 use App\Entity\OptionPaymentMethod;
 use App\Entity\Payment;
+use App\Entity\PaymentInvoice;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,6 +38,20 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
                 ->setThirdPartyName($faker->company);
             $manager->persist($payment);
 
+            if ((float)$payment->getAmount() > 0.0 && $faker->boolean) {
+
+                /** @var Invoice $invoice */
+                $invoice = $this->getReference(sprintf('invoice-%d', $faker->numberBetween(0, 9)));
+
+                $paymentInvoice = new PaymentInvoice();
+                $paymentInvoice
+                    ->setAmount($payment->getAmount())
+                    ->setInvoice($invoice)
+                    ->setPayment($payment);
+                $manager->persist($paymentInvoice);
+
+            }
+
         }
 
         $manager->flush();
@@ -47,6 +63,7 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
+            InvoiceFixtures::class,
             OptionPaymentMethodFixtures::class,
         ];
     }

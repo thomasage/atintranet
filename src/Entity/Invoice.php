@@ -186,6 +186,14 @@ class Invoice
     }
 
     /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->number;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int

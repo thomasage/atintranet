@@ -1,3 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% set menuActive='payment' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('payment') }}
+{% endblock %}

@@ -78,7 +78,10 @@ class Payment
     /**
      * @var Collection|PaymentInvoice[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice", mappedBy="payment", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice",
+     *     mappedBy="payment",
+     *     cascade={"persist"},
+     *     orphanRemoval=true)
      */
     private $paymentInvoices;
 

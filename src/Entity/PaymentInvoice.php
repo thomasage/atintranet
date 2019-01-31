@@ -93,10 +93,10 @@ class PaymentInvoice
     }
 
     /**
-     * @param Payment $payment
+     * @param Payment|null $payment
      * @return PaymentInvoice
      */
-    public function setPayment(Payment $payment): self
+    public function setPayment(?Payment $payment): self
     {
         $this->payment = $payment;
 

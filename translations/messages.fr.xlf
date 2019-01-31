@@ -545,6 +545,14 @@
         <source>title.payment_delete</source>
         <target>Supprimer un règlement</target>
       </trans-unit>
+      <trans-unit id="tiUSl8k" resname="field.invoices">
+        <source>field.invoices</source>
+        <target>Factures</target>
+      </trans-unit>
+      <trans-unit id="kiEwLD5" resname="field.invoice">
+        <source>field.invoice</source>
+        <target>Facture</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -75,6 +75,19 @@ table.table-hover tr[data-url] {
 
 }
 
+#page-payment-add,
+#page-payment-edit {
+
+  #payment_paymentInvoices {
+
+    select[id$="_invoice"] {
+      min-width: 110px;
+    }
+
+  }
+
+}
+
 #page-stat-time-data {
 
   tr[data-total="1"]:hover > td {

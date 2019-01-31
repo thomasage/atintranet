@@ -7,6 +7,7 @@ Encore
     .addEntry('admin', './assets/js/admin.js')
     .addEntry('client', './assets/js/client.js')
     .addEntry('invoice', './assets/js/invoice.js')
+    .addEntry('payment', './assets/js/payment.js')
     .addEntry('stat-time-chart', './assets/js/stat-time-chart.js')
     .addEntry('stat-time-data', './assets/js/stat-time-data.js')
     .addEntry('stat-turnover-client', './assets/js/stat-turnover-client.js')

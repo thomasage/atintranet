@@ -9,6 +9,7 @@ use App\Repository\OptionPaymentMethodRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -97,6 +98,17 @@ class PaymentType extends AbstractType
                 [
                     'label' => 'field.comment',
                     'required' => false,
+                ]
+            )
+            ->add(
+                'paymentInvoices',
+                CollectionType::class,
+                [
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_type' => PaymentInvoiceType::class,
+                    'label' => 'field.invoices',
                 ]
             );
     }

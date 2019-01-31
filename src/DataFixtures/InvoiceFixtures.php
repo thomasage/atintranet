@@ -68,6 +68,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
                     )
                 );
             $manager->persist($invoice);
+            $this->setReference(sprintf('invoice-%d', $i), $invoice);
 
             $detail = new InvoiceDetail();
             $detail
