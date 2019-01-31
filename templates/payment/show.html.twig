@@ -1,0 +1,101 @@
+{% extends 'payment/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-payment-show">
+
+        <div class="d-flex flex-row align-items-center">
+            <h2 class="flex-grow-1 mb-0 text-truncate">{{ 'title.payment_show'|trans }}</h2>
+            <div class="btn-group ml-2">
+                {% if payment.locked==false %}
+                    <a href="{{ path('app_payment_edit',{uuid:payment.uuid}) }}" class="btn btn-outline-primary">
+                        <span class="fa fa-pencil"></span>
+                        <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
+                    </a>
+                    <a href="#" class="btn btn-outline-success">
+                        <span class="fa fa-lock"></span>
+                        <span class="d-none d-md-inline">{{ 'action.lock'|trans }}</span>
+                    </a>
+                {% else %}
+                    <a href="#" class="btn btn-outline-danger">
+                        <span class="fa fa-lock"></span>
+                        <span class="d-none d-md-inline">{{ 'action.unlock'|trans }}</span>
+                    </a>
+                {% endif %}
+                <a href="{{ path('app_payment_index') }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-md-3">
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.operation_date'|trans }}</div>
+                    <div>{{ payment.operationDate|localizeddate('long','none') }}</div>
+                </div>
+                {% if payment.valueDate %}
+                    <div class="mt-2">
+                        <div class="text-muted small">{{ 'field.value_date'|trans }}</div>
+                        <div>{{ payment.valueDate|localizeddate('long','none') }}</div>
+                    </div>
+                {% endif %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.status'|trans }}</div>
+                    <div>
+                        {% if payment.locked %}
+                            <span class="badge badge-success">
+                                <span class="fa fa-lock"></span> {{ 'locked'|trans }}
+                            </span>
+                        {% else %}
+                            <span class="badge badge-danger">
+                            <span class="fa fa-unlock"></span> {{ 'unlocked'|trans }}
+                        </span>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.payment_method'|trans }}</div>
+                    <div>{{ payment.method }}</div>
+                </div>
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.amount'|trans }}</div>
+                    <div class="{{ payment.cssClass }}">{{ payment.amount|localizedcurrency(payment.currency) }}</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.third_party'|trans }}</div>
+                    <div>{{ payment.thirdPartyName }}</div>
+                </div>
+                {% if payment.bankName %}
+                    <div class="mt-2">
+                        <div class="text-muted small">{{ 'field.bank_name'|trans }}</div>
+                        <div>{{ payment.bankName }}</div>
+                    </div>
+                {% endif %}
+                {% if payment.comment %}
+                    <div class="mt-2">
+                        <div class="text-muted small">{{ 'field.comment'|trans }}</div>
+                        <div>{{ payment.comment|nl2br }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <h5 class="mt-5 pb-2 border-bottom">{{ 'danger_zone'|trans }}</h5>
+
+        <div class="mt-4">
+            <a href="{{ path('app_payment_delete',{uuid:payment.uuid}) }}" class="btn btn-outline-danger btn-sm">
+                <span class="fa fa-trash"></span>
+                {{ 'action.delete_payment'|trans }}
+            </a>
+        </div>
+
+    </div>
+
+{% endblock %}

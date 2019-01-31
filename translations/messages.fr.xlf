@@ -181,6 +181,10 @@
         <source>notification.user_removed</source>
         <target>L'utilisateur est supprimé.</target>
       </trans-unit>
+      <trans-unit id="oCzGhEn" resname="notification.payment_removed">
+        <source>notification.payment_removed</source>
+        <target>Le règlement est supprimé.</target>
+      </trans-unit>
       <trans-unit id="2orqhMK" resname="notification.client_updated">
         <source>notification.client_updated</source>
         <target>Le client est modifié.</target>
@@ -433,9 +437,17 @@
         <source>action.delete_user</source>
         <target>Supprimer l'utilisateur</target>
       </trans-unit>
+      <trans-unit id="BEexc88" resname="action.delete_payment">
+        <source>action.delete_payment</source>
+        <target>Supprimer le règlement</target>
+      </trans-unit>
       <trans-unit id="aHw5Vzp" resname="confirmation.delete_user">
         <source>confirmation.delete_user</source>
         <target>Je souhaite supprimer définitivement cet utilisateur</target>
+      </trans-unit>
+      <trans-unit id="gCfeo7U" resname="confirmation.delete_payment">
+        <source>confirmation.delete_payment</source>
+        <target>Je souhaite supprimer définitivement ce règlement</target>
       </trans-unit>
       <trans-unit id="NGooIBs" resname="danger_zone">
         <source>danger_zone</source>
@@ -460,6 +472,70 @@
       <trans-unit id="5ODSxhK" resname="notification.invoice_added">
         <source>notification.invoice_added</source>
         <target>La facture est créée</target>
+      </trans-unit>
+      <trans-unit id="Cdog0_O" resname="notification.payment_updated">
+        <source>notification.payment_updated</source>
+        <target>Le règlement est modifié.</target>
+      </trans-unit>
+      <trans-unit id="i_lS6Od" resname="notification.payment_added">
+        <source>notification.payment_added</source>
+        <target>Le règlement est ajouté.</target>
+      </trans-unit>
+      <trans-unit id="JbYt_2v" resname="menu.payments">
+        <source>menu.payments</source>
+        <target>Règlements</target>
+      </trans-unit>
+      <trans-unit id="Npm5EiI" resname="action.download">
+        <source>action.download</source>
+        <target>Télécharger</target>
+      </trans-unit>
+      <trans-unit id="uTdiEnj" resname="title.payment_show">
+        <source>title.payment_show</source>
+        <target>Afficher un règlement</target>
+      </trans-unit>
+      <trans-unit id="1bYiV8w" resname="field.operation_date">
+        <source>field.operation_date</source>
+        <target>Date opération</target>
+      </trans-unit>
+      <trans-unit id="yoZm6Jb" resname="field.value_date">
+        <source>field.value_date</source>
+        <target>Date valeur</target>
+      </trans-unit>
+      <trans-unit id="tf7JNd9" resname="field.amount">
+        <source>field.amount</source>
+        <target>Montant</target>
+      </trans-unit>
+      <trans-unit id="S1L3unw" resname="field.payment_method">
+        <source>field.payment_method</source>
+        <target>Mode règlement</target>
+      </trans-unit>
+      <trans-unit id="Ws.eAbb" resname="field.third_party">
+        <source>field.third_party</source>
+        <target>Tiers</target>
+      </trans-unit>
+      <trans-unit id="LkCWmzM" resname="field.bank_name">
+        <source>field.bank_name</source>
+        <target>Banque</target>
+      </trans-unit>
+      <trans-unit id="FEk.X1R" resname="locked">
+        <source>locked</source>
+        <target>verrouillé</target>
+      </trans-unit>
+      <trans-unit id=".Vs5bEw" resname="unlocked">
+        <source>unlocked</source>
+        <target>ouvert</target>
+      </trans-unit>
+      <trans-unit id="fAKPzY2" resname="title.payment_edit">
+        <source>title.payment_edit</source>
+        <target>Modifier un règlement</target>
+      </trans-unit>
+      <trans-unit id="JZrr6SV" resname="title.payment_add">
+        <source>title.payment_add</source>
+        <target>Ajouter un règlement</target>
+      </trans-unit>
+      <trans-unit id="QQEITq1" resname="title.payment_delete">
+        <source>title.payment_delete</source>
+        <target>Supprimer un règlement</target>
       </trans-unit>
     </body>
   </file>

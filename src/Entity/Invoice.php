@@ -157,6 +157,13 @@ class Invoice
     private $details;
 
     /**
+     * @var Collection|PaymentInvoice[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice", mappedBy="invoice", orphanRemoval=true)
+     */
+    private $paymentInvoices;
+
+    /**
      * Invoice constructor.
      * @throws \Exception
      */
@@ -172,6 +179,7 @@ class Invoice
         $this->dueDate = new \DateTime('+1 month');
         $this->issueDate = new \DateTime();
         $this->locked = false;
+        $this->paymentInvoices = new ArrayCollection();
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
@@ -538,6 +546,45 @@ class Invoice
     public function setTaxRate(float $taxRate): self
     {
         $this->taxRate = $taxRate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PaymentInvoice[]
+     */
+    public function getPaymentInvoices(): Collection
+    {
+        return $this->paymentInvoices;
+    }
+
+    /**
+     * @param PaymentInvoice $paymentInvoice
+     * @return Invoice
+     */
+    public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
+    {
+        if (!$this->paymentInvoices->contains($paymentInvoice)) {
+            $this->paymentInvoices[] = $paymentInvoice;
+            $paymentInvoice->setInvoice($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param PaymentInvoice $paymentInvoice
+     * @return Invoice
+     */
+    public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self
+    {
+        if ($this->paymentInvoices->contains($paymentInvoice)) {
+            $this->paymentInvoices->removeElement($paymentInvoice);
+            // set the owning side to null (unless already changed)
+            if ($paymentInvoice->getInvoice() === $this) {
+                $paymentInvoice->setInvoice(null);
+            }
+        }
 
         return $this;
     }

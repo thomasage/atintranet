@@ -31,6 +31,10 @@ label.required:after {
   color: red;
 }
 
+table.table-hover tr[data-url] {
+  cursor: pointer;
+}
+
 #page-admin-user-index,
 #page-admin-user-show {
 

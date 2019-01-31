@@ -1,0 +1,56 @@
+{% extends 'payment/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-payment-index">
+
+        <div class="d-flex flex-row align-items-center">
+            <h2 class="flex-grow-1 mb-0 text-truncate">{{ 'menu.payments'|trans }}</h2>
+            <div class="btn-group ml-2">
+                <a href="{{ path('app_payment_add') }}" class="btn btn-outline-primary">
+                    <span class="fa fa-plus"></span>
+                    <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+                </a>
+                <a href="#" class="btn btn-outline-info">
+                    <span class="fa fa-download"></span>
+                    <span class="d-none d-md-inline">{{ 'action.download'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-hover mt-4">
+            <thead class="text-truncate">
+            <tr>
+                <th>{{ 'field.operation_date'|trans }}</th>
+                <th class="d-none d-md-table-cell">{{ 'field.value_date'|trans }}</th>
+                <th>{{ 'field.amount'|trans }}</th>
+                <th class="d-none d-md-table-cell">{{ 'field.payment_method'|trans }}</th>
+                <th class="d-none d-sm-table-cell">{{ 'field.third_party'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for payment in payments %}
+                <tr data-url="{{ path('app_payment_show',{uuid:payment.uuid}) }}">
+                    <td>{{ payment.operationDate|localizeddate('short','none') }}</td>
+                    <td class="d-none d-md-table-cell">
+                        {% if payment.valueDate is not null %}
+                            {{ payment.valueDate|localizeddate('short','none') }}
+                        {% endif %}
+                    </td>
+                    <td class="{{ payment.cssClass }}">
+                        {{ payment.amount|localizedcurrency(payment.currency) }}
+                    </td>
+                    <td class="d-none d-md-table-cell">{{ payment.method }}</td>
+                    <td class="d-none d-sm-table-cell">{{ payment.thirdPartyName }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="p-5 text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'payment/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-payment-delete">
+
+        <div class="d-flex flex-row align-items-center">
+            <h2 class="flex-grow-1 mb-0 text-truncate">{{ 'title.payment_delete'|trans }}</h2>
+            <div class="btn-group ml-2">
+                <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        {{ form_start(formDelete,{attr:{class:'mt-5'}}) }}
+        {{ form_widget(formDelete) }}
+        <div class="mt-4 offset-sm-2">
+            <button type="submit" class="btn btn-danger">
+                <span class="fa fa-trash"></span>
+                {{ 'action.delete'|trans }}
+            </button>
+        </div>
+        {{ form_end(formDelete) }}
+
+    </div>
+
+{% endblock %}
