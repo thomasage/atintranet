@@ -58,15 +58,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             $invoice
                 ->setAddress($address)
                 ->setClient($this->getRandomClient())
-                ->setIssueDate($issue)
-                ->setNumber(
-                    sprintf(
-                        '%s%s%s',
-                        $issue->format('y'),
-                        $issue->format('m'),
-                        str_pad((string)$faker->numberBetween(1, 999), 3, '0', STR_PAD_LEFT)
-                    )
-                );
+                ->setIssueDate($issue);
             $manager->persist($invoice);
             $this->setReference(sprintf('invoice-%d', $i), $invoice);
 

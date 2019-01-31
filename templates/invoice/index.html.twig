@@ -37,7 +37,12 @@
                     <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
                     <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
                     <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
-                    <td class="d-none d-sm-table-cell">{{ invoice.amountPaid|localizedcurrency(invoice.currency) }}</td>
+                    <td class="d-none d-sm-table-cell">
+                        {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
+                        {% if invoice.amountPaid==invoice.amountIncludingTax %}
+                            <span class="fa fa-check text-success ml-1"></span>
+                        {% endif %}
+                    </td>
                     <td class="d-none d-sm-table-cell">
                         <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">
                             {{ invoice.client }}

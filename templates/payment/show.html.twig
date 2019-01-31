@@ -96,7 +96,8 @@
                 <tr>
                     <th>{{ 'field.number'|trans }}</th>
                     <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
-                    <th>{{ 'field.amount'|trans }}</th>
+                    <th class="d-none d-md-table-cell">{{ 'field.amount_including_tax'|trans }}</th>
+                    <th>{{ 'field.amount_paid'|trans }}</th>
                     <th class="d-none d-md-table-cell">{{ 'field.client'|trans }}</th>
                 </tr>
                 </thead>
@@ -109,7 +110,15 @@
                             </a>
                         </td>
                         <td class="d-none d-md-table-cell">{{ paymentInvoice.invoice.issueDate|localizeddate('short','none') }}</td>
-                        <td>{{ paymentInvoice.amount|localizedcurrency(payment.currency) }}</td>
+                        <td class="d-none d-md-table-cell">
+                            {{ paymentInvoice.invoice.amountIncludingTax|localizedcurrency(paymentInvoice.invoice.currency) }}
+                        </td>
+                        <td>
+                            {{ paymentInvoice.amount|localizedcurrency(payment.currency) }}
+                            {% if payment.currency==paymentInvoice.invoice.currency and paymentInvoice.invoice.amountIncludingTax==paymentInvoice.amount %}
+                                <span class="fa fa-check text-success ml-1"></span>
+                            {% endif %}
+                        </td>
                         <td class="d-none d-md-table-cell">
                             <a href="{{ path('app_client_show',{uuid:paymentInvoice.invoice.client.uuid}) }}">
                                 {{ paymentInvoice.invoice.client }}
