@@ -7,11 +7,13 @@ use App\Entity\Payment;
 use App\Form\Type\PaymentDeleteType;
 use App\Form\Type\PaymentType;
 use App\Repository\PaymentRepository;
+use App\Service\PaymentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -98,6 +100,25 @@ class PaymentController extends AbstractController
                 'payment' => $payment,
             ]
         );
+    }
+
+    /**
+     * @param PaymentManager $pm
+     * @return Response
+     *
+     * @Route("/download",
+     *     name="app_payment_download",
+     *     methods={"GET"})
+     */
+    public function download(PaymentManager $pm): Response
+    {
+        $response = $pm->download();
+
+        if (!$response instanceof StreamedResponse) {
+            return $this->redirectToRoute('app_payment_index');
+        }
+
+        return $response;
     }
 
     /**
