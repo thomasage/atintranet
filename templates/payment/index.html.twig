@@ -31,7 +31,12 @@
             <tbody>
             {% for payment in payments %}
                 <tr data-url="{{ path('app_payment_show',{uuid:payment.uuid}) }}">
-                    <td>{{ payment.operationDate|localizeddate('short','none') }}</td>
+                    <td>
+                        {{ payment.operationDate|localizeddate('short','none') }}
+                        {% if payment.locked %}
+                            <span class="fa fa-lock text-success ml-1"></span>
+                        {% endif %}
+                    </td>
                     <td class="d-none d-md-table-cell">
                         {% if payment.valueDate is not null %}
                             {{ payment.valueDate|localizeddate('short','none') }}

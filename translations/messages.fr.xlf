@@ -205,6 +205,14 @@
         <source>notification.invoice_unlocked</source>
         <target>La facture %number% est déverrouillée.</target>
       </trans-unit>
+      <trans-unit id="N83xcKA" resname="notification.payment_locked">
+        <source>notification.payment_locked</source>
+        <target>Le règlement est verrouillé.</target>
+      </trans-unit>
+      <trans-unit id="uNiESnx" resname="notification.payment_unlocked">
+        <source>notification.payment_unlocked</source>
+        <target>Le règlement est déverrouillé.</target>
+      </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Enregistrer</target>
