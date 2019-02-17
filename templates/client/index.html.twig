@@ -1,28 +1,44 @@
 {% extends 'client/base.html.twig' %}
 
+{% block page_title %}{{ 'title.client_list'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_client_new') }}" class="btn btn-outline-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-client-index">
-
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1">List of clients</h2>
-            <div>
-                <a href="{{ path('app_client_new') }}" class="btn btn-outline-primary">
-                    <span class="fa fa-plus"></span>
-                    {{ 'action.add'|trans }}
-                </a>
-            </div>
-        </div>
-
-        <div class="list-group mt-4">
-            {% for client in clients %}
-                <a href="{{ path('app_client_show',{uuid:client.uuid}) }}"
-                   class="list-group-item list-group-item-action">
-                    {{ client.name }}
-                </a>
-            {% endfor %}
-        </div>
-
-    </div>
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>{{ 'field.name'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'field.postcode'|trans }}</th>
+            <th>{{ 'field.city'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+            <tr>
+                <td>
+                    <div class="d-flex flex-column flex-md-row">
+                        <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="flex-grow-1">
+                            {{ client.name }}
+                        </a>
+                        {% if false==client.active %}
+                            <div>
+                                <span class="badge badge-secondary">{{ 'inactive'|trans }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </td>
+                <td class="d-none d-md-table-cell">{{ client.addressPrimary.postcode }}</td>
+                <td>{{ client.addressPrimary.city }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

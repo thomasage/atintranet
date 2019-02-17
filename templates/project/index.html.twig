@@ -1,29 +1,31 @@
 {% extends 'project/base.html.twig' %}
 
+{% block page_title %}{{ 'title.project_list'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="#" class="btn btn-outline-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-project-index">
-
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1">{{ 'menu.projects'|trans }}</h2>
-            <div>
-                <a href="#" class="btn btn-outline-primary">
-                    <span class="fa fa-plus"></span>
-                    {{ 'action.add'|trans }}
-                </a>
-            </div>
-        </div>
-
-        <div class="list-group mt-4">
-            {% for project in projects %}
-                <a href="{{ path('app_project_show',{uuid:project.uuid}) }}"
-                   class="list-group-item list-group-item-action">
-                    {{ project.name }}
-                    <div class="small">{{ project.client.name }}</div>
-                </a>
-            {% endfor %}
-        </div>
-
-    </div>
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>{{ 'field.name'|trans }}</th>
+            <th>{{ 'field.client'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td><a href="{{ path('app_project_show',{uuid:project.uuid}) }}">{{ project.name }}</a></td>
+                <td>{{ project.client.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

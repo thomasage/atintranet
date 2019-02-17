@@ -22,7 +22,7 @@ class ClientFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
             $address = new Address();
             $address
@@ -30,12 +30,14 @@ class ClientFixtures extends Fixture
                 ->setCity($faker->city)
                 ->setCountry($faker->countryCode)
                 ->setName($faker->company)
-                ->setPostcode($faker->postcode);
+                ->setPostcode(preg_replace('/[\D]/', '', $faker->postcode));
             $manager->persist($address);
 
             $client = new Client();
             $client
+                ->setActive($faker->boolean)
                 ->setAddressPrimary($address)
+                ->setCode($faker->unique()->word)
                 ->setName($faker->company);
             $manager->persist($client);
             $this->setReference('client'.$i, $client);

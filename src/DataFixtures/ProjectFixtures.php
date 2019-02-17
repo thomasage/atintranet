@@ -33,7 +33,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
             $project = new Project();
             $project
                 ->setClient($client)
-                ->setName(sprintf('Project %d (%s)', $i, $client->getName()));
+                ->setName(ucfirst($faker->words(3, true)));
             $manager->persist($project);
             $this->setReference('project'.$i, $project);
 

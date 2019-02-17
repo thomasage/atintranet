@@ -34,7 +34,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
                 $start = $faker->dateTimeBetween('-2 years');
                 $stop = clone $start;
-                $stop->modify(sprintf('+%d minutes', $faker->numberBetween(60, 60 * 8)));
+                $stop->modify(sprintf('+%d minutes', $faker->numberBetween(5, 60 * 2)));
 
                 $task = new Task();
                 $task

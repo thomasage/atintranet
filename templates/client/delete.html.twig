@@ -1,0 +1,35 @@
+{% extends 'client/base.html.twig' %}
+
+{% block body %}
+
+    <div id="page-client-delete">
+
+        <div class="d-flex flex-row align-items-center">
+            <h2 class="flex-grow-1 mb-0 text-truncate">{{ client.name }}</h2>
+            <div class="btn-group ml-2">
+                <a href="{{ path('app_client_index') }}" class="btn btn-outline-secondary">
+                    <span class="fa fa-list"></span>
+                    <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+                </a>
+                <a href="{{ path('app_client_edit',{uuid:client.uuid}) }}" class="btn btn-primary">
+                    <span class="fa fa-undo"></span>
+                    <span class="d-none d-md-inline">{{ 'action.cancel'|trans }}</span>
+                </a>
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        <div class="mt-5">
+            {{ form_widget(form.confirmation) }}
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-danger">
+                <span class="fa fa-trash"></span>
+                {{ 'action.delete'|trans }}
+            </button>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

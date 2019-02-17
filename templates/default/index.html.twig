@@ -1,7 +1,90 @@
 {% extends 'base.html.twig' %}
 
+{% block page_title %}{{ 'dashboard'|trans }}{% endblock %}
+
 {% block body %}
 
-    <div id="page-default-index"></div>
+    <div class="row">
+
+        <div class="col-12 col-md-6">
+
+            {% set total=timesThisWeek|arraySumColumn('duration') %}
+
+            <h2>{{ 'this_week'|trans }}</h2>
+
+            <table class="table table-sm mt-3">
+                <thead>
+                <tr>
+                    {% if null==app.user.client %}
+                        <th>{{ 'field.client'|trans }}</th>
+                    {% endif %}
+                    <th>{{ 'field.project'|trans }}</th>
+                    <th>{{ 'field.duration'|trans }}</th>
+                    <th class="d-none d-md-table-cell"></th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th colspan="{% if null==app.user.client %}2{% else %}1{% endif %}">Total</th>
+                    <th>{{ total|localizedduration }}</th>
+                    <th class="d-none d-md-table-cell"></th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for d in timesThisWeek %}
+                    <tr>
+                        {% if null==app.user.client %}
+                            <td>{{ d.client_name }}</td>
+                        {% endif %}
+                        <td>{{ d.project_name }}</td>
+                        <td>{{ d.duration|localizedduration }}</td>
+                        <td class="d-none d-md-table-cell">{{ (d.duration/total)|localizednumber('percent') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="col-12 col-md-6 mt-5 mt-md-0">
+
+            {% set total=timesThisMonth|arraySumColumn('duration') %}
+
+            <h2>{{ 'this_month'|trans }}</h2>
+
+            <table class="table table-sm mt-3">
+                <thead>
+                <tr>
+                    {% if null==app.user.client %}
+                        <th>{{ 'field.client'|trans }}</th>
+                    {% endif %}
+                    <th>{{ 'field.project'|trans }}</th>
+                    <th colspan="2">{{ 'field.duration'|trans }}</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th colspan="{% if null==app.user.client %}2{% else %}1{% endif %}">Total</th>
+                    <th>{{ total|localizedduration }}</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for d in timesThisMonth %}
+                    <tr>
+                        {% if null==app.user.client %}
+                            <td>{{ d.client_name }}</td>
+                        {% endif %}
+                        <td>{{ d.project_name }}</td>
+                        <td>{{ d.duration|localizedduration }}</td>
+                        <td>{{ (d.duration/total)|localizednumber('percent') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
 
 {% endblock %}

@@ -553,6 +553,50 @@
         <source>field.invoice</source>
         <target>Facture</target>
       </trans-unit>
+      <trans-unit id="o8H6_LT" resname="title.client_list">
+        <source>title.client_list</source>
+        <target>Clients</target>
+      </trans-unit>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
+        <target>Active</target>
+      </trans-unit>
+      <trans-unit id="0QImGLm" resname="inactive">
+        <source>inactive</source>
+        <target>Inactive</target>
+      </trans-unit>
+      <trans-unit id="F5OJ4EF" resname="action.delete_client">
+        <source>action.delete_client</source>
+        <target>Supprimer le client</target>
+      </trans-unit>
+      <trans-unit id="kYZxF13" resname="confirmation.delete_client">
+        <source>confirmation.delete_client</source>
+        <target>Je souhaite supprimer définitivement ce client</target>
+      </trans-unit>
+      <trans-unit id="fkwDIvy" resname="notification.client_removed">
+        <source>notification.client_removed</source>
+        <target>Le client est supprimé.</target>
+      </trans-unit>
+      <trans-unit id="bG4IweY" resname="title.invoice_list">
+        <source>title.invoice_list</source>
+        <target>Factures</target>
+      </trans-unit>
+      <trans-unit id="TjanFYQ" resname="title.project_list">
+        <source>title.project_list</source>
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id=".eoLf4B" resname="this_week">
+        <source>this_week</source>
+        <target>Cette semaine</target>
+      </trans-unit>
+      <trans-unit id="PsVWpHF" resname="this_month">
+        <source>this_month</source>
+        <target>Ce mois</target>
+      </trans-unit>
+      <trans-unit id="Zs2WiKK" resname="dashboard">
+        <source>dashboard</source>
+        <target>Tableau de bord</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

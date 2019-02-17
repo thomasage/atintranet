@@ -14,7 +14,13 @@
 {% endif %}
 <div class="container">
     {% include '_flash_messages.html.twig' %}
-    {% block body %}{% endblock %}
+    <div class="d-flex flex-row align-items-center mb-4">
+        <h2 class="flex-grow-1 mb-0 text-truncate">{% block page_title %}{% endblock %}</h2>
+        <div class="btn-group">{% block page_menu %}{% endblock %}</div>
+    </div>
+    <div id="{{ app.request.get('_route')|replace({'_':'-'})|replace({'app-':'page-'}) }}">
+        {% block body %}{% endblock %}
+    </div>
 </div>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

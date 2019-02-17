@@ -43,7 +43,7 @@ class LocaleExtension extends AbstractExtension
 
         $diff = $from->diff($to);
 
-        $hours = $diff->h;
+        $hours = $diff->h + $diff->d * 24;
         $minutes = $diff->i;
         $seconds = $diff->s;
 

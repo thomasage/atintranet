@@ -59,7 +59,7 @@ class TaskRepository extends ServiceEntityRepository
                 $interval = 'P1D';
                 $format = 'd';
             }
-            $start->setTime(0, 0, 0);
+            $start->setTime(0, 0);
             $stop->setTime(23, 59, 59);
 
             foreach (new \DatePeriod($start, new \DateInterval($interval), $stop) as $d) {
@@ -228,5 +228,61 @@ class TaskRepository extends ServiceEntityRepository
             ->setMaxResults(50)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function findTimesThisMonth(User $user): array
+    {
+        $builder = $this
+            ->createQueryBuilder('task')
+            ->innerJoin('task.project', 'project')
+            ->innerJoin('project.client', 'client')
+            ->andWhere('SUBSTRING( task.start, 1, 7 ) = :month')
+            ->setParameter('month', date('Y-m'))
+            ->addGroupBy('project.id')
+            ->addOrderBy('client.name', 'ASC')
+            ->addOrderBy('project.name', 'ASC')
+            ->select('client.name AS client_name')
+            ->addSelect('project.name AS project_name')
+            ->addSelect('SUM( UNIX_TIMESTAMP( task.stop ) - UNIX_TIMESTAMP( task.start ) ) AS duration');
+
+        if (($client = $user->getClient()) instanceof Client) {
+            $builder
+                ->andWhere('project.client = :client')
+                ->setParameter(':client', $client);
+        }
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function findTimesThisWeek(User $user): array
+    {
+        $builder = $this
+            ->createQueryBuilder('task')
+            ->innerJoin('task.project', 'project')
+            ->innerJoin('project.client', 'client')
+            ->andWhere('DATE_FORMAT( task.start, \'%v\' ) = :week')
+            ->setParameter('week', date('W'))
+            ->addGroupBy('project.id')
+            ->addOrderBy('client.name', 'ASC')
+            ->addOrderBy('project.name', 'ASC')
+            ->select('client.name AS client_name')
+            ->addSelect('project.name AS project_name')
+            ->addSelect('SUM( UNIX_TIMESTAMP( task.stop ) - UNIX_TIMESTAMP( task.start ) ) AS duration');
+
+        if (($client = $user->getClient()) instanceof Client) {
+            $builder
+                ->andWhere('project.client = :client')
+                ->setParameter(':client', $client);
+        }
+
+        return $builder->getQuery()->getResult();
     }
 }

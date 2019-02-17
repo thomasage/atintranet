@@ -1,58 +1,57 @@
 {% extends 'invoice/base.html.twig' %}
 
+{% block page_title %}{{ 'title.invoice_list'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_invoice_new') }}" class="btn btn-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-invoice-index">
-
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1">List of invoices</h2>
-            <div>
-                <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-primary">
-                    <span class="fa fa-plus"></span>
-                    {{ 'action.add'|trans }}
-                </a>
-            </div>
-        </div>
-
-        <table class="table mt-4">
-            <thead>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ 'field.number'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
+            <th>{{ 'field.amount_including_tax'|trans }}</th>
+            <th class="d-none d-sm-table-cell">{{ 'field.amount_paid'|trans }}</th>
+            <th class="d-none d-sm-table-cell">{{ 'field.client'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for invoice in invoices %}
             <tr>
-                <th>{{ 'field.number'|trans }}</th>
-                <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
-                <th class="d-none d-md-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
-                <th>{{ 'field.amount_including_tax'|trans }}</th>
-                <th class="d-none d-sm-table-cell">{{ 'field.amount_paid'|trans }}</th>
-                <th class="d-none d-sm-table-cell">{{ 'field.client'|trans }}</th>
+                <td>
+                    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">{{ invoice.number }}</a>
+                    {% if invoice.locked %}
+                        <span class="fa fa-lock ml-1 text-success"></span>
+                    {% endif %}
+                </td>
+                <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
+                <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
+                <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
+                <td class="d-none d-sm-table-cell">
+                    {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
+                    {% if invoice.amountPaid==invoice.amountIncludingTax %}
+                        <span class="fa fa-check text-success ml-1"></span>
+                    {% endif %}
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">
+                        {{ invoice.client }}
+                    </a>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            {% for invoice in invoices %}
-                <tr>
-                    <td>
-                        <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">{{ invoice.number }}</a>
-                        {% if invoice.locked %}
-                            <span class="fa fa-lock ml-1 text-success"></span>
-                        {% endif %}
-                    </td>
-                    <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
-                    <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
-                    <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
-                    <td class="d-none d-sm-table-cell">
-                        {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
-                        {% if invoice.amountPaid==invoice.amountIncludingTax %}
-                            <span class="fa fa-check text-success ml-1"></span>
-                        {% endif %}
-                    </td>
-                    <td class="d-none d-sm-table-cell">
-                        <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">
-                            {{ invoice.client }}
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
+        {% else %}
+            <tr>
+                <td colspan="6" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

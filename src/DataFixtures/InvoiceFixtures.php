@@ -52,7 +52,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
                 ->setPostcode(preg_replace('[^0-9]', '', $faker->postcode));
             $manager->persist($address);
 
-            $issue = $faker->dateTimeBetween('-1 year');
+            $issue = $faker->dateTimeBetween(sprintf('-%d months', $i), sprintf('-%d months +25 days', $i));
 
             $invoice = new Invoice();
             $invoice

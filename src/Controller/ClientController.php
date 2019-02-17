@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Form\Type\ClientDeleteType;
+use App\Form\Type\ClientSearchType;
 use App\Form\Type\ClientType;
 use App\Repository\ClientRepository;
+use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +23,52 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ClientController extends AbstractController
 {
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param Client $client
+     * @return Response
+     *
+     * @Route("/{uuid}/delete",
+     *     name="app_client_delete",
+     *     methods={"GET", "POST"},
+     *     requirements={"uuid"})
+     */
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        Client $client
+    ): Response {
+
+        if (count($client->getInvoices()) > 0) {
+            return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
+        }
+
+        $form = $this->createForm(ClientDeleteType::class, $client);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->remove($client);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.client_removed'));
+
+            return $this->redirectToRoute('app_client_index');
+
+        }
+
+        return $this->render(
+            'client/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'client' => $client,
+            ]
+        );
+    }
+
     /**
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -62,6 +111,7 @@ class ClientController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @param ClientRepository $clientRepository
      * @return Response
      *
@@ -69,9 +119,9 @@ class ClientController extends AbstractController
      *     name="app_client_index",
      *     methods={"GET"})
      */
-    public function index(ClientRepository $clientRepository): Response
+    public function index(Request $request, ClientRepository $clientRepository): Response
     {
-        $clients = $clientRepository->findBy([], ['name' => 'ASC']);
+        $clients = $clientRepository->findBySearch();
 
         return $this->render(
             'client/index.html.twig',

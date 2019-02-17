@@ -7,28 +7,28 @@
 
 h1 {
   margin: 0;
-  font-size: 1.8em;
-}
-
-h2 {
   font-size: 1.6em;
 }
 
-h3 {
+h2 {
   font-size: 1.4em;
 }
 
-h4 {
+h3 {
   font-size: 1.2em;
 }
 
-h5, h6 {
+h4, h5, h6 {
   font-size: 1em;
 }
 
 label.required:after {
   content: ' *';
   color: red;
+}
+
+legend {
+  font-size: 1.2em;
 }
 
 table.table-hover tr[data-url] {
