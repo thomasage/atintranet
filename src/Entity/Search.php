@@ -59,9 +59,9 @@ class Search
     private $orderby = [];
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $resultsPerPage = 20;
 
@@ -131,10 +131,15 @@ class Search
     }
 
     /**
-     * @return array
+     * @param string|null $name
+     * @return mixed
      */
-    public function getFilter(): array
+    public function getFilter(?string $name = null)
     {
+        if (null !== $name) {
+            return $this->filter[$name] ?? null;
+        }
+
         return $this->filter;
     }
 
@@ -178,20 +183,66 @@ class Search
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getResultsPerPage(): int
+    public function getResultsPerPage(): ?int
     {
         return $this->resultsPerPage;
     }
 
     /**
-     * @param int $resultsPerPage
+     * @param int|null $resultsPerPage
      * @return Search
      */
-    public function setResultsPerPage(int $resultsPerPage): self
+    public function setResultsPerPage(?int $resultsPerPage): self
     {
         $this->resultsPerPage = $resultsPerPage;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return Search
+     */
+    public function addFilter(string $name, $value): self
+    {
+        if (null === $value) {
+            return $this->removeFilter($name);
+        }
+
+        $this->filter[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return Search
+     */
+    public function removeFilter(string $name): self
+    {
+        unset($this->filter[$name]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $code
+     * @param bool $asc
+     * @return Search
+     */
+    public function addOrderby(string $code, bool $asc = true): self
+    {
+        $orderby = $this->orderby;
+        $this->orderby = [$code => $asc];
+        foreach ($orderby as $k => $v) {
+            if ($k === $code) {
+                continue;
+            }
+            $this->orderby[$k] = $v;
+        }
 
         return $this;
     }

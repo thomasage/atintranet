@@ -1,49 +1,44 @@
 {% extends 'client/base.html.twig' %}
 
+{% block page_title %}{{ 'title.client_add'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_client_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-client-new">
+    {{ form_start(form,{attr:{class:'mt-4'}}) }}
 
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1 text-truncate mb-0">{{ 'title.client_add'|trans }}</h2>
-            <div class="btn-group">
-                <a href="{{ path('app_client_index') }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-undo"></span>
-                    <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
-                </a>
-            </div>
-        </div>
+    {{ form_row(form.code) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.vatNumber) }}
+    {{ form_row(form.accountNumber) }}
+    {{ form_row(form.comment) }}
+    {{ form_row(form.active) }}
 
-        {{ form_start(form,{attr:{class:'mt-4'}}) }}
+    <h3 class="mb-3 mt-5">{{ form.addressPrimary.vars.label|trans }}</h3>
 
-        {{ form_row(form.code) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.vatNumber) }}
-        {{ form_row(form.accountNumber) }}
-        {{ form_row(form.comment) }}
-        {{ form_row(form.active) }}
+    {{ form_row(form.addressPrimary.name) }}
+    {{ form_row(form.addressPrimary.address) }}
+    {{ form_row(form.addressPrimary.postcode) }}
+    {{ form_row(form.addressPrimary.city) }}
+    {{ form_row(form.addressPrimary.country) }}
 
-        <h3 class="mb-3 mt-5">{{ form.addressPrimary.vars.label|trans }}</h3>
-
-        {{ form_row(form.addressPrimary.name) }}
-        {{ form_row(form.addressPrimary.address) }}
-        {{ form_row(form.addressPrimary.postcode) }}
-        {{ form_row(form.addressPrimary.city) }}
-        {{ form_row(form.addressPrimary.country) }}
-
-        <div class="mt-5">
-            <button type="submit" class="btn btn-success">
-                <span class="fa fa-save"></span>
-                {{ 'action.save'|trans }}
-            </button>
-            <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
-                <span class="fa fa-undo"></span>
-                {{ 'action.cancel'|trans }}
-            </a>
-        </div>
-
-        {{ form_end(form) }}
-
+    <div class="mt-5">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-save"></span>
+            {{ 'action.save'|trans }}
+        </button>
+        <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+            <span class="fa fa-undo"></span>
+            {{ 'action.cancel'|trans }}
+        </a>
     </div>
+
+    {{ form_end(form) }}
 
 {% endblock %}

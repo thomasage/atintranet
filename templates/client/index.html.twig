@@ -3,6 +3,13 @@
 {% block page_title %}{{ 'title.client_list'|trans }}{% endblock %}
 
 {% block page_menu %}
+    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target=".filters">
+        <span class="fa fa-filter"></span>
+        <span class="d-none d-md-inline">{{ 'filters'|trans }}</span>
+        {% if search.filter|length>0 %}
+            <small>({{ search.filter|length }})</small>
+        {% endif %}
+    </a>
     <a href="{{ path('app_client_new') }}" class="btn btn-outline-primary">
         <span class="fa fa-plus"></span>
         <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
@@ -14,31 +21,40 @@
     <table class="table mt-4">
         <thead>
         <tr>
-            <th>{{ 'field.name'|trans }}</th>
+            <th>{% include '_sort.html.twig' with {code:'name',name:'field.name',search:search} only %}</th>
+            <th class="d-none d-sm-table-cell">{{ 'field.status'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'field.postcode'|trans }}</th>
-            <th>{{ 'field.city'|trans }}</th>
+            <th class="d-none d-sm-table-cell">{{ 'field.city'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for client in clients %}
             <tr>
                 <td>
-                    <div class="d-flex flex-column flex-md-row">
-                        <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="flex-grow-1">
-                            {{ client.name }}
-                        </a>
-                        {% if false==client.active %}
-                            <div>
-                                <span class="badge badge-secondary">{{ 'inactive'|trans }}</span>
-                            </div>
-                        {% endif %}
-                    </div>
+                    <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="flex-grow-1">
+                        {{ client.name }}
+                    </a>
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    {% if client.active %}
+                        <span class="badge badge-success">{{ 'active'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-light">{{ 'inactive'|trans }}</span>
+                    {% endif %}
                 </td>
                 <td class="d-none d-md-table-cell">{{ client.addressPrimary.postcode }}</td>
-                <td>{{ client.addressPrimary.city }}</td>
+                <td class="d-none d-sm-table-cell">{{ client.addressPrimary.city }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="p-5 text-muted text-center">{{ 'no_results_for_your_search'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    {% include '_pagination.html.twig' with {search:search,results:clients|length} only %}
+
+    {% include '_filters.html.twig' with {formSearch:formSearch,search:search} only %}
 
 {% endblock %}

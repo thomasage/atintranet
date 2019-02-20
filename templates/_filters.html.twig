@@ -1,0 +1,36 @@
+{% spaceless %}
+
+    <div class="modal fade filters" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                {{ form_start(formSearch) }}
+
+                <div class="modal-body">
+                    {{ form_widget(formSearch) }}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">
+                        <span class="fa fa-times"></span>
+                        <span class="d-none d-md-inline">{{ 'action.close'|trans }}</span>
+                    </button>
+                    <a href="{{ path(search.route,{empty:1}) }}" class="btn btn-secondary">
+                        <span class="fa fa-trash-o"></span>
+                        <span class="d-none d-md-inline">{{ 'action.empty'|trans }}</span>
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="fa fa-search"></span>
+                        <span class="d-none d-md-inline">{{ 'action.search'|trans }}</span>
+                    </button>
+                </div>
+
+                {{ form_end(formSearch) }}
+
+            </div>
+
+        </div>
+    </div>
+
+{% endspaceless %}

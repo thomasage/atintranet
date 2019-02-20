@@ -597,6 +597,30 @@
         <source>dashboard</source>
         <target>Tableau de bord</target>
       </trans-unit>
+      <trans-unit id="wCazS.X" resname="action.close">
+        <source>action.close</source>
+        <target>Fermer</target>
+      </trans-unit>
+      <trans-unit id="k2NTGbJ" resname="action.empty">
+        <source>action.empty</source>
+        <target>Vider</target>
+      </trans-unit>
+      <trans-unit id="R_InZ3G" resname="filters">
+        <source>filters</source>
+        <target>Filtres</target>
+      </trans-unit>
+      <trans-unit id="eMYZ2ku" resname="count_results">
+        <source>count_results</source>
+        <target>{0}Aucun résultat|1 résultat|[2,Inf[%count% résultats</target>
+      </trans-unit>
+      <trans-unit id="gTOp0Qi" resname="count_pages">
+        <source>count_pages</source>
+        <target>{0}Aucune page|1 page|[2,Inf[%count% pages</target>
+      </trans-unit>
+      <trans-unit id="E6MDY_u" resname="filtered">
+        <source>filtered</source>
+        <target>filtré</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,0 +1,44 @@
+{% spaceless %}
+
+    {% set pages=search.pages(results) %}
+
+    {% if pages>1 %}
+
+        {% set page=search.page %}
+        {% set max=min(pages-1,page+5) %}
+        {% set min=max(0,page-5) %}
+
+        <div class="d-flex flex-column align-items-center flex-md-row mt-4">
+
+            <ul class="pagination flex-grow-1">
+                {% if page>0 %}
+                    <li class="page-item">
+                        <a href="{{ path(search.route,{page:0}) }}" class="page-link">
+                            <span class="fa fa-step-backward"></span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for p in range(min,max) %}
+                    <li class="page-item{% if p==page %} active{% endif %}">
+                        <a href="{{ path(search.route,{page:p}) }}" class="page-link">{{ p+1 }}</a>
+                    </li>
+                {% endfor %}
+                {% if page<pages-1 %}
+                    <li class="page-item">
+                        <a href="{{ path(search.route,{page:pages-1}) }}" class="page-link">
+                            <span class="fa fa-step-forward"></span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <div class="mt-1 small text-muted">
+                {{ 'count_results'|transchoice(results) }} &ndash;
+                {{ 'count_pages'|transchoice(pages) }}
+            </div>
+
+        </div>
+
+    {% endif %}
+
+{% endspaceless %}

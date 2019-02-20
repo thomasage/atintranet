@@ -112,21 +112,32 @@ class ClientController extends AbstractController
 
     /**
      * @param Request $request
+     * @param SearchManager $sm
      * @param ClientRepository $clientRepository
      * @return Response
      *
      * @Route("/",
      *     name="app_client_index",
-     *     methods={"GET"})
+     *     methods={"GET", "POST"})
      */
-    public function index(Request $request, ClientRepository $clientRepository): Response
+    public function index(Request $request, SearchManager $sm, ClientRepository $clientRepository): Response
     {
-        $clients = $clientRepository->findBySearch();
+        $search = $sm->find($this->getUser(), 'app_client_index');
+
+        $formSearch = $this->createForm(ClientSearchType::class);
+
+        if ($sm->handleRequest($search, $request, $formSearch)) {
+            return $this->redirectToRoute($search->getRoute());
+        }
+
+        $clients = $clientRepository->findBySearch($search);
 
         return $this->render(
             'client/index.html.twig',
             [
                 'clients' => $clients,
+                'formSearch' => $formSearch->createView(),
+                'search' => $search,
             ]
         );
     }
