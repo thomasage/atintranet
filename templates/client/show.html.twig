@@ -17,79 +17,75 @@
 
     <div class="row">
 
-        <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
-            <legend class="pb-1 border-bottom">{{ 'informations'|trans }}</legend>
-            <div class="float-right">
-                {% if client.active %}
-                    <span class="small badge badge-success">{{ 'active'|trans }}</span>
-                {% else %}
-                    <span class="small badge badge-light">{{ 'inactive'|trans }}</span>
-                {% endif %}
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.name'|trans }}</div>
+                <div>{{ client.name }}</div>
             </div>
-            <div><strong>{{ client.name }}</strong></div>
-            {% if client.code|length>0 %}
-                <div>{{ 'field.code'|trans }} : {{ client.code }}</div>
-            {% endif %}
-            {% if client.vatNumber|length>0 %}
-                <div>{{ 'field.vat_number'|trans }} : {{ client.vatNumber }}</div>
-            {% endif %}
-            {% if client.accountNumber|length>0 %}
-                <div>{{ 'field.account_number'|trans }} : {{ client.accountNumber }}</div>
-            {% endif %}
-            {% if client.comment|length>0 %}
-                <div class="small mt-2"><em>{{ client.comment }}</em></div>
-            {% endif %}
-            <div class="small mt-2">Created at {{ client.createdAt|localizeddate('short','short') }}</div>
-            <div class="small">Last update at {{ client.updatedAt|localizeddate('short','short') }}</div>
-        </fieldset>
 
-        <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
-            <legend class="pb-1 border-bottom">{{ 'primary_address'|trans }}</legend>
-            <div>{{ client.addressPrimary.name }}</div>
-            <div>{{ client.addressPrimary.address }}</div>
-            <div>{{ client.addressPrimary.postcode }} {{ client.addressPrimary.city }}</div>
-            <div>{{ client.addressPrimary.country|localizedcountry }}</div>
-        </fieldset>
-
-        <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
-            <legend class="pb-1 border-bottom">{{ 'last_invoices'|trans }}</legend>
-            {% for invoice in client.invoices|slice(0,3) %}
-                <div class="row mb-1">
-                    <div class="col-4">
-                        <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
-                            {{ invoice.number }}
-                        </a>
-                    </div>
-                    <div class="col-4">{{ invoice.issueDate|localizeddate('short','none') }}</div>
-                    <div class="col-4">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</div>
+            {% if client.code %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.code'|trans }}</div>
+                    <div>{{ client.code }}</div>
                 </div>
-            {% endfor %}
-        </fieldset>
+            {% endif %}
 
-        <fieldset class="col-12 col-sm-6 col-md-4 mt-4">
-            <legend class="pb-1 border-bottom">{{ 'projects'|trans }}</legend>
-            {% for project in client.projects %}
-                <div class="mb-1">
-                    <a href="{{ path('app_project_show',{uuid:project.uuid}) }}">
-                        {{ project.name }}
-                    </a>
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.status'|trans }}</div>
+                <div>
+                    {% if client.active %}
+                        <span class="badge badge-success">{{ 'active'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-light">{{ 'inactive'|trans }}</span>
+                    {% endif %}
                 </div>
-            {% endfor %}
-        </fieldset>
+            </div>
 
-    </div>
-
-    {% if client.invoices|length==0 %}
-
-        <h5 class="mt-5 pb-2 border-bottom">{{ 'danger_zone'|trans }}</h5>
-
-        <div class="mt-4">
-            <a href="{{ path('app_client_delete',{uuid:client.uuid}) }}" class="btn btn-outline-danger btn-sm">
-                <span class="fa fa-trash"></span>
-                {{ 'action.delete_client'|trans }}
-            </a>
         </div>
 
-    {% endif %}
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'primary_address'|trans }}</div>
+                <div>
+                    {{ client.addressPrimary.name }}<br/>
+                    {{ client.addressPrimary.address|nl2br }}<br/>
+                    {{ client.addressPrimary.postcode }} {{ client.addressPrimary.city }}<br/>
+                    {{ client.addressPrimary.country|localizedcountry }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            {% if client.vatNumber %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.vat_number'|trans }}</div>
+                    <div>{{ client.vatNumber }}</div>
+                </div>
+            {% endif %}
+
+            {% if client.accountNumber %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.account_number'|trans }}</div>
+                    <div>{{ client.accountNumber }}</div>
+                </div>
+            {% endif %}
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.creation'|trans }}</div>
+                <div>{{ client.createdAt|localizeddate('long','short') }}</div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.lastUpdate'|trans }}</div>
+                <div>{{ client.updatedAt|localizeddate('long','short') }}</div>
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}

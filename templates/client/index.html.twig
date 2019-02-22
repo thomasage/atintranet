@@ -22,9 +22,9 @@
         <thead>
         <tr>
             <th>{% include '_sort.html.twig' with {code:'name',name:'field.name',search:search} only %}</th>
-            <th class="d-none d-sm-table-cell">{{ 'field.status'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'field.postcode'|trans }}</th>
-            <th class="d-none d-sm-table-cell">{{ 'field.city'|trans }}</th>
+            <th class="d-none d-sm-table-cell">{% include '_sort.html.twig' with {code:'status',name:'field.status',search:search} only %}</th>
+            <th class="d-none d-lg-table-cell">{% include '_sort.html.twig' with {code:'postcode',name:'field.postcode',search:search} only %}</th>
+            <th class="d-none d-sm-table-cell">{% include '_sort.html.twig' with {code:'city',name:'field.city',search:search} only %}</th>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                         <span class="badge badge-light">{{ 'inactive'|trans }}</span>
                     {% endif %}
                 </td>
-                <td class="d-none d-md-table-cell">{{ client.addressPrimary.postcode }}</td>
+                <td class="d-none d-lg-table-cell">{{ client.addressPrimary.postcode }}</td>
                 <td class="d-none d-sm-table-cell">{{ client.addressPrimary.city }}</td>
             </tr>
         {% else %}

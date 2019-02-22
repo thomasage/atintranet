@@ -47,8 +47,14 @@ class ClientRepository extends ServiceEntityRepository
         }
 
         foreach ($search->getOrderby() as $orderby => $reverse) {
-            if ('name' === $orderby) {
+            if ('city' === $orderby) {
+                $builder->addOrderBy('addressPrimary.city', $reverse ? 'DESC' : 'ASC');
+            } elseif ('name' === $orderby) {
                 $builder->addOrderBy('client.name', $reverse ? 'DESC' : 'ASC');
+            } elseif ('postcode' === $orderby) {
+                $builder->addOrderBy('addressPrimary.postcode', $reverse ? 'DESC' : 'ASC');
+            } elseif ('status' === $orderby) {
+                $builder->addOrderBy('client.active', $reverse ? 'DESC' : 'ASC');
             }
         }
         $builder->addOrderBy('client.id', 'ASC');

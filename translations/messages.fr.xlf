@@ -621,6 +621,14 @@
         <source>filtered</source>
         <target>filtré</target>
       </trans-unit>
+      <trans-unit id="yCDtyPi" resname="field.creation">
+        <source>field.creation</source>
+        <target>Création</target>
+      </trans-unit>
+      <trans-unit id="mBrJvDT" resname="field.lastUpdate">
+        <source>field.lastUpdate</source>
+        <target>Dernière modification</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
