@@ -6,8 +6,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\UserAddType;
 use App\Form\Type\UserDeleteType;
+use App\Form\Type\UserSearchType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
+use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -137,6 +139,8 @@ class AdminUserController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param SearchManager $sm
      * @param UserRepository $repository
      * @return Response
      *
@@ -144,13 +148,23 @@ class AdminUserController extends AbstractController
      *     name="app_admin_user_index",
      *     methods={"GET"})
      */
-    public function index(UserRepository $repository): Response
+    public function index(Request $request, SearchManager $sm, UserRepository $repository): Response
     {
-        $users = $repository->findBySearch();
+        $search = $sm->find($this->getUser(), 'app_admin_user_index');
+
+        $formSearch = $this->createForm(UserSearchType::class);
+
+        if ($sm->handleRequest($search, $request, $formSearch)) {
+            return $this->redirectToRoute($search->getRoute());
+        }
+
+        $users = $repository->findBySearch($search);
 
         return $this->render(
             'admin/user/index.html.twig',
             [
+                'formSearch' => $formSearch->createView(),
+                'search' => $search,
                 'users' => $users,
             ]
         );

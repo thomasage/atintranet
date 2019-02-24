@@ -1,53 +1,60 @@
 {% extends 'admin/user/base.html.twig' %}
 
+{% block page_title %}{{ 'menu.admin.user'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target=".filters">
+        <span class="fa fa-filter"></span>
+        <span class="d-none d-md-inline">{{ 'filters'|trans }}</span>
+        {% if search.filter|length>0 %}
+            <small>({{ search.filter|length }})</small>
+        {% endif %}
+    </a>
+    <a href="{{ path('app_admin_user_new') }}" class="btn btn-outline-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-admin-user-index">
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>{% include '_sort.html.twig' with {code:'username',name:'field.username',search:search} only %}</th>
+            <th class="d-none d-md-table-cell">{% include '_sort.html.twig' with {code:'roles',name:'field.roles',search:search} only %}</th>
+            <th class="d-none d-sm-table-cell">{% include '_sort.html.twig' with {code:'enabled',name:'field.enabled',search:search} only %}</th>
+            <th class="d-none d-md-table-cell">{% include '_sort.html.twig' with {code:'client',name:'field.client',search:search} only %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td><a href="{{ path('app_admin_user_show',{uuid:user.uuid}) }}">{{ user.username }}</a></td>
+                <td class="d-none d-md-table-cell">
+                    {% for role in user.roles %}
+                        <span class="badge badge-secondary badge_{{ role|lower }}">{{ role|trans }}</span>
+                    {% endfor %}
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    {% if user.enabled %}
+                        <span class="fa fa-check-square-o text-success"></span>
+                    {% else %}
+                        <span class="fa fa-square-o text-muted"></span>
+                    {% endif %}
+                </td>
+                <td class="d-none d-md-table-cell">{{ user.client }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1>{{ 'menu.admin.user'|trans }}</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group btn-group-sm">
-                    <a href="{{ path('app_admin_user_new') }}" class="btn btn-outline-primary">
-                        <span class="fa fa-plus"></span>
-                        {{ 'action.add'|trans }}
-                    </a>
-                </div>
-            </div>
-        </div>
+    {% include '_pagination.html.twig' with {search:search,results:users|length} only %}
 
-        <div class="list-group mt-4">
-            {% for user in users %}
-                <a href="{{ path('app_admin_user_show',{uuid:user.uuid}) }}"
-                   class="list-group-item list-group-item-action">
-                    <div class="d-flex flex-column flex-sm-row justify-content-between">
-                        <div>
-                            <div><strong>{{ user.username }}</strong></div>
-                            {% if user.client %}
-                                <div class="small">{{ user.client }}</div>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for role in user.roles %}
-                                <span class="badge badge-secondary badge_{{ role|lower }}">{{ role|trans }}</span>
-                            {% endfor %}
-                            {% if user.enabled==true %}
-                                <span class="badge badge-success">
-                                    <span class="fa fa-check"></span>
-                                    {{ 'field.enabled'|trans }}
-                                </span>
-                            {% else %}
-                                <span class="badge badge-warning">
-                                    <span class="fa fa-times"></span>
-                                    {{ 'field.disabled'|trans }}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-
-    </div>
+    {% include '_filters.html.twig' with {formSearch:formSearch,search:search} only %}
 
 {% endblock %}
