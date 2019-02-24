@@ -1,36 +1,76 @@
 {% extends 'project/base.html.twig' %}
 
+{% block page_title %}{{ project.name }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_project_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
+    </a>
+    <a href="{{ path('app_project_edit',{uuid:project.uuid}) }}" class="btn btn-primary">
+        <span class="fa fa-pencil"></span>
+        <span class="d-none d-sm-inline">{{ 'action.edit'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-project-show">
+    <div class="row">
 
-        <div class="d-flex flex-row align-items-center mt-5">
-            <h2 class="flex-grow-1 text-truncate mb-0">{{ project.name }}</h2>
-            <div class="btn-group">
-                <a href="{{ path('app_project_index') }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-list"></span>
-                    <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
-                </a>
-                <a href="{{ path('app_project_edit',{uuid:project.uuid}) }}" class="btn btn-primary">
-                    <span class="fa fa-pencil"></span>
-                    <span class="d-none d-sm-inline">{{ 'action.edit'|trans }}</span>
-                </a>
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.name'|trans }}</div>
+                <div>{{ project.name }}</div>
             </div>
+
         </div>
 
-        <div class="row mt-5">
-            <div class="col-2">{{ 'field.client'|trans }}</div>
-            <div class="col-10">
-                <a href="{{ path('app_client_show',{uuid:project.client.uuid}) }}">
-                    {{ project.client }}
-                </a>
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.client'|trans }}</div>
+                <div>{{ project.client.name }}</div>
             </div>
+
         </div>
-        <div class="row mt-2">
-            <div class="col-2">{{ 'field.name'|trans }}</div>
-            <div class="col-10">{{ project.name }}</div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.status'|trans }}</div>
+                <div>
+                    {% if project.active %}
+                        <span class="badge badge-success">{{ 'active'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-light">{{ 'inactive'|trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
 
     </div>
+
+    <h3 class="mt-5">{{ 'rates'|trans }}</h3>
+
+    <table class="table table-sm mt-3">
+        <thead>
+        <tr>
+            <th>{{ 'field.start'|trans }}</th>
+            <th>{{ 'field.on_site'|trans }}</th>
+            <th>{{ 'field.off_site'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rate in project.rates %}
+            <tr>
+                <td>{{ rate.startedAt|localizeddate('short','none') }}</td>
+                <td>{{ rate.hourlyRateOnSite|localizedcurrency('EUR') }}</td>
+                <td>{{ rate.hourlyRateOffSite|localizedcurrency('EUR') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

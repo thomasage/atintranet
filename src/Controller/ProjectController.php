@@ -37,6 +37,7 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator,
         Project $project
     ): Response {
+
         $formEdit = $this->createForm(ProjectType::class, $project);
         $formEdit->handleRequest($request);
 
@@ -46,7 +47,7 @@ class ProjectController extends AbstractController
 
             $this->addFlash('success', $translator->trans('notification.project_updated'));
 
-            return $this->redirectToRoute('app_project_show', ['project' => $project->getUuid()]);
+            return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
 
         }
 
@@ -75,6 +76,42 @@ class ProjectController extends AbstractController
             'project/index.html.twig',
             [
                 'projects' => $projects,
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @return Response
+     *
+     * @Route("/new",
+     *     name="app_project_new",
+     *     methods={"GET", "POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    {
+        $project = new Project();
+
+        $formEdit = $this->createForm(ProjectType::class, $project);
+        $formEdit->handleRequest($request);
+
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
+
+            $em->persist($project);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.project_added'));
+
+            return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
+
+        }
+
+        return $this->render(
+            'project/new.html.twig',
+            [
+                'formEdit' => $formEdit->createView(),
             ]
         );
     }

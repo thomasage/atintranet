@@ -3,7 +3,7 @@
 {% block page_title %}{{ 'title.project_list'|trans }}{% endblock %}
 
 {% block page_menu %}
-    <a href="#" class="btn btn-outline-primary">
+    <a href="{{ path('app_project_new') }}" class="btn btn-outline-primary">
         <span class="fa fa-plus"></span>
         <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
     </a>
@@ -15,14 +15,22 @@
         <thead>
         <tr>
             <th>{{ 'field.name'|trans }}</th>
-            <th>{{ 'field.client'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'field.client'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'field.status'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for project in projects %}
             <tr>
                 <td><a href="{{ path('app_project_show',{uuid:project.uuid}) }}">{{ project.name }}</a></td>
-                <td>{{ project.client.name }}</td>
+                <td class="d-none d-md-table-cell">{{ project.client.name }}</td>
+                <td class="d-none d-md-table-cell">
+                    {% if project.active %}
+                        <span class="badge badge-success">{{ 'active'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-secondary">{{ 'inactive'|trans }}</span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

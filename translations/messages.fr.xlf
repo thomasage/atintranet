@@ -189,6 +189,10 @@
         <source>notification.client_updated</source>
         <target>Le client est modifié.</target>
       </trans-unit>
+      <trans-unit id="Hk5AHCL" resname="notification.project_added">
+        <source>notification.project_added</source>
+        <target>Le projet est ajouté.</target>
+      </trans-unit>
       <trans-unit id="UVoxuhF" resname="notification.project_updated">
         <source>notification.project_updated</source>
         <target>Le projet est modifié.</target>
@@ -628,6 +632,18 @@
       <trans-unit id="mBrJvDT" resname="field.lastUpdate">
         <source>field.lastUpdate</source>
         <target>Dernière modification</target>
+      </trans-unit>
+      <trans-unit id="wikSY.H" resname="title.project_add">
+        <source>title.project_add</source>
+        <target>Ajouter un projet</target>
+      </trans-unit>
+      <trans-unit id=".ySq0sA" resname="rates">
+        <source>rates</source>
+        <target>Tarifs</target>
+      </trans-unit>
+      <trans-unit id="XL9PV6w" resname="field.off_site">
+        <source>field.off_site</source>
+        <target>Hors site</target>
       </trans-unit>
     </body>
   </file>
