@@ -37,7 +37,7 @@ class ClientFixtures extends Fixture
             $client
                 ->setActive($faker->boolean)
                 ->setAddressPrimary($address)
-                ->setCode(strtoupper($faker->unique()->word))
+                ->setCode(substr(strtoupper($faker->unique()->word), 0, 10))
                 ->setName($faker->company)
                 ->setVatNumber(preg_replace('/[^0-9A-Z]/', '', $faker->vat));
             $manager->persist($client);
