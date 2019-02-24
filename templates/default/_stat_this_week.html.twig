@@ -1,0 +1,35 @@
+{% set total=timesThisWeek|arraySumColumn('duration') %}
+
+<h2>{{ 'this_week'|trans }}</h2>
+
+<table class="table table-sm mt-3">
+    <thead>
+    <tr>
+        {% if null==app.user.client %}
+            <th>{{ 'field.client'|trans }}</th>
+        {% endif %}
+        <th>{{ 'field.project'|trans }}</th>
+        <th>{{ 'field.duration'|trans }}</th>
+        <th class="d-none d-md-table-cell"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th colspan="{% if null==app.user.client %}2{% else %}1{% endif %}">Total</th>
+        <th>{{ total|localizedduration }}</th>
+        <th class="d-none d-md-table-cell"></th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {% for d in timesThisWeek %}
+        <tr>
+            {% if null==app.user.client %}
+                <td>{{ d.client_name }}</td>
+            {% endif %}
+            <td>{{ d.project_name }}</td>
+            <td>{{ d.duration|localizedduration }}</td>
+            <td class="d-none d-md-table-cell">{{ (d.duration/total)|localizednumber('percent') }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
