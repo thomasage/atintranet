@@ -10,6 +10,7 @@ use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client as GuzzleClient;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -58,7 +59,10 @@ class ImportTogglCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Import CSV file from Toggl');
+        $this
+            ->setDescription('Import CSV file from Toggl')
+            ->addArgument('start', InputArgument::OPTIONAL, 'Import from date (YYYY-MM-DD)')
+            ->addArgument('stop', InputArgument::OPTIONAL, 'Import to date (YYYY-MM-DD)');
     }
 
     /**
@@ -178,9 +182,25 @@ class ImportTogglCommand extends Command
 
         $this->em->flush();
 
-        $start = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', mktime(0, 0, 0, (int)date('n'), 1)));
+        $start = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('start'));
+        if (!$start instanceof \DateTime) {
+            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int)date('n'), 1)));
+        }
+        $start->setTime(0, 0);
 
-        $response = $guzzleClient->get(sprintf('time_entries?start_date=%s', urlencode($start->format('c'))));
+        $stop = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('stop'));
+        if (!$stop instanceof \DateTime) {
+            $stop = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, date('n') + 1, 0)));
+        }
+        $stop->setTime(23, 59, 59);
+
+        $response = $guzzleClient->get(
+            sprintf(
+                'time_entries?start_date=%s&end_date=%s',
+                urlencode($start->format('c')),
+                urlencode($stop->format('c'))
+            )
+        );
         if (200 !== $response->getStatusCode()) {
             $io->error(sprintf('Unable to fetch time_entries (%d)', $response->getStatusCode()));
 
