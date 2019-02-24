@@ -29,8 +29,7 @@ class ProjectController extends AbstractController
      *
      * @Route("/{uuid}/edit",
      *     name="app_project_edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function edit(
         Request $request,
@@ -86,8 +85,7 @@ class ProjectController extends AbstractController
      *
      * @Route("/{uuid}",
      *     name="app_project_show",
-     *     methods={"GET"},
-     *     requirements={"uuid"})
+     *     methods={"GET"})
      */
     public function show(Project $project): Response
     {

@@ -32,8 +32,7 @@ class InvoiceController extends AbstractController
      *
      * @Route("/{uuid}/edit",
      *     name="app_invoice_edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function edit(
         Request $request,
@@ -97,7 +96,7 @@ class InvoiceController extends AbstractController
      * @Route("/{uuid}/lock/{lock}",
      *     name="app_invoice_lock",
      *     methods={"GET"},
-     *     requirements={"uuid", "lock"="0|1"})
+     *     requirements={"lock"="0|1"})
      */
     public function lock(
         EntityManagerInterface $em,
@@ -172,8 +171,7 @@ class InvoiceController extends AbstractController
      *
      * @Route("/{uuid}/print",
      *     name="app_invoice_print",
-     *     methods={"GET"},
-     *     requirements={"uuid"})
+     *     methods={"GET"})
      */
     public function print(InvoicePDF $generator, TranslatorInterface $translator, Invoice $invoice): BinaryFileResponse
     {
@@ -203,8 +201,7 @@ class InvoiceController extends AbstractController
      *
      * @Route("/{uuid}",
      *     name="app_invoice_show",
-     *     methods={"GET"},
-     *     requirements={"uuid"})
+     *     methods={"GET"})
      */
     public function show(Invoice $invoice): Response
     {

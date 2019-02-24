@@ -32,8 +32,7 @@ class ClientController extends AbstractController
      *
      * @Route("/{uuid}/delete",
      *     name="app_client_delete",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function delete(
         Request $request,
@@ -78,8 +77,7 @@ class ClientController extends AbstractController
      *
      * @Route("/{uuid}/edit",
      *     name="app_client_edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function edit(
         Request $request,
@@ -178,8 +176,7 @@ class ClientController extends AbstractController
      *
      * @Route("/{uuid}",
      *     name="app_client_show",
-     *     methods={"GET"},
-     *     requirements={"uuid"})
+     *     methods={"GET"})
      */
     public function show(Client $client): Response
     {

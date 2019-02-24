@@ -34,8 +34,7 @@ class AdminUserController extends AbstractController
      *
      * @Route("/{uuid}/delete",
      *     name="app_admin_user_delete",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function delete(
         Request $request,
@@ -81,8 +80,7 @@ class AdminUserController extends AbstractController
      *
      * @Route("/{uuid}/edit",
      *     name="app_admin_user_edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"uuid"})
+     *     methods={"GET", "POST"})
      */
     public function edit(
         Request $request,
@@ -218,8 +216,7 @@ class AdminUserController extends AbstractController
      *
      * @Route("/{uuid}",
      *     name="app_admin_user_show",
-     *     methods={"GET"},
-     *     requirements={"uuid"})
+     *     methods={"GET"})
      */
     public function show(User $user): Response
     {
