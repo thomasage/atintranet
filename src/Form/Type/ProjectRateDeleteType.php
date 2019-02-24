@@ -24,9 +24,6 @@ class ProjectRateDeleteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var ProjectRate $rate */
-        $rate = $options['data'];
-
         $builder
             ->add(
                 'project',
