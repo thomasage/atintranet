@@ -50,6 +50,7 @@ jobs:
             - node_modules
 
       # prepare the database
+      - run: mkdir storage
       - run: touch storage/testing.sqlite
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
