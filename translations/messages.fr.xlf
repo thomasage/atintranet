@@ -197,6 +197,18 @@
         <source>notification.project_updated</source>
         <target>Le projet est modifié.</target>
       </trans-unit>
+      <trans-unit id="P7zrmiP" resname="notification.project_rate_added">
+        <source>notification.project_rate_added</source>
+        <target>Le tarif a été ajouté.</target>
+      </trans-unit>
+      <trans-unit id="IVAcgmb" resname="notification.project_rate_updated">
+        <source>notification.project_rate_updated</source>
+        <target>Le tarif a été modifié.</target>
+      </trans-unit>
+      <trans-unit id="E4L418d" resname="notification.project_rate_removed">
+        <source>notification.project_rate_removed</source>
+        <target>Le tarif a été supprimé.</target>
+      </trans-unit>
       <trans-unit id=".NuLF.M" resname="notification.invoice_updated">
         <source>notification.invoice_updated</source>
         <target>La facture est modifiée.</target>
@@ -461,6 +473,10 @@
         <source>confirmation.delete_payment</source>
         <target>Je souhaite supprimer définitivement ce règlement</target>
       </trans-unit>
+      <trans-unit id="Qe9EIZE" resname="confirmation.delete_project_rate">
+        <source>confirmation.delete_project_rate</source>
+        <target>Je souhaite supprimer définitivement ce tarif</target>
+      </trans-unit>
       <trans-unit id="NGooIBs" resname="danger_zone">
         <source>danger_zone</source>
         <target>Zone dangereuse</target>
@@ -644,6 +660,18 @@
       <trans-unit id="XL9PV6w" resname="field.off_site">
         <source>field.off_site</source>
         <target>Hors site</target>
+      </trans-unit>
+      <trans-unit id="CKvkmpF" resname="title.project_rate_add">
+        <source>title.project_rate_add</source>
+        <target>Ajouter un tarif</target>
+      </trans-unit>
+      <trans-unit id="U5H8EH0" resname="title.project_rate_edit">
+        <source>title.project_rate_edit</source>
+        <target>Modifier un tarif</target>
+      </trans-unit>
+      <trans-unit id=".qAMqEn" resname="title.project_rate_delete">
+        <source>title.project_rate_delete</source>
+        <target>Supprimer un tarif</target>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,32 @@
+{% extends 'client/base.html.twig' %}
+
+{% block page_title %}{{ 'title.project_rate_delete'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_project_show',{uuid:project.uuid}) }}" class="btn btn-outline-secondary">
+        <span class="fa fa-undo"></span>
+        <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="mt-5">
+
+        {{ form_start(formDelete) }}
+        {{ form_widget(formDelete) }}
+        <div class="mt-5">
+            <button type="submit" class="btn btn-danger">
+                <span class="fa fa-trash"></span>
+                {{ 'action.delete'|trans }}
+            </button>
+            <a href="{{ path('app_project_show',{uuid:project.uuid}) }}" class="btn btn-outline-secondary">
+                <span class="fa fa-undo"></span>
+                {{ 'action.cancel'|trans }}
+            </a>
+        </div>
+        {{ form_end(formDelete) }}
+
+    </div>
+
+{% endblock %}

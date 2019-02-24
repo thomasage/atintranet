@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Helper\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -12,16 +13,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class ProjectRate
 {
+    use IdTrait {
+        IdTrait::__construct as protected IdTraitConstruct;
+    }
     use TimestampableEntity;
-
-    /**
-     * @var int
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @var Project
@@ -53,11 +48,12 @@ class ProjectRate
     private $startedAt;
 
     /**
-     * @return int|null
+     * ProjectRate constructor.
      */
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->IdTraitConstruct();
+        $this->startedAt = new \DateTime();
     }
 
     /**
