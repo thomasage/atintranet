@@ -1,151 +1,165 @@
 {% extends 'invoice/base.html.twig' %}
 
+{% block page_title %}{{ invoice.type|trans }} {{ invoice.number }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+    </a>
+    <a href="{{ path('app_invoice_print',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-print"></span>
+        <span class="d-none d-md-inline">{{ 'action.print'|trans }}</span>
+    </a>
+    {% if invoice.locked %}
+        <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:0}) }}"
+           class="btn btn-outline-danger">
+            <span class="fa fa-unlock"></span>
+            <span class="d-none d-md-inline">{{ 'action.unlock'|trans }}</span>
+        </a>
+    {% else %}
+        <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:1}) }}"
+           class="btn btn-outline-info">
+            <span class="fa fa-lock"></span>
+            <span class="d-none d-md-inline">{{ 'action.lock'|trans }}</span>
+        </a>
+        <a href="{{ path('app_invoice_edit',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
+            <span class="fa fa-pencil"></span>
+            <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
+        </a>
+        <a href="#" class="btn btn-outline-danger">
+            <span class="fa fa-trash"></span>
+            <span class="d-none d-md-inline">{{ 'action.delete'|trans }}</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-invoice-show">
+    <div class="row">
 
-        <div class="d-flex flex-column flex-md-row justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h2><strong>{{ invoice.type|trans }} {{ invoice.number }}</strong></h2>
-            <div class="btn-group mt-2 mt-md-0 mb-2">
-                <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-list"></span>
-                    <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
-                </a>
-                <a href="{{ path('app_invoice_print',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
-                    <span class="fa fa-print"></span>
-                    <span class="d-none d-md-inline">{{ 'action.print'|trans }}</span>
-                </a>
-                {% if invoice.locked %}
-                    <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:0}) }}"
-                       class="btn btn-outline-danger">
-                        <span class="fa fa-unlock"></span>
-                        <span class="d-none d-md-inline">{{ 'action.unlock'|trans }}</span>
-                    </a>
-                {% else %}
-                    <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:1}) }}"
-                       class="btn btn-outline-info">
-                        <span class="fa fa-lock"></span>
-                        <span class="d-none d-md-inline">{{ 'action.lock'|trans }}</span>
-                    </a>
-                    <a href="{{ path('app_invoice_edit',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
-                        <span class="fa fa-pencil"></span>
-                        <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
-                    </a>
-                    <a href="#" class="btn btn-outline-danger">
-                        <span class="fa fa-trash"></span>
-                        <span class="d-none d-md-inline">{{ 'action.delete'|trans }}</span>
-                    </a>
-                {% endif %}
+        <div class="col-12 col-md-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.number'|trans }}</div>
+                <div>{{ invoice.type|trans }} {{ invoice.number }}</div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.client'|trans }}</div>
+                <div>
+                    <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">{{ invoice.client.name }}</a>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.status'|trans }}</div>
+                <div>
+                    {% if invoice.locked %}
+                        <span class="badge badge-success"><span class="fa fa-lock"></span> locked</span>
+                    {% else %}
+                        <span class="badge badge-danger"><span class="fa fa-unlock"></span> unlocked</span>
+                    {% endif %}
+                    {% if invoice.closed %}
+                        <span class="ml-2 badge badge-success"><span
+                                    class="fa fa-check-square-o"></span> closed</span>
+                    {% else %}
+                        <span class="ml-2 badge badge-secondary"><span class="fa fa-square-o"></span> open</span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <div class="mt-2 mt-md-0">
+                <div class="text-muted small">{{ 'field.issue_date'|trans }}</div>
+                <div>{{ invoice.issueDate|localizeddate('full','none')|capitalize }}</div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.due_date'|trans }}</div>
+                <div>{{ invoice.dueDate|localizeddate('full','none')|capitalize }}</div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-4 mt-2 mt-md-0">
+            <div class="text-muted small">{{ 'field.address'|trans }}</div>
+            <div>
+                {{ invoice.address.name }}<br/>
+                {{ invoice.address.address|nl2br }}<br/>
+                {{ invoice.address.postcode }} {{ invoice.address.city }}<br/>
+                {{ invoice.address.country|localizedcountry }}
             </div>
         </div>
 
-        <div class="row mt-4">
+        {% if invoice.comment|length>0 %}
+            <div class="col-12 mt-2">
+                <div class="text-muted small">{{ 'field.comment'|trans }}</div>
+                <div>{{ invoice.comment }}</div>
+            </div>
+        {% endif %}
 
-            <div class="col-12 col-md-4">
+        {% if invoice.commentInternal|length>0 %}
+            <div class="col-12 mt-2">
+                <div class="text-muted small">{{ 'field.internal_comment'|trans }}</div>
+                <div>{{ invoice.commentInternal }}</div>
+            </div>
+        {% endif %}
 
-                <div>
-                    <div class="text-muted small">{{ 'field.number'|trans }}</div>
-                    <div>{{ invoice.type|trans }} {{ invoice.number }}</div>
-                </div>
+    </div>
 
-                <div class="mt-2">
-                    <div class="text-muted small">{{ 'field.status'|trans }}</div>
-                    <div>
-                        {% if invoice.locked %}
-                            <span class="badge badge-success"><span class="fa fa-lock"></span> locked</span>
-                        {% else %}
-                            <span class="badge badge-danger"><span class="fa fa-unlock"></span> unlocked</span>
-                        {% endif %}
-                        {% if invoice.closed %}
-                            <span class="ml-2 badge badge-success"><span
-                                        class="fa fa-check-square-o"></span> closed</span>
-                        {% else %}
-                            <span class="ml-2 badge badge-secondary"><span class="fa fa-square-o"></span> open</span>
-                        {% endif %}
+    <div class="mt-4">
+        <div class="d-none d-md-flex row mt-5">
+            <div class="col-6"><strong>{{ 'field.designation'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.quantity'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.amount_unit'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.amount_excluding_tax'|trans }}</strong></div>
+        </div>
+        {% for detail in invoice.details %}
+            <div class="mt-2 row border-top pt-2">
+                <div class="col-12 col-md-6 text-truncate-under-md">{{ detail.designation }}</div>
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.quantity'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.quantity }}</div>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="col-12 col-md-4">
-
-                <div class="mt-2 mt-md-0">
-                    <div class="text-muted small">{{ 'field.issue_date'|trans }}</div>
-                    <div>{{ invoice.issueDate|localizeddate('full','none')|capitalize }}</div>
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.amount_unit'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.amountUnit|localizedcurrency(invoice.currency) }}</div>
+                    </div>
                 </div>
-
-                <div class="mt-2">
-                    <div class="text-muted small">{{ 'field.due_date'|trans }}</div>
-                    <div>{{ invoice.dueDate|localizeddate('full','none')|capitalize }}</div>
-                </div>
-
-            </div>
-
-            <div class="col-12 col-md-4 mt-2 mt-md-0">
-                <div class="text-muted small">{{ 'field.address'|trans }}</div>
-                <div>
-                    {{ invoice.client.name }}<br/>
-                    {{ invoice.address.address|nl2br }}<br/>
-                    {{ invoice.address.postcode }} {{ invoice.address.city }}<br/>
-                    {{ invoice.address.country|localizedcountry }}
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.amount_excluding_tax'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.amountTotal|localizedcurrency(invoice.currency) }}</div>
+                    </div>
                 </div>
             </div>
-
-            {% if invoice.comment|length>0 %}
-                <div class="col-12 mt-2">
-                    <div class="text-muted small">{{ 'field.comment'|trans }}</div>
-                    <div>{{ invoice.comment }}</div>
-                </div>
-            {% endif %}
-
-            {% if invoice.commentInternal|length>0 %}
-                <div class="col-12 mt-2">
-                    <div class="text-muted small">{{ 'field.internal_comment'|trans }}</div>
-                    <div>{{ invoice.commentInternal }}</div>
-                </div>
-            {% endif %}
-
+        {% endfor %}
+        <div class="row border-top mt-2 pt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ 'field.amount_excluding_tax'|trans }}</div>
+            <div class="col-7 col-md-2 text-right">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</div>
         </div>
-
-        <table class="table table-responsive-md mt-4 mb-0 mt-md-5" id="invoice_details">
-            <thead class="text-truncate">
-            <tr>
-                <th>{{ 'field.designation'|trans }}</th>
-                <th class="text-right">{{ 'field.quantity'|trans }}</th>
-                <th class="text-right">{{ 'field.amount_unit'|trans }}</th>
-                <th class="text-right">{{ 'field.amount_excluding_tax'|trans }}</th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th colspan="3" class="text-right">{{ 'field.amount_excluding_tax'|trans }}</th>
-                <th class="text-right">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</th>
-            </tr>
-            <tr>
-                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.tax_amount'|trans }} ({{ invoice.taxRate|localizednumber('percent') }})</th>
-                <th class="text-right border-0 pt-0">{{ invoice.taxAmount|localizedcurrency(invoice.currency) }}</th>
-            </tr>
-            <tr>
-                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.amount_including_tax'|trans }}</th>
-                <th class="text-right border-0 pt-0">{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</th>
-            </tr>
-            <tr>
-                <th colspan="3" class="text-right border-0 pt-0">{{ 'field.amount_paid'|trans }}</th>
-                <th class="text-right border-0 pt-0">{{ invoice.amountPaid|localizedcurrency(invoice.currency) }}</th>
-            </tr>
-            </tfoot>
-            <tbody class="text-nowrap">
-            {% for detail in invoice.details %}
-                <tr>
-                    <td>{{ detail.designation }}</td>
-                    <td class="text-right">{{ detail.quantity }}</td>
-                    <td class="text-right">{{ detail.amountUnit|localizedcurrency(invoice.currency) }}</td>
-                    <td class="text-right">{{ detail.amountTotal|localizedcurrency(invoice.currency) }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                {{ 'field.tax_amount'|trans }}
+                <span class="d-none d-md-inline">({{ invoice.taxRate|localizednumber('percent') }})</span>
+            </div>
+            <div class="col-6 col-md-2 text-right">{{ invoice.taxAmount|localizedcurrency(invoice.currency) }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                <strong>{{ 'field.amount_including_tax'|trans }}</strong>
+            </div>
+            <div class="col-6 col-md-2 text-right">
+                <strong>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</strong>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

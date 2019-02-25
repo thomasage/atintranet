@@ -96,3 +96,13 @@ table.table-hover tr[data-url] {
   }
 
 }
+
+@media (max-width: 768px) {
+
+  .text-truncate-under-md {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+}
