@@ -6,9 +6,9 @@
     {% set class='text-dark'~(firstOrderby==code? ' active':'') %}
 
     <a href="{{ path(search.route,{orderby:code,reverse:reverse}) }}" class="{{ class }}">
-        {% if firstOrderby==code %}
-            <span class="fa fa-sort-alpha-{% if firstReverse %}desc{% else %}asc{% endif %}"></span>
-        {% endif %}
+        {%- if firstOrderby==code -%}
+            <span class="fa fa-sort-alpha-{% if firstReverse %}desc{% else %}asc{% endif %} mr-1"></span>
+        {%- endif -%}
         {{- name|trans -}}
         {%- if search.filter(code) is not null -%}
             <small class="text-muted ml-2">{{ 'filtered'|trans }}</small>

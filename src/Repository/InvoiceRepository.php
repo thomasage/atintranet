@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Invoice;
+use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -142,18 +144,53 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Invoice[]
+     * @param Search $search
+     * @return Paginator
      */
-    public function findBySearch(): array
+    public function findBySearch(Search $search): Paginator
     {
-        return $this
+        $builder = $this
             ->createQueryBuilder('i')
             ->innerJoin('i.client', 'c')
-            ->addSelect('c')
-            ->addOrderBy('i.issueDate', 'DESC')
-            ->addOrderBy('i.number', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->addSelect('c');
+
+        if (null !== ($client = $search->getFilter('client'))) {
+            $builder
+                ->andWhere('c.id = :client')
+                ->setParameter('client', $client);
+        }
+        if (null !== ($type = $search->getFilter('type'))) {
+            $builder
+                ->andWhere('i.type = :type')
+                ->setParameter('type', $type);
+        }
+
+        foreach ($search->getOrderby() as $orderby => $reverse) {
+            if ('amountExcludingTax' === $orderby) {
+                $builder->addOrderBy('i.amountExcludingTax', $reverse ? 'DESC' : 'ASC');
+            } elseif ('amountIncludingTax' === $orderby) {
+                $builder->addOrderBy('i.amountIncludingTax', $reverse ? 'DESC' : 'ASC');
+            } elseif ('amountPaid' === $orderby) {
+                $builder->addOrderBy('i.amountPaid', $reverse ? 'DESC' : 'ASC');
+            } elseif ('client' === $orderby) {
+                $builder->addOrderBy('c.name', $reverse ? 'DESC' : 'ASC');
+            } elseif ('issueDate' === $orderby) {
+                $builder->addOrderBy('i.issueDate', $reverse ? 'DESC' : 'ASC');
+            } elseif ('number' === $orderby) {
+                $builder->addOrderBy('i.number', $reverse ? 'DESC' : 'ASC');
+            } elseif ('type' === $orderby) {
+                $builder->addOrderBy('i.type', $reverse ? 'DESC' : 'ASC');
+            }
+        }
+        $builder->addOrderBy('i.id', 'DESC');
+
+        if (null !== $search->getResultsPerPage()) {
+            $builder
+                ->setFirstResult($search->getPage() * $search->getResultsPerPage())
+                ->setMaxResults($search->getResultsPerPage());
+        }
+
+        return new Paginator($builder->getQuery());
     }
 
     /**

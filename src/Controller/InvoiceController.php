@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Invoice;
+use App\Form\Type\InvoiceSearchType;
 use App\Form\Type\InvoiceType;
 use App\Model\InvoicePDF;
 use App\Repository\InvoiceRepository;
+use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,21 +70,33 @@ class InvoiceController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param SearchManager $sm
      * @param InvoiceRepository $invoiceRepository
      * @return Response
      *
      * @Route("/",
      *     name="app_invoice_index",
-     *     methods={"GET"})
+     *     methods={"GET", "POST"})
      */
-    public function index(InvoiceRepository $invoiceRepository): Response
+    public function index(Request $request, SearchManager $sm, InvoiceRepository $invoiceRepository): Response
     {
-        $invoices = $invoiceRepository->findBySearch();
+        $search = $sm->find($this->getUser(), 'app_invoice_index');
+
+        $formSearch = $this->createForm(InvoiceSearchType::class);
+
+        if ($sm->handleRequest($search, $request, $formSearch)) {
+            return $this->redirectToRoute($search->getRoute());
+        }
+
+        $invoices = $invoiceRepository->findBySearch($search);
 
         return $this->render(
             'invoice/index.html.twig',
             [
+                'formSearch' => $formSearch->createView(),
                 'invoices' => $invoices,
+                'search' => $search,
             ]
         );
     }

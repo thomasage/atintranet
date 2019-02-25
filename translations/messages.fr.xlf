@@ -245,6 +245,10 @@
         <source>field.city</source>
         <target>Ville</target>
       </trans-unit>
+      <trans-unit id="QfddF23" resname="field.type">
+        <source>field.type</source>
+        <target>Type</target>
+      </trans-unit>
       <trans-unit id="JYn0dJ." resname="field.country">
         <source>field.country</source>
         <target>Pays</target>

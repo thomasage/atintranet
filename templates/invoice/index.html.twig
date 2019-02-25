@@ -3,7 +3,14 @@
 {% block page_title %}{{ 'title.invoice_list'|trans }}{% endblock %}
 
 {% block page_menu %}
-    <a href="{{ path('app_invoice_new') }}" class="btn btn-primary">
+    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target=".filters">
+        <span class="fa fa-filter"></span>
+        <span class="d-none d-md-inline">{{ 'filters'|trans }}</span>
+        {% if search.filter|length>0 %}
+            <small>({{ search.filter|length }})</small>
+        {% endif %}
+    </a>
+    <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-primary">
         <span class="fa fa-plus"></span>
         <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
     </a>
@@ -14,23 +21,42 @@
     <table class="table">
         <thead>
         <tr>
-            <th>{{ 'field.number'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'field.issue_date'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'field.amount_excluding_tax'|trans }}</th>
-            <th>{{ 'field.amount_including_tax'|trans }}</th>
-            <th class="d-none d-sm-table-cell">{{ 'field.amount_paid'|trans }}</th>
-            <th class="d-none d-sm-table-cell">{{ 'field.client'|trans }}</th>
+            <th>
+                {%- include '_sort.html.twig' with {code:'number',name:'field.number',search:search} only -%}
+            </th>
+            <th class="d-none d-sm-table-cell">
+                {%- include '_sort.html.twig' with {code:'type',name:'field.type',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'issueDate',name:'field.issue_date',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'amountExcludingTax',name:'field.amount_excluding_tax',search:search} only -%}
+            </th>
+            <th>
+                {%- include '_sort.html.twig' with {code:'amountIncludingTax',name:'field.amount_including_tax',search:search} only -%}
+            </th>
+            <th class="d-none d-sm-table-cell">
+                {%- include '_sort.html.twig' with {code:'amountPaid',name:'field.amount_paid',search:search} only -%}
+            </th>
+            <th class="d-none d-sm-table-cell">
+                {%- include '_sort.html.twig' with {code:'client',name:'field.client',search:search} only -%}
+            </th>
         </tr>
         </thead>
         <tbody>
         {% for invoice in invoices %}
             <tr>
                 <td>
-                    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">{{ invoice.number }}</a>
-                    {% if invoice.locked %}
+                    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
+                        <span class="mr-1 d-sm-none">{{ invoice.type|trans|first }}</span>
+                        {{- invoice.number -}}
+                    </a>
+                    {%- if invoice.locked -%}
                         <span class="fa fa-lock ml-1 text-success"></span>
-                    {% endif %}
+                    {%- endif -%}
                 </td>
+                <td class="d-none d-sm-table-cell">{{ invoice.type|trans }}</td>
                 <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
                 <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
                 <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
@@ -48,10 +74,14 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+                <td colspan="7" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    {% include '_pagination.html.twig' with {search:search,results:invoices|length} only %}
+
+    {% include '_filters.html.twig' with {formSearch:formSearch,search:search} only %}
 
 {% endblock %}

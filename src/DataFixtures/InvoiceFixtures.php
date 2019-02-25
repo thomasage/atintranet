@@ -58,7 +58,8 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             $invoice
                 ->setAddress($address)
                 ->setClient($this->getRandomClient())
-                ->setIssueDate($issue);
+                ->setIssueDate($issue)
+                ->setLocked($faker->boolean);
             $manager->persist($invoice);
             $this->setReference(sprintf('invoice-%d', $i), $invoice);
 
