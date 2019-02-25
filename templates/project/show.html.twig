@@ -58,14 +58,14 @@
 
             <h3 class="mt-5">{{ 'rates'|trans }}</h3>
 
-            <table class="table mt-3">
+            <table class="table table-responsive-sm mt-3">
                 <colgroup>
                     <col/>
                     <col/>
                     <col/>
                     <col width="1"/>
                 </colgroup>
-                <thead>
+                <thead class="text-nowrap">
                 <tr>
                     <th>{{ 'field.start'|trans }}</th>
                     <th>{{ 'field.on_site'|trans }}</th>
@@ -91,6 +91,10 @@
                                 </a>
                             </div>
                         </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
