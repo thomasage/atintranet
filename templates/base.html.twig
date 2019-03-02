@@ -14,9 +14,9 @@
 {% endif %}
 <div class="container">
     {% include '_flash_messages.html.twig' %}
-    <div class="d-flex flex-row align-items-center mb-4">
-        <h2 class="flex-grow-1 mb-0 text-truncate">{% block page_title %}{% endblock %}</h2>
-        <div class="ml-3 btn-group">{% block page_menu %}{% endblock %}</div>
+    <div class="d-flex flex-row flex-wrap flex-md-nowrap align-items-center mb-4">
+        <h2 class="flex-grow-1 mb-0 text-truncate mb-2 mb-md-0 mr-3">{% block page_title %}{% endblock %}</h2>
+        <div class="btn-group">{% block page_menu %}{% endblock %}</div>
     </div>
     <div id="{{ app.request.get('_route')|replace({'_':'-'})|replace({'app-':'page-'}) }}">
         {% block body %}{% endblock %}
