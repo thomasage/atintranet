@@ -677,6 +677,14 @@
         <source>title.project_rate_delete</source>
         <target>Supprimer un tarif</target>
       </trans-unit>
+      <trans-unit id="w7xJjbI" resname="action.copy">
+        <source>action.copy</source>
+        <target>Copier</target>
+      </trans-unit>
+      <trans-unit id="Kw3N1AA" resname="actions">
+        <source>actions</source>
+        <target>Actions</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

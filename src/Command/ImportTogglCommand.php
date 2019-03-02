@@ -225,6 +225,11 @@ class ImportTogglCommand extends Command
 
                 try {
 
+                    // Entry in progress
+                    if (!isset($timeEntry->stop)) {
+                        continue;
+                    }
+
                     $task = new Task();
                     $task
                         ->setExternalReference((string)$timeEntry->id)

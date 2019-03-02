@@ -27,3 +27,9 @@ global.scrollToElement = function (element, increment = 0) {
     );
 
 };
+
+global.toNumber = function (input) {
+
+    return parseFloat(input.replace(',', '.'));
+
+};

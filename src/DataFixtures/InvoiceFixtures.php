@@ -63,32 +63,23 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($invoice);
             $this->setReference(sprintf('invoice-%d', $i), $invoice);
 
-            $detail = new InvoiceDetail();
-            $detail
-                ->setAmountUnit((string)$faker->numberBetween(50, 100))
-                ->setDesignation(ucfirst($faker->words(3, true)))
-                ->setQuantity($faker->numberBetween(1, 10));
-            $manager->persist($detail);
+            $countDetails = $faker->numberBetween(1, 10);
 
-            $invoice->addDetail($detail);
+            $j = 0;
+            while ($j < $countDetails) {
 
-            $detail = new InvoiceDetail();
-            $detail
-                ->setAmountUnit((string)$faker->numberBetween(50, 100))
-                ->setDesignation(ucfirst($faker->words(3, true)))
-                ->setQuantity($faker->numberBetween(1, 10));
-            $manager->persist($detail);
+                $detail = new InvoiceDetail();
+                $detail
+                    ->setAmountUnit((string)$faker->randomFloat(2, 50, 100))
+                    ->setDesignation(ucfirst($faker->words(3, true)))
+                    ->setQuantity($faker->numberBetween(1, 10));
+                $manager->persist($detail);
 
-            $invoice->addDetail($detail);
+                $invoice->addDetail($detail);
 
-            $detail = new InvoiceDetail();
-            $detail
-                ->setAmountUnit((string)$faker->numberBetween(50, 100))
-                ->setDesignation(ucfirst($faker->words(3, true)))
-                ->setQuantity($faker->numberBetween(1, 10));
-            $manager->persist($detail);
+                $j++;
 
-            $invoice->addDetail($detail);
+            }
 
         }
 
