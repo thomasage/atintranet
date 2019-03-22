@@ -74,7 +74,7 @@
             {% endif %}
             <li class="nav-item">
                 <a href="{{ path('app_security_logout') }}" class="nav-link">
-                    {{ 'menu.logout'|trans }}
+                    {{ 'menu.logout'|trans }} <small>({{ app.user }})</small>
                 </a>
             </li>
         </ul>
