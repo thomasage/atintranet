@@ -46,8 +46,8 @@ class UserRepository extends ServiceEntityRepository
                 $builder->addOrderBy('client.name', $reverse ? 'DESC' : 'ASC');
             } elseif ('enabled' === $orderby) {
                 $builder->addOrderBy('user.enabled', $reverse ? 'DESC' : 'ASC');
-            } elseif ('roles' === $orderby) {
-                $builder->addOrderBy('user.roles', $reverse ? 'DESC' : 'ASC');
+            } elseif ('role' === $orderby) {
+                $builder->addOrderBy('user.role', $reverse ? 'DESC' : 'ASC');
             } elseif ('username' === $orderby) {
                 $builder->addOrderBy('user.username', $reverse ? 'DESC' : 'ASC');
             }

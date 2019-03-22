@@ -1,74 +1,63 @@
 {% extends 'admin/user/base.html.twig' %}
 
+{% block page_title %}{{ user }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_admin_user_edit',{uuid:user.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-pencil"></span>
+        {{ 'action.edit'|trans }}
+    </a>
+    <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        {{ 'action.back'|trans }}
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-admin-user-show">
+    <div class="mt-2">
+        <div class="text-muted small">{{ 'field.username'|trans }}</div>
+        <div>{{ user.username }}</div>
+    </div>
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1>{{ user }}</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group btn-group-sm">
-                    <a href="{{ path('app_admin_user_edit',{uuid:user.uuid}) }}" class="btn btn-outline-primary">
-                        <span class="fa fa-pencil"></span>
-                        {{ 'action.edit'|trans }}
-                    </a>
-                    <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-secondary">
-                        <span class="fa fa-list"></span>
-                        {{ 'action.back'|trans }}
-                    </a>
-                </div>
-            </div>
+    <div class="mt-2">
+        <div class="text-muted small">{{ 'field.roles'|trans }}</div>
+        <div><span class="badge badge-secondary badge_{{ user.role|lower }}">{{ user.role|trans }}</span></div>
+    </div>
+
+    <div class="mt-2">
+        <div class="text-muted small">{{ 'field.enabled'|trans }}</div>
+        <div>
+            {% if user.enabled %}
+                <span class="badge badge-success"><span class="fa fa-check"></span> {{ 'yes'|trans }}</span>
+            {% else %}
+                <span class="badge badge-warning"><span class="fa fa-times"></span> {{ 'no'|trans }}</span>
+            {% endif %}
         </div>
+    </div>
 
-        <div class="row mt-4">
-            <div class="col-12 col-sm-2 text-muted">{{ 'field.username'|trans }}</div>
-            <div class="col-12 col-sm-10">{{ user.username }}</div>
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-12 col-sm-2 text-muted">{{ 'field.roles'|trans }}</div>
-            <div class="col-12 col-sm-10">
-                {% for role in user.roles %}
-                    <span class="badge badge-secondary badge_{{ role|lower }}">{{ role|trans }}</span>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-12 col-sm-2 text-muted">{{ 'field.enabled'|trans }}</div>
-            <div class="col-12 col-sm-10">
-                {% if user.enabled %}
-                    <span class="badge badge-success"><span class="fa fa-check"></span> {{ 'yes'|trans }}</span>
-                {% else %}
-                    <span class="badge badge-warning"><span class="fa fa-times"></span> {{ 'no'|trans }}</span>
-                {% endif %}
-            </div>
-        </div>
-
-        {% if user.client %}
-            <div class="row mt-2">
-                <div class="col-12 col-sm-2 text-muted">{{ 'field.client'|trans }}</div>
-                <div class="col-12 col-sm-10">
-                    <a href="{{ path('app_client_show',{uuid:user.client.uuid}) }}">
-                        {{ user.client }}
-                    </a>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if app.user.id!=user.id %}
-
-            <h5 class="mt-5 pb-2 border-bottom">{{ 'danger_zone'|trans }}</h5>
-
-            <div class="mt-4">
-                <a href="{{ path('app_admin_user_delete',{uuid:user.uuid}) }}" class="btn btn-outline-danger btn-sm">
-                    <span class="fa fa-trash"></span>
-                    {{ 'action.delete_user'|trans }}
+    {% if user.client %}
+        <div class="mt-2">
+            <div class="text-muted small">{{ 'field.client'|trans }}</div>
+            <div>
+                <a href="{{ path('app_client_show',{uuid:user.client.uuid}) }}">
+                    {{ user.client }}
                 </a>
             </div>
+        </div>
+    {% endif %}
 
-        {% endif %}
+    {% if app.user.id!=user.id %}
 
-    </div>
+        <h5 class="mt-5 pb-2 border-bottom">{{ 'danger_zone'|trans }}</h5>
+
+        <div class="mt-4">
+            <a href="{{ path('app_admin_user_delete',{uuid:user.uuid}) }}" class="btn btn-outline-danger btn-sm">
+                <span class="fa fa-trash"></span>
+                {{ 'action.delete_user'|trans }}
+            </a>
+        </div>
+
+    {% endif %}
 
 {% endblock %}

@@ -465,6 +465,10 @@
         <source>field.roles</source>
         <target>Rôles</target>
       </trans-unit>
+      <trans-unit id="_xlmai9" resname="field.role">
+        <source>field.role</source>
+        <target>Rôle</target>
+      </trans-unit>
       <trans-unit id="t4m1FLM" resname="action.delete_user">
         <source>action.delete_user</source>
         <target>Supprimer l'utilisateur</target>
@@ -696,6 +700,10 @@
       <trans-unit id="U8Eg7bO" resname="title.payment_list">
         <source>title.payment_list</source>
         <target>Règlements</target>
+      </trans-unit>
+      <trans-unit id="ybpIDD3" resname="notification.unable_to_create_user">
+        <source>notification.unable_to_create_user</source>
+        <target>Impossible de créer un utilisateur</target>
       </trans-unit>
     </body>
   </file>

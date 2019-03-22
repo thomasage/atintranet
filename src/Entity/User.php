@@ -56,11 +56,11 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string", length=255)
      */
-    private $roles = [];
+    private $role = 'ROLE_CLIENT';
 
     /**
      * @var string
@@ -74,7 +74,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = true;
 
     /**
      * User constructor.
@@ -82,7 +82,6 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->enabled = true;
         $this->uuid = Uuid::uuid4();
     }
 
@@ -122,24 +121,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param array $roles
-     * @return User
-     */
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-        if (!in_array('ROLE_CLIENT', $this->roles, true)) {
-            $this->client = null;
-        }
-
-        return $this;
+        return ['ROLE_USER', $this->role];
     }
 
     /**
@@ -230,6 +212,25 @@ class User implements UserInterface
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     * @return User
+     */
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

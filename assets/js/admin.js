@@ -4,7 +4,6 @@ $(function () {
 
     let AppAdminUserEdit = {
         handleChangeRole: function () {
-            console.log(AppAdminUserEdit.$rolesSelect.val());
             $.ajax({
                 url: AppAdminUserEdit.$rolesSelect.data('client-location-url'),
                 data: {

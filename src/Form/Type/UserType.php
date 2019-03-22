@@ -51,16 +51,15 @@ class UserType extends AbstractType
                 ]
             )
             ->add(
-                'roles',
+                'role',
                 ChoiceType::class,
                 [
                     'choices' => [
                         'ROLE_ADMIN' => 'ROLE_ADMIN',
                         'ROLE_CLIENT' => 'ROLE_CLIENT',
                     ],
-                    'label' => 'field.roles',
-                    'multiple' => true,
-                    'required' => false,
+                    'label' => 'field.role',
+                    'required' => true,
                 ]
             );
 
@@ -73,12 +72,12 @@ class UserType extends AbstractType
                     if (!$data) {
                         return;
                     }
-                    $this->setupClientField($event->getForm(), $data->getRoles());
+                    $this->setupClientField($event->getForm(), $data->getRole());
                 }
             );
 
         $builder
-            ->get('roles')
+            ->get('role')
             ->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) {
@@ -90,11 +89,11 @@ class UserType extends AbstractType
 
     /**
      * @param FormInterface $form
-     * @param array $roles
+     * @param string $role
      */
-    private function setupClientField(FormInterface $form, array $roles): void
+    private function setupClientField(FormInterface $form, string $role): void
     {
-        if (!in_array('ROLE_CLIENT', $roles, true)) {
+        if ('ROLE_CLIENT' !== $role) {
             $form->remove('client');
 
             return;

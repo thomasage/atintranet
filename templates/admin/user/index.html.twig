@@ -22,7 +22,7 @@
         <thead>
         <tr>
             <th>{% include '_sort.html.twig' with {code:'username',name:'field.username',search:search} only %}</th>
-            <th class="d-none d-md-table-cell">{% include '_sort.html.twig' with {code:'roles',name:'field.roles',search:search} only %}</th>
+            <th class="d-none d-md-table-cell">{% include '_sort.html.twig' with {code:'role',name:'field.role',search:search} only %}</th>
             <th class="d-none d-sm-table-cell">{% include '_sort.html.twig' with {code:'enabled',name:'field.enabled',search:search} only %}</th>
             <th class="d-none d-md-table-cell">{% include '_sort.html.twig' with {code:'client',name:'field.client',search:search} only %}</th>
         </tr>
@@ -31,19 +31,21 @@
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('app_admin_user_show',{uuid:user.uuid}) }}">{{ user.username }}</a></td>
-                <td class="d-none d-md-table-cell">
-                    {% for role in user.roles %}
-                        <span class="badge badge-secondary badge_{{ role|lower }}">{{ role|trans }}</span>
-                    {% endfor %}
-                </td>
+                <td class="d-none d-md-table-cell">{{ user.role|trans }}</td>
                 <td class="d-none d-sm-table-cell">
                     {% if user.enabled %}
-                        <span class="fa fa-check-square-o text-success"></span>
+                        <span class="text-success">{{ 'yes'|trans|capitalize }}</span>
                     {% else %}
-                        <span class="fa fa-square-o text-muted"></span>
+                        <span class="text-danger">{{ 'no'|trans|capitalize }}</span>
                     {% endif %}
                 </td>
-                <td class="d-none d-md-table-cell">{{ user.client }}</td>
+                <td class="d-none d-md-table-cell">
+                    {% if user.client %}
+                        <a href="{{ path('app_client_show',{uuid:user.client.uuid}) }}">
+                            {{ user.client }}
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>

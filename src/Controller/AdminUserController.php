@@ -122,7 +122,7 @@ class AdminUserController extends AbstractController
     public function getClientSelect(Request $request): Response
     {
         $user = new User();
-        $user->setRoles($request->query->get('roles') ?? []);
+        $user->setRole($request->query->get('roles') ?? '');
         $form = $this->createForm(UserType::class, $user);
         if (!$form->has('client')) {
             return new Response(null, Response::HTTP_NO_CONTENT);
@@ -186,7 +186,13 @@ class AdminUserController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder
     ): Response {
 
-        $user = new User();
+        try {
+            $user = new User();
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $translator->trans('notification.unable_to_create_user'));
+
+            return $this->redirectToRoute('app_admin_user_index');
+        }
         $form = $this->createForm(UserAddType::class, $user);
         $form->handleRequest($request);
 

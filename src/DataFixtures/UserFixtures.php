@@ -41,7 +41,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user = new User();
         $user
             ->setPassword($this->encoder->encodePassword($user, 'admin'))
-            ->setRoles(['ROLE_ADMIN'])
+            ->setRole('ROLE_ADMIN')
             ->setUsername('admin');
         $manager->persist($user);
 
@@ -56,7 +56,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user
                 ->setClient($client)
                 ->setPassword($this->encoder->encodePassword($user, $faker->password))
-                ->setRoles(['ROLE_CLIENT'])
+                ->setRole('ROLE_CLIENT')
                 ->setUsername($faker->userName);
             $manager->persist($user);
 
