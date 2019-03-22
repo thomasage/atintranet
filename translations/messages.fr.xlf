@@ -221,6 +221,10 @@
         <source>notification.invoice_unlocked</source>
         <target>La facture %number% est déverrouillée.</target>
       </trans-unit>
+      <trans-unit id="ed2r.6f" resname="notification.invoice_removed">
+        <source>notification.invoice_removed</source>
+        <target>La facture est supprimée.</target>
+      </trans-unit>
       <trans-unit id="N83xcKA" resname="notification.payment_locked">
         <source>notification.payment_locked</source>
         <target>Le règlement est verrouillé.</target>
@@ -480,6 +484,10 @@
       <trans-unit id="Qe9EIZE" resname="confirmation.delete_project_rate">
         <source>confirmation.delete_project_rate</source>
         <target>Je souhaite supprimer définitivement ce tarif</target>
+      </trans-unit>
+      <trans-unit id="yvxArGk" resname="confirmation.delete_invoice">
+        <source>confirmation.delete_invoice</source>
+        <target>Je souhaite supprimer définitivement cette facture</target>
       </trans-unit>
       <trans-unit id="NGooIBs" resname="danger_zone">
         <source>danger_zone</source>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Invoice;
+use App\Form\Type\InvoiceDeleteType;
 use App\Form\Type\InvoiceSearchType;
 use App\Form\Type\InvoiceType;
 use App\Model\InvoicePDF;
@@ -25,6 +26,51 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class InvoiceController extends AbstractController
 {
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param Invoice $invoice
+     * @return Response
+     *
+     * @Route("/{uuid}/delete",
+     *     name="app_invoice_delete",
+     *     methods={"GET", "POST"})
+     */
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        Invoice $invoice
+    ): Response {
+
+        if ($invoice->getLocked()) {
+            return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
+        }
+
+        $formDelete = $this->createForm(InvoiceDeleteType::class, $invoice);
+        $formDelete->handleRequest($request);
+
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+
+            $em->remove($invoice);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.invoice_removed'));
+
+            return $this->redirectToRoute('app_invoice_index');
+
+        }
+
+        return $this->render(
+            'invoice/delete.html.twig',
+            [
+                'formDelete' => $formDelete->createView(),
+                'invoice' => $invoice,
+            ]
+        );
+    }
+
     /**
      * @param Request $request
      * @param TranslatorInterface $translator
