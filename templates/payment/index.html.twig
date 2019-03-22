@@ -1,61 +1,79 @@
 {% extends 'payment/base.html.twig' %}
 
+{% block page_title %}{{ 'title.payment_list'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target=".filters">
+        <span class="fa fa-filter"></span>
+        <span class="d-none d-md-inline">{{ 'filters'|trans }}</span>
+        {% if search.filter|length>0 %}
+            <small>({{ search.filter|length }})</small>
+        {% endif %}
+    </a>
+    <a href="{{ path('app_payment_new') }}" class="btn btn-outline-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+    <a href="{{ path('app_payment_download') }}" class="btn btn-outline-info">
+        <span class="fa fa-download"></span>
+        <span class="d-none d-md-inline">{{ 'action.download'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-payment-index">
-
-        <div class="d-flex flex-row align-items-center">
-            <h2 class="flex-grow-1 mb-0 text-truncate">{{ 'menu.payments'|trans }}</h2>
-            <div class="btn-group ml-2">
-                <a href="{{ path('app_payment_add') }}" class="btn btn-outline-primary">
-                    <span class="fa fa-plus"></span>
-                    <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
-                </a>
-                <a href="{{ path('app_payment_download') }}" class="btn btn-outline-info">
-                    <span class="fa fa-download"></span>
-                    <span class="d-none d-md-inline">{{ 'action.download'|trans }}</span>
-                </a>
-            </div>
-        </div>
-
-        <table class="table table-hover mt-4">
-            <thead class="text-truncate">
+    <table class="table table-hover mt-4">
+        <thead class="text-truncate">
+        <tr>
+            <th>
+                {%- include '_sort.html.twig' with {code:'operation_date',name:'field.operation_date',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'value_date',name:'field.value_date',search:search} only -%}
+            </th>
+            <th>
+                {%- include '_sort.html.twig' with {code:'amount',name:'field.amount',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'payment_method',name:'field.payment_method',search:search} only -%}
+            </th>
+            <th class="d-none d-sm-table-cell">
+                {%- include '_sort.html.twig' with {code:'third_party',name:'field.third_party',search:search} only -%}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for payment in payments %}
             <tr>
-                <th>{{ 'field.operation_date'|trans }}</th>
-                <th class="d-none d-md-table-cell">{{ 'field.value_date'|trans }}</th>
-                <th>{{ 'field.amount'|trans }}</th>
-                <th class="d-none d-md-table-cell">{{ 'field.payment_method'|trans }}</th>
-                <th class="d-none d-sm-table-cell">{{ 'field.third_party'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for payment in payments %}
-                <tr data-url="{{ path('app_payment_show',{uuid:payment.uuid}) }}">
-                    <td>
+                <td>
+                    <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}">
                         {{ payment.operationDate|localizeddate('short','none') }}
-                        {% if payment.locked %}
-                            <span class="fa fa-lock text-success ml-1"></span>
-                        {% endif %}
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        {% if payment.valueDate is not null %}
-                            {{ payment.valueDate|localizeddate('short','none') }}
-                        {% endif %}
-                    </td>
-                    <td class="{{ payment.cssClass }}">
-                        {{ payment.amount|localizedcurrency(payment.currency) }}
-                    </td>
-                    <td class="d-none d-md-table-cell">{{ payment.method }}</td>
-                    <td class="d-none d-sm-table-cell">{{ payment.thirdPartyName }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                    </a>
+                    {% if payment.locked %}
+                        <span class="fa fa-lock text-success ml-1"></span>
+                    {% endif %}
+                </td>
+                <td class="d-none d-md-table-cell">
+                    {% if payment.valueDate is not null %}
+                        {{ payment.valueDate|localizeddate('short','none') }}
+                    {% endif %}
+                </td>
+                <td class="{{ payment.cssClass }}">
+                    {{ payment.amount|localizedcurrency(payment.currency) }}
+                </td>
+                <td class="d-none d-md-table-cell">{{ payment.method }}</td>
+                <td class="d-none d-sm-table-cell">{{ payment.thirdPartyName }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    </div>
+    {% include '_pagination.html.twig' with {search:search,results:payments|length} only %}
+
+    {% include '_filters.html.twig' with {formSearch:formSearch,search:search} only %}
 
 {% endblock %}

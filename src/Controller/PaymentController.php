@@ -5,9 +5,11 @@ namespace App\Controller;
 
 use App\Entity\Payment;
 use App\Form\Type\PaymentDeleteType;
+use App\Form\Type\PaymentSearchType;
 use App\Form\Type\PaymentType;
 use App\Repository\PaymentRepository;
 use App\Service\PaymentManager;
+use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,41 +27,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PaymentController extends AbstractController
 {
-    /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @return Response
-     *
-     * @Route("/add",
-     *     name="app_payment_add",
-     *     methods={"GET", "POST"})
-     */
-    public function add(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
-    {
-        $payment = new Payment();
-        $formEdit = $this->createForm(PaymentType::class, $payment);
-        $formEdit->handleRequest($request);
-
-        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
-            $em->persist($payment);
-            $em->flush();
-
-            $this->addFlash('success', $translator->trans('notification.payment_added'));
-
-            return $this->redirectToRoute('app_payment_show', ['uuid' => $payment->getUuid()]);
-
-        }
-
-        return $this->render(
-            'payment/add.html.twig',
-            [
-                'formEdit' => $formEdit->createView(),
-            ]
-        );
-    }
-
     /**
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -195,21 +162,68 @@ class PaymentController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param SearchManager $sm
      * @param PaymentRepository $repository
      * @return Response
      *
      * @Route("/",
      *     name="app_payment_index",
-     *     methods={"GET"})
+     *     methods={"GET", "POST"})
      */
-    public function index(PaymentRepository $repository): Response
+    public function index(Request $request, SearchManager $sm, PaymentRepository $repository): Response
     {
-        $payments = $repository->findBy([], ['operationDate' => 'DESC', 'valueDate' => 'DESC']);
+        $search = $sm->find($this->getUser(), 'app_payment_index');
+
+        $formSearch = $this->createForm(PaymentSearchType::class);
+
+        if ($sm->handleRequest($search, $request, $formSearch)) {
+            return $this->redirectToRoute($search->getRoute());
+        }
+
+        $payments = $repository->findBySearch($search);
 
         return $this->render(
             'payment/index.html.twig',
             [
+                'formSearch' => $formSearch->createView(),
                 'payments' => $payments,
+                'search' => $search,
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @return Response
+     *
+     * @Route("/new",
+     *     name="app_payment_new",
+     *     methods={"GET", "POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    {
+        $payment = new Payment();
+        $formEdit = $this->createForm(PaymentType::class, $payment);
+        $formEdit->handleRequest($request);
+
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
+
+            $em->persist($payment);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.payment_added'));
+
+            return $this->redirectToRoute('app_payment_show', ['uuid' => $payment->getUuid()]);
+
+        }
+
+        return $this->render(
+            'payment/new.html.twig',
+            [
+                'formEdit' => $formEdit->createView(),
             ]
         );
     }

@@ -693,6 +693,10 @@
         <source>actions</source>
         <target>Actions</target>
       </trans-unit>
+      <trans-unit id="U8Eg7bO" resname="title.payment_list">
+        <source>title.payment_list</source>
+        <target>Règlements</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
