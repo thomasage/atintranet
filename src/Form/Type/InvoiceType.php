@@ -136,6 +136,14 @@ class InvoiceType extends AbstractType
                 ]
             )
             ->add(
+                'amountPaid',
+                MoneyType::class,
+                [
+                    'disabled' => true,
+                    'label' => 'field.amount_paid',
+                ]
+            )
+            ->add(
                 'details',
                 CollectionType::class,
                 [

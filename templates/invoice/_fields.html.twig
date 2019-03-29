@@ -123,6 +123,15 @@
     </div>
 {%- endblock -%}
 
+{%- block _invoice_amountPaid_row -%}
+    <div class="col-12">
+        <div class="row align-items-center mt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-2">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
 {%- block _invoice_taxAmount_row -%}
     <div class="col-12">
         <div class="row align-items-center mt-2">
@@ -173,6 +182,10 @@
 {% endblock %}
 
 {% block _invoice_amountIncludingTax_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _invoice_amountPaid_label %}
     <label for="{{ id }}">{{ label|trans }}</label>
 {% endblock %}
 

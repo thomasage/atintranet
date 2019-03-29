@@ -2,95 +2,91 @@
 
 {% form_theme formEdit 'invoice/_fields.html.twig' %}
 
+{% block page_title %}{{ 'title.invoice_add'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-undo"></span>
+        <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-invoice-new">
+    {{ form_start(formEdit) }}
 
-        <div class="d-flex flex-column flex-md-row justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h2>{{ 'title.invoice_add'|trans }}</h2>
-            <div class="btn-group mt-2 mt-md-0 mb-2">
-                <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-undo"></span>
-                    {{ 'action.back'|trans }}
-                </a>
-            </div>
+    <div class="row mt-4">
+
+        <div class="col-12 col-md-6">
+
+            <fieldset>
+                <legend class="mb-3">Informations</legend>
+                {{ form_row(formEdit.client) }}
+                {{ form_row(formEdit.number) }}
+                {{ form_row(formEdit.issueDate) }}
+                {{ form_row(formEdit.dueDate) }}
+                {{ form_row(formEdit.currency) }}
+                {{ form_row(formEdit.comment) }}
+                {{ form_row(formEdit.commentInternal) }}
+            </fieldset>
+
         </div>
 
-        {{ form_start(formEdit,{attr:{class:'mt-4'}}) }}
+        <div class="col-12 col-md-6">
 
-        {{ form_row(formEdit.number) }}
-        {{ form_row(formEdit.client) }}
-        {{ form_row(formEdit.issueDate) }}
-        {{ form_row(formEdit.dueDate) }}
-        {{ form_row(formEdit.currency) }}
-        {{ form_row(formEdit.comment) }}
-        {{ form_row(formEdit.commentInternal) }}
+            <fieldset>
+                <legend class="mb-3">{{ formEdit.address.vars.label|trans }}</legend>
+                <div>{{ form_widget(formEdit.address.name) }}</div>
+                <div class="mt-2">{{ form_widget(formEdit.address.address) }}</div>
+                <div class="row mt-2">
+                    <div class="col-4 col-md-3">{{ form_widget(formEdit.address.postcode) }}</div>
+                    <div class="col-8 col-md-9 pl-0">{{ form_widget(formEdit.address.city) }}</div>
+                </div>
+                <div class="mt-2">{{ form_widget(formEdit.address.country) }}</div>
+            </fieldset>
 
-        <h2 class="mb-4 mt-5 text-truncate">{{ formEdit.address.vars.label|trans }}</h2>
-
-        {{ form_widget(formEdit.address) }}
-
-        <h2 class="mb-4 mt-5 text-truncate">{{ formEdit.details.vars.label|trans }}</h2>
-
-        <table class="table" id="invoice_details_table">
-            <thead>
-            <tr class="d-none d-lg-table-row">
-                <th>{{ 'field.designation'|trans }}</th>
-                <th>{{ 'field.quantity'|trans }}</th>
-                <th>{{ 'field.amount_unit'|trans }}</th>
-                <th>{{ 'field.tax_rate'|trans }}</th>
-                <th>{{ 'field.amount_including_tax'|trans }}</th>
-                <th>
-                    <a href="#" class="btn btn-outline-primary btn-block btn-sm js-detail-add">
-                        <span class="fa fa-plus"></span>
-                    </a>
-                </th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th colspan="4" class="text-right">
-                    <label class="col-form-label">
-                        {{ formEdit.amountExcludingTax.vars.label|trans }}
-                    </label>
-                </th>
-                <th>{{ form_widget(formEdit.amountExcludingTax) }}</th>
-                <th></th>
-            </tr>
-            <tr>
-                <th colspan="4" class="text-right pt-0 border-0">
-                    <label class="col-form-label">
-                        {{ formEdit.taxAmount.vars.label|trans }}
-                    </label>
-                </th>
-                <th class="pt-0 border-0">{{ form_widget(formEdit.taxAmount) }}</th>
-                <th class="pt-0 border-0"></th>
-            </tr>
-            <tr>
-                <th colspan="4" class="text-right pt-0 border-0">
-                    <label class="col-form-label">
-                        {{ formEdit.amountIncludingTax.vars.label|trans }}
-                    </label>
-                </th>
-                <th class="pt-0 border-0">{{ form_widget(formEdit.amountIncludingTax) }}</th>
-                <th class="pt-0 border-0"></th>
-            </tr>
-            </tfoot>
-            {{ form_widget(formEdit.details) }}
-        </table>
-
-        <div class="mt-5">
-            <button type="submit" class="btn btn-success">
-                <span class="fa fa-save"></span>
-                {{ 'action.save'|trans }}
-            </button>
-            <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
-                <span class="fa fa-undo"></span>
-                {{ 'action.cancel'|trans }}
-            </a>
         </div>
-        {{ form_end(formEdit) }}
 
     </div>
+
+    <h2 class="mb-md-4 mt-5 text-truncate">{{ formEdit.details.vars.label|trans }}</h2>
+
+    <div class="mb-5">
+        <div class="d-none d-md-flex row border-bottom pb-2">
+            <div class="col-6">{{ 'field.designation'|trans }}</div>
+            <div class="col-2">{{ 'field.quantity'|trans }}</div>
+            <div class="col-2">{{ 'field.amount_unit'|trans }}</div>
+            <div class="col-2">{{ 'field.amount_excluding_tax'|trans }}</div>
+        </div>
+        {{ form_widget(formEdit.details) }}
+        <div class="mt-3">
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-outline-primary js-detail-add">
+                    <span class="fa fa-plus"></span>
+                    {{ 'action.add'|trans }}
+                </button>
+            </div>
+        </div>
+        <div class="row mt-3 pt-2 border-top">
+            {{ form_row(formEdit.amountExcludingTax) }}
+            {{ form_row(formEdit.taxRate) }}
+            {{ form_row(formEdit.taxAmount) }}
+            {{ form_row(formEdit.amountIncludingTax) }}
+            {{ form_row(formEdit.amountPaid) }}
+        </div>
+    </div>
+
+    <div class="fixed-bottom bg-light border-top p-2 text-center">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-save"></span>
+            {{ 'action.save'|trans }}
+        </button>
+        <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
+            <span class="fa fa-undo"></span>
+            {{ 'action.cancel'|trans }}
+        </a>
+    </div>
+
+    {{ form_end(formEdit) }}
 
 {% endblock %}

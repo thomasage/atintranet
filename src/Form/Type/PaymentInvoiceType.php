@@ -27,38 +27,39 @@ class PaymentInvoiceType extends AbstractType
         $builder
             ->add(
                 'invoice',
-                null,
+                InvoiceSelectorType::class,
                 [
                     'label' => 'field.invoice',
                     'required' => true,
                 ]
             );
 
-        $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $currency = 'EUR';
-                /** @var PaymentInvoice|null $payment */
-                $paymentInvoice = $event->getData();
-                if ($paymentInvoice instanceof PaymentInvoice) {
-                    $payment = $paymentInvoice->getPayment();
-                    if ($payment instanceof Payment) {
-                        $currency = $payment->getCurrency();
+        $builder
+            ->addEventListener(
+                FormEvents::POST_SET_DATA,
+                function (FormEvent $event) {
+                    $currency = 'EUR';
+                    /** @var PaymentInvoice|null $payment */
+                    $paymentInvoice = $event->getData();
+                    if ($paymentInvoice instanceof PaymentInvoice) {
+                        $payment = $paymentInvoice->getPayment();
+                        if ($payment instanceof Payment) {
+                            $currency = $payment->getCurrency();
+                        }
                     }
+                    $event
+                        ->getForm()
+                        ->add(
+                            'amount',
+                            MoneyType::class,
+                            [
+                                'currency' => $currency,
+                                'label' => 'field.amount',
+                                'required' => true,
+                            ]
+                        );
                 }
-                $event
-                    ->getForm()
-                    ->add(
-                        'amount',
-                        MoneyType::class,
-                        [
-                            'currency' => $currency,
-                            'label' => 'field.amount',
-                            'required' => true,
-                        ]
-                    );
-            }
-        );
+            );
     }
 
     /**

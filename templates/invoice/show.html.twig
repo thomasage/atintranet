@@ -160,6 +160,14 @@
                 <strong>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</strong>
             </div>
         </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                {{ 'field.amount_paid'|trans }}
+            </div>
+            <div class="col-6 col-md-2 text-right">
+                {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 {%- block _payment_paymentInvoices_entry_row -%}
     <div class="d-flex flex-row flex-nowrap mb-1" id="{{ id }}">
-        <div class="ml-1">{{ form_widget(form.invoice) }}</div>
+        <div class="ml-1">{{ form_widget(form.invoice) }}{{ form_errors(form.invoice) }}</div>
         <div class="ml-1">{{ form_widget(form.amount) }}</div>
         <div class="ml-1">
             <a href="#" class="btn btn-danger js-invoice-delete">
