@@ -20,6 +20,7 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @param ObjectManager $manager
+     * @throws \Exception
      */
     public function load(ObjectManager $manager): void
     {
@@ -38,7 +39,7 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
                 ->setThirdPartyName($faker->company);
             $manager->persist($payment);
 
-            if ((float)$payment->getAmount() > 0.0 && $faker->boolean) {
+            if ($faker->boolean && (float)$payment->getAmount() > 0.0) {
 
                 /** @var Invoice $invoice */
                 $invoice = $this->getReference(sprintf('invoice-%d', $faker->numberBetween(0, 9)));
