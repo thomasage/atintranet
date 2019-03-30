@@ -151,7 +151,9 @@ class InvoiceDetail
     private function updateAmounts(): void
     {
         $this->amountTotal = bcmul($this->amountUnit, (string) $this->quantity, 2);
-        $this->invoice->updateAmounts();
+        if ($this->invoice instanceof Invoice) {
+            $this->invoice->updateAmounts();
+        }
     }
 
     /**
