@@ -494,7 +494,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 2);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 3);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 2);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 2);
     }
 
