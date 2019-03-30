@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -23,8 +24,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class TrackerManager
- * @package App\Service
+ * Class TrackerManager.
  */
 class TrackerManager implements ServiceSubscriberInterface
 {
@@ -35,6 +35,7 @@ class TrackerManager implements ServiceSubscriberInterface
 
     /**
      * TrackerManager constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -56,7 +57,8 @@ class TrackerManager implements ServiceSubscriberInterface
 
     /**
      * @param \DateTime $month
-     * @param Client $client
+     * @param Client    $client
+     *
      * @return Response|null
      */
     public function export(\DateTime $month, Client $client): ?Response
@@ -79,7 +81,6 @@ class TrackerManager implements ServiceSubscriberInterface
         $formatter->setPattern('MMMM');
 
         try {
-
             $spreadsheet = new Spreadsheet();
 
             $spreadsheet->getDefaultStyle()->getFont()->setName('arial')->setSize(10);
@@ -112,16 +113,14 @@ class TrackerManager implements ServiceSubscriberInterface
 
             $rownum = 2;
             foreach ($summary as $d) {
-
-                $rownum++;
+                ++$rownum;
                 $sheet->setCellValue('A'.$rownum, $d['project_name']);
                 $sheet->setCellValue('B'.$rownum, $d['task_duration_month']);
                 $sheet->setCellValue('D'.$rownum, $d['task_duration_year']);
                 $sheet->setCellValue('F'.$rownum, $d['task_duration_total']);
-
             }
 
-            $rownum++;
+            ++$rownum;
             $lastrow = $rownum;
             $sheet->setCellValue('B'.$rownum, '=SUM(B3:B'.($rownum - 1).')');
             $sheet->setCellValue('D'.$rownum, '=SUM(D3:D'.($rownum - 1).')');
@@ -129,12 +128,10 @@ class TrackerManager implements ServiceSubscriberInterface
 
             $rownum = 2;
             foreach ($summary as $d) {
-
-                $rownum++;
+                ++$rownum;
                 $sheet->setCellValue('C'.$rownum, sprintf('=B%d/B%d', $rownum, $lastrow));
                 $sheet->setCellValue('E'.$rownum, sprintf('=D%d/D%d', $rownum, $lastrow));
                 $sheet->setCellValue('G'.$rownum, sprintf('=F%d/F%d', $rownum, $lastrow));
-
             }
 
             $sheet
@@ -186,7 +183,6 @@ class TrackerManager implements ServiceSubscriberInterface
 
             $rownum = 1;
             foreach ($details as $detail) {
-
                 /** @var \DateTime $date */
                 $date = $detail->getStart();
                 $date = $date->format('Y-m-d');
@@ -195,9 +191,8 @@ class TrackerManager implements ServiceSubscriberInterface
                 $rate = $project->getRateOfDate($detail->getStart());
 
                 if (isset($coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()])) {
-
                     /**
-                     * @var Cell $cell
+                     * @var Cell
                      */
                     $cell = $sheet->getCell(
                         sprintf(
@@ -207,10 +202,9 @@ class TrackerManager implements ServiceSubscriberInterface
                     );
                     $cell->setValue(sprintf('%s+%f', $cell->getValue(), $detail->getDuration() / 3600));
                     continue;
-
                 }
 
-                $rownum++;
+                ++$rownum;
                 $sheet->setCellValue('A'.$rownum, $intl->format($detail->getStart()));
                 $sheet->setCellValue('B'.$rownum, $project);
                 $sheet->setCellValue('C'.$rownum, $detail->getName());
@@ -225,10 +219,9 @@ class TrackerManager implements ServiceSubscriberInterface
                 $sheet->setCellValue('F'.$rownum, sprintf('=D%d*E%d', $rownum, $rownum));
 
                 $coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()] = $rownum;
-
             }
 
-            $rownum++;
+            ++$rownum;
             $sheet->setCellValue('D'.$rownum, '=SUM(D2:D'.($rownum - 1).')');
             $sheet->setCellValue('F'.$rownum, '=SUM(F2:F'.($rownum - 1).')');
 
@@ -261,11 +254,8 @@ class TrackerManager implements ServiceSubscriberInterface
             $response->headers->set('Cache-Control', 'max-age=0');
 
             return $response;
-
         } catch (\Exception $e) {
-
             return null;
-
         }
     }
 }

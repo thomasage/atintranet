@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -100,6 +101,7 @@ class Project
 
     /**
      * @param string $name
+     *
      * @return Project
      */
     public function setName(string $name): self
@@ -119,6 +121,7 @@ class Project
 
     /**
      * @param Client $client
+     *
      * @return Project
      */
     public function setClient(Client $client): self
@@ -138,6 +141,7 @@ class Project
 
     /**
      * @param Task $task
+     *
      * @return Project
      */
     public function addTask(Task $task): self
@@ -152,6 +156,7 @@ class Project
 
     /**
      * @param Task $task
+     *
      * @return Project
      */
     public function removeTask(Task $task): self
@@ -177,6 +182,7 @@ class Project
 
     /**
      * @param ProjectRate $rate
+     *
      * @return Project
      */
     public function addRate(ProjectRate $rate): self
@@ -191,6 +197,7 @@ class Project
 
     /**
      * @param ProjectRate $rate
+     *
      * @return Project
      */
     public function removeRate(ProjectRate $rate): self
@@ -216,6 +223,7 @@ class Project
 
     /**
      * @param string|null $externalReference
+     *
      * @return Project
      */
     public function setExternalReference(?string $externalReference): self
@@ -227,6 +235,7 @@ class Project
 
     /**
      * @param \DateTimeInterface $date
+     *
      * @return ProjectRate|null
      */
     public function getRateOfDate(\DateTimeInterface $date): ?ProjectRate
@@ -253,6 +262,7 @@ class Project
 
     /**
      * @param bool $active
+     *
      * @return Project
      */
     public function setActive(bool $active): self

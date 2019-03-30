@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -53,6 +54,7 @@ class OptionPaymentMethod
 
     /**
      * @param string $name
+     *
      * @return OptionPaymentMethod
      */
     public function setName(string $name): self

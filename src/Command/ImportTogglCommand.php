@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -16,8 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Class ImportTogglCommand
- * @package App\Command
+ * Class ImportTogglCommand.
  */
 class ImportTogglCommand extends Command
 {
@@ -43,8 +43,9 @@ class ImportTogglCommand extends Command
 
     /**
      * ImportTogglCommand constructor.
+     *
      * @param EntityManagerInterface $em
-     * @param string $togglApiKey
+     * @param string                 $togglApiKey
      */
     public function __construct(EntityManagerInterface $em, string $togglApiKey)
     {
@@ -66,8 +67,9 @@ class ImportTogglCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -97,7 +99,6 @@ class ImportTogglCommand extends Command
         $workspaces = json_decode($response->getBody()->getContents());
 
         foreach ($workspaces as $workspace) {
-
             $io->section(sprintf('Workspace #%d "%s"', $workspace->id, $workspace->name));
 
             $response = $guzzleClient->get(sprintf('workspaces/%d/clients', $workspace->id));
@@ -110,12 +111,10 @@ class ImportTogglCommand extends Command
             $clients = json_decode($response->getBody()->getContents());
 
             foreach ($clients as $client) {
-
                 $io->writeln(sprintf('Client #%d "%s"', $client->id, $client->name));
 
                 $localClient = $repoClient->findOneBy(['externalReference' => $client->id]);
                 if (!$localClient instanceof Client) {
-
                     $address = new Address();
                     $address
                         ->setCity('-')
@@ -126,20 +125,16 @@ class ImportTogglCommand extends Command
                     $localClient = new Client();
                     $localClient
                         ->setAddressPrimary($address)
-                        ->setExternalReference((string)$client->id)
+                        ->setExternalReference((string) $client->id)
                         ->setName($client->name);
                     $this->em->persist($localClient);
-
                 }
-
             }
-
         }
 
         $this->em->flush();
 
         foreach ($workspaces as $workspace) {
-
             $io->section(sprintf('Workspace #%d "%s"', $workspace->id, $workspace->name));
 
             $response = $guzzleClient->get(sprintf('workspaces/%d/projects', $workspace->id));
@@ -152,12 +147,10 @@ class ImportTogglCommand extends Command
             $projects = json_decode($response->getBody()->getContents());
 
             foreach ($projects as $project) {
-
                 $io->writeln(sprintf('Project #%d "%s"', $project->id, $project->name));
 
                 $localProject = $repoProject->findOneBy(['externalReference' => $project->id]);
                 if (!$localProject instanceof Project) {
-
                     $localClient = $repoClient->findOneBy(['externalReference' => $project->cid]);
                     if (!$localClient instanceof Client) {
                         $io->error(sprintf('Unable to find client "%d"', $project->cid));
@@ -168,27 +161,24 @@ class ImportTogglCommand extends Command
                     $localProject = new Project();
                     $localProject
                         ->setClient($localClient)
-                        ->setExternalReference((string)$project->id)
+                        ->setExternalReference((string) $project->id)
                         ->setName($project->name);
                     $this->em->persist($localProject);
 
                     $io->note('Project added');
-
                 }
-
             }
-
         }
 
         $this->em->flush();
 
-        $start = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('start'));
+        $start = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('start'));
         if (!$start instanceof \DateTime) {
-            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int)date('n'), 1)));
+            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int) date('n'), 1)));
         }
         $start->setTime(0, 0);
 
-        $stop = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('stop'));
+        $stop = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('stop'));
         if (!$stop instanceof \DateTime) {
             $stop = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, date('n') + 1, 0)));
         }
@@ -210,12 +200,10 @@ class ImportTogglCommand extends Command
         $timeEntries = json_decode($response->getBody()->getContents());
 
         foreach ($timeEntries as $timeEntry) {
-
             $io->writeln(sprintf('Task #%d "%s"', $timeEntry->id, $timeEntry->description));
 
             $task = $repoTask->findOneBy(['externalReference' => $timeEntry->id]);
             if (!$task instanceof Task) {
-
                 $localProject = $repoProject->findOneBy(['externalReference' => $timeEntry->pid]);
                 if (!$localProject instanceof Project) {
                     $io->error(sprintf('Unable to find project "%d"', $timeEntry->pid));
@@ -224,7 +212,6 @@ class ImportTogglCommand extends Command
                 }
 
                 try {
-
                     // Entry in progress
                     if (!isset($timeEntry->stop)) {
                         continue;
@@ -232,7 +219,7 @@ class ImportTogglCommand extends Command
 
                     $task = new Task();
                     $task
-                        ->setExternalReference((string)$timeEntry->id)
+                        ->setExternalReference((string) $timeEntry->id)
                         ->setName($timeEntry->description)
                         ->setProject($localProject)
                         ->setStart(new \DateTime($timeEntry->start))
@@ -251,17 +238,12 @@ class ImportTogglCommand extends Command
                     $this->em->persist($task);
 
                     $io->note('Task added');
-
                 } catch (\Exception $e) {
-
                     $io->error(sprintf('Unable to create task: %s', $e));
 
                     return 1;
-
                 }
-
             }
-
         }
 
         $this->em->flush();

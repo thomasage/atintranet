@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -9,14 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class TrackerController
- * @package App\Controller
+ * Class TrackerController.
+ *
  * @Route("/tracker")
  */
 class TrackerController extends AbstractController
 {
     /**
      * @param TaskRepository $repository
+     *
      * @return Response
      *
      * @Route("/",

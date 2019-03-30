@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -10,13 +11,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class TaskRepository
- * @package App\Repository
+ * Class TaskRepository.
  */
 class TaskRepository extends ServiceEntityRepository
 {
     /**
      * TaskRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -25,8 +26,9 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $period
+     *
      * @return array
      */
     public function findStatByPeriodGroupByProject(User $user, string $period = 'd'): array
@@ -37,7 +39,6 @@ class TaskRepository extends ServiceEntityRepository
         ];
 
         try {
-
             if ('y' === $period) {
                 $start = new \DateTime('-9 years');
                 $stop = new \DateTime('+1 second');
@@ -68,11 +69,8 @@ class TaskRepository extends ServiceEntityRepository
                 }
                 $data['categories'][] = $d->format($format);
             }
-
         } catch (\Exception $e) {
-
             return $data;
-
         }
 
         $countCategories = count($data['categories']);
@@ -107,7 +105,6 @@ class TaskRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-
             if ($client instanceof Client) {
                 $name = $result['project_name'];
             } else {
@@ -123,7 +120,6 @@ class TaskRepository extends ServiceEntityRepository
 
             $c = array_search($result['period'], $data['categories'], true);
             $data['series'][$name]['data'][$c] = round($result['task_duration'] / 3600, 1);
-
         }
 
         return [
@@ -133,8 +129,9 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client $client
+     * @param Client             $client
      * @param \DateTimeInterface $month
+     *
      * @return array
      */
     public function summaryByClientAndMonth(Client $client, \DateTimeInterface $month): array
@@ -182,8 +179,9 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client $client
+     * @param Client             $client
      * @param \DateTimeInterface $month
+     *
      * @return Task[]
      */
     public function detailByClientAndMonth(Client $client, \DateTimeInterface $month): array
@@ -232,6 +230,7 @@ class TaskRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     *
      * @return array
      */
     public function findTimesThisMonth(User $user): array
@@ -260,6 +259,7 @@ class TaskRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     *
      * @return array
      */
     public function findTimesThisWeek(User $user): array

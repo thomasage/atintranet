@@ -75,6 +75,7 @@ class PaymentInvoice
 
     /**
      * @param string $amount
+     *
      * @return PaymentInvoice
      */
     public function setAmount(string $amount): self
@@ -94,6 +95,7 @@ class PaymentInvoice
 
     /**
      * @param Payment|null $payment
+     *
      * @return PaymentInvoice
      */
     public function setPayment(?Payment $payment): self
@@ -113,6 +115,7 @@ class PaymentInvoice
 
     /**
      * @param Invoice|null $invoice
+     *
      * @return PaymentInvoice
      */
     public function setInvoice(?Invoice $invoice): self

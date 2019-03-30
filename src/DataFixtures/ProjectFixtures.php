@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -11,8 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class ProjectFixtures
- * @package App\DataFixtures
+ * Class ProjectFixtures.
  */
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -23,11 +23,8 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
-
-            /**
-             * @var Client $client
-             */
+        for ($i = 0; $i < 10; ++$i) {
+            /** @var Client $client */
             $client = $this->getReference('client'.$i);
 
             $project = new Project();
@@ -36,7 +33,6 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
                 ->setName(ucfirst($faker->words(3, true)));
             $manager->persist($project);
             $this->setReference('project'.$i, $project);
-
         }
 
         $manager->flush();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -95,6 +96,7 @@ class Address
 
     /**
      * @param string $name
+     *
      * @return Address
      */
     public function setName(string $name): self
@@ -114,6 +116,7 @@ class Address
 
     /**
      * @param string|null $address
+     *
      * @return Address
      */
     public function setAddress(?string $address): self
@@ -133,6 +136,7 @@ class Address
 
     /**
      * @param string $postcode
+     *
      * @return Address
      */
     public function setPostcode(string $postcode): self
@@ -152,6 +156,7 @@ class Address
 
     /**
      * @param string $city
+     *
      * @return Address
      */
     public function setCity(string $city): self
@@ -171,6 +176,7 @@ class Address
 
     /**
      * @param string $country
+     *
      * @return Address
      */
     public function setCountry(string $country): self

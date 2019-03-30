@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Security;
@@ -21,8 +22,7 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 /**
- * Class LoginFormAuthenticator
- * @package App\Security
+ * Class LoginFormAuthenticator.
  */
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -50,9 +50,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     /**
      * LoginFormAuthenticator constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface $router
-     * @param CsrfTokenManagerInterface $csrfTokenManager
+     *
+     * @param EntityManagerInterface       $entityManager
+     * @param RouterInterface              $router
+     * @param CsrfTokenManagerInterface    $csrfTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
@@ -69,6 +70,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
     public function supports(Request $request): bool
@@ -78,6 +80,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function getCredentials(Request $request): array
@@ -93,8 +96,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @param mixed $credentials
+     * @param mixed                 $credentials
      * @param UserProviderInterface $userProvider
+     *
      * @return User
      */
     public function getUser($credentials, UserProviderInterface $userProvider): User
@@ -115,8 +119,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @param mixed $credentials
+     * @param mixed         $credentials
      * @param UserInterface $user
+     *
      * @return bool
      */
     public function checkCredentials($credentials, UserInterface $user): bool
@@ -125,9 +130,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
-     * @param string $providerKey
+     * @param string         $providerKey
+     *
      * @return RedirectResponse
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse

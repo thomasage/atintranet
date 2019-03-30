@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -8,13 +9,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class PaymentInvoiceRepository
- * @package App\Repository
+ * Class PaymentInvoiceRepository.
  */
 class PaymentInvoiceRepository extends ServiceEntityRepository
 {
     /**
      * PaymentInvoiceRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)

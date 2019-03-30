@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -82,7 +83,7 @@ class Task
      */
     public function __toString(): string
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**
@@ -95,6 +96,7 @@ class Task
 
     /**
      * @param string|null $name
+     *
      * @return Task
      */
     public function setName(?string $name): self
@@ -114,6 +116,7 @@ class Task
 
     /**
      * @param \DateTimeInterface $start
+     *
      * @return Task
      */
     public function setStart(\DateTimeInterface $start): self
@@ -133,6 +136,7 @@ class Task
 
     /**
      * @param \DateTimeInterface|null $stop
+     *
      * @return Task
      */
     public function setStop(?\DateTimeInterface $stop): self
@@ -152,6 +156,7 @@ class Task
 
     /**
      * @param Project|null $project
+     *
      * @return Task
      */
     public function setProject(?Project $project): self
@@ -171,6 +176,7 @@ class Task
 
     /**
      * @param bool $onSite
+     *
      * @return Task
      */
     public function setOnSite(bool $onSite): self
@@ -190,6 +196,7 @@ class Task
 
     /**
      * @param bool $expected
+     *
      * @return Task
      */
     public function setExpected(bool $expected): self
@@ -209,6 +216,7 @@ class Task
 
     /**
      * @param string|null $externalReference
+     *
      * @return Task
      */
     public function setExternalReference(?string $externalReference): self

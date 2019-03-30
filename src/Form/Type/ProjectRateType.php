@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Form\Type;
@@ -12,14 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ProjectRateType
- * @package App\Form\Type
+ * Class ProjectRateType.
  */
 class ProjectRateType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -31,7 +31,7 @@ class ProjectRateType extends AbstractType
                 'project',
                 TextType::class,
                 [
-                    'data' => $rate instanceof ProjectRate ? (string)$rate->getProject() : '',
+                    'data' => $rate instanceof ProjectRate ? (string) $rate->getProject() : '',
                     'disabled' => true,
                     'label' => 'field.project',
                     'mapped' => false,

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -27,10 +28,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvoiceController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Invoice $invoice
+     * @param TranslatorInterface    $translator
+     * @param Invoice                $invoice
+     *
      * @return Response
      *
      * @Route("/{uuid}/delete",
@@ -43,7 +45,6 @@ class InvoiceController extends AbstractController
         TranslatorInterface $translator,
         Invoice $invoice
     ): Response {
-
         if ($invoice->getLocked()) {
             return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
         }
@@ -52,14 +53,12 @@ class InvoiceController extends AbstractController
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
-
             $em->remove($invoice);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.invoice_removed'));
 
             return $this->redirectToRoute('app_invoice_index');
-
         }
 
         return $this->render(
@@ -72,10 +71,11 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
+     * @param Request                $request
+     * @param TranslatorInterface    $translator
      * @param EntityManagerInterface $em
-     * @param Invoice $invoice
+     * @param Invoice                $invoice
+     *
      * @return Response
      *
      * @Route("/{uuid}/edit",
@@ -88,7 +88,6 @@ class InvoiceController extends AbstractController
         EntityManagerInterface $em,
         Invoice $invoice
     ): Response {
-
         if ($invoice->getLocked()) {
             return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
         }
@@ -97,13 +96,11 @@ class InvoiceController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.invoice_updated'));
 
             return $this->redirectToRoute('app_invoice_edit', ['uuid' => $invoice->getUuid()]);
-
         }
 
         return $this->render(
@@ -116,9 +113,10 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
+     * @param Request           $request
+     * @param SearchManager     $sm
      * @param InvoiceRepository $invoiceRepository
+     *
      * @return Response
      *
      * @Route("/",
@@ -149,8 +147,9 @@ class InvoiceController extends AbstractController
 
     /**
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Invoice $invoice
+     * @param TranslatorInterface    $translator
+     * @param Invoice                $invoice
+     *
      * @return Response
      *
      * @Route("/{uuid}/lock/{lock}",
@@ -164,8 +163,7 @@ class InvoiceController extends AbstractController
         Invoice $invoice,
         string $lock
     ): Response {
-
-        $invoice->setLocked((bool)$lock);
+        $invoice->setLocked((bool) $lock);
 
         $em->flush();
 
@@ -188,9 +186,10 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface    $translator
+     *
      * @return Response
      *
      * @throws \Exception
@@ -205,14 +204,12 @@ class InvoiceController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->persist($invoice);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.invoice_added'));
 
             return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
-
         }
 
         return $this->render(
@@ -224,9 +221,10 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param InvoicePDF $generator
+     * @param InvoicePDF          $generator
      * @param TranslatorInterface $translator
-     * @param Invoice $invoice
+     * @param Invoice             $invoice
+     *
      * @return BinaryFileResponse
      *
      * @Route("/{uuid}/print",
@@ -257,6 +255,7 @@ class InvoiceController extends AbstractController
 
     /**
      * @param Invoice $invoice
+     *
      * @return Response
      *
      * @Route("/{uuid}",

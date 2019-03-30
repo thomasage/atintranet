@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -83,6 +84,7 @@ class Search
 
     /**
      * @param string $route
+     *
      * @return Search
      */
     public function setRoute(string $route): self
@@ -102,6 +104,7 @@ class Search
 
     /**
      * @param User $user
+     *
      * @return Search
      */
     public function setUser(User $user): self
@@ -121,6 +124,7 @@ class Search
 
     /**
      * @param int $page
+     *
      * @return Search
      */
     public function setPage(int $page): self
@@ -132,6 +136,7 @@ class Search
 
     /**
      * @param string|null $name
+     *
      * @return mixed
      */
     public function getFilter(?string $name = null)
@@ -145,6 +150,7 @@ class Search
 
     /**
      * @param array $filter
+     *
      * @return Search
      */
     public function setFilter(array $filter): self
@@ -164,6 +170,7 @@ class Search
 
     /**
      * @param array $orderby
+     *
      * @return Search
      */
     public function setOrderby(array $orderby): self
@@ -175,11 +182,12 @@ class Search
 
     /**
      * @param int $results
+     *
      * @return int
      */
     public function getPages(int $results): int
     {
-        return (int)ceil($results / $this->resultsPerPage);
+        return (int) ceil($results / $this->resultsPerPage);
     }
 
     /**
@@ -192,6 +200,7 @@ class Search
 
     /**
      * @param int|null $resultsPerPage
+     *
      * @return Search
      */
     public function setResultsPerPage(?int $resultsPerPage): self
@@ -203,7 +212,8 @@ class Search
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return Search
      */
     public function addFilter(string $name, $value): self
@@ -219,6 +229,7 @@ class Search
 
     /**
      * @param string $name
+     *
      * @return Search
      */
     public function removeFilter(string $name): self
@@ -230,7 +241,8 @@ class Search
 
     /**
      * @param string $code
-     * @param bool $asc
+     * @param bool   $asc
+     *
      * @return Search
      */
     public function addOrderby(string $code, bool $asc = true): self

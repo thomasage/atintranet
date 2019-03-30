@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -108,6 +109,7 @@ class Payment
 
     /**
      * Payment constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -130,6 +132,7 @@ class Payment
 
     /**
      * @param PaymentInvoice $paymentInvoice
+     *
      * @return Payment
      */
     public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
@@ -144,6 +147,7 @@ class Payment
 
     /**
      * @param PaymentInvoice $paymentInvoice
+     *
      * @return Payment
      */
     public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self
@@ -169,6 +173,7 @@ class Payment
 
     /**
      * @param \DateTimeInterface $operationDate
+     *
      * @return Payment
      */
     public function setOperationDate(\DateTimeInterface $operationDate): self
@@ -188,6 +193,7 @@ class Payment
 
     /**
      * @param \DateTimeInterface|null $valueDate
+     *
      * @return Payment
      */
     public function setValueDate(?\DateTimeInterface $valueDate): self
@@ -207,6 +213,7 @@ class Payment
 
     /**
      * @param string $amount
+     *
      * @return Payment
      */
     public function setAmount(string $amount): self
@@ -226,6 +233,7 @@ class Payment
 
     /**
      * @param string $currency
+     *
      * @return Payment
      */
     public function setCurrency(string $currency): self
@@ -245,6 +253,7 @@ class Payment
 
     /**
      * @param bool $locked
+     *
      * @return Payment
      */
     public function setLocked(bool $locked): self
@@ -264,6 +273,7 @@ class Payment
 
     /**
      * @param OptionPaymentMethod $method
+     *
      * @return Payment
      */
     public function setMethod(OptionPaymentMethod $method): self
@@ -283,6 +293,7 @@ class Payment
 
     /**
      * @param string|null $bankName
+     *
      * @return Payment
      */
     public function setBankName(?string $bankName): self
@@ -297,7 +308,7 @@ class Payment
      */
     public function getCssClass(): string
     {
-        if ((float)$this->amount < 0.0) {
+        if ((float) $this->amount < 0.0) {
             return 'text-danger';
         }
 
@@ -314,6 +325,7 @@ class Payment
 
     /**
      * @param string $thirdPartyName
+     *
      * @return Payment
      */
     public function setThirdPartyName(string $thirdPartyName): self
@@ -333,6 +345,7 @@ class Payment
 
     /**
      * @param string|null $comment
+     *
      * @return Payment
      */
     public function setComment(?string $comment): self

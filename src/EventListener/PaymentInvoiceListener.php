@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\EventListener;
@@ -8,8 +9,7 @@ use App\Entity\PaymentInvoice;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 /**
- * Class PaymentInvoiceListener
- * @package App\EventListener
+ * Class PaymentInvoiceListener.
  */
 class PaymentInvoiceListener
 {

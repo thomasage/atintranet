@@ -10,6 +10,7 @@
     "ext-iconv": "*",
     "ext-json": "^1.7",
     "beberlei/doctrineextensions": "^1.1",
+    "friendsofphp/php-cs-fixer": "^2.14",
     "guzzlehttp/guzzle": "^6.3",
     "phpoffice/phpspreadsheet": "^1.5",
     "ramsey/uuid-doctrine": "^1.5",

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -10,8 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class SearchManager
- * @package App\Service
+ * Class SearchManager.
  */
 class SearchManager
 {
@@ -22,6 +22,7 @@ class SearchManager
 
     /**
      * SearchManager constructor.
+     *
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -30,8 +31,9 @@ class SearchManager
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $route
+     *
      * @return Search
      */
     public function find(User $user, string $route): Search
@@ -51,9 +53,10 @@ class SearchManager
     }
 
     /**
-     * @param Search $search
-     * @param Request $request
+     * @param Search        $search
+     * @param Request       $request
      * @param FormInterface $form
+     *
      * @return bool
      */
     public function handleRequest(Search $search, Request $request, FormInterface $form): bool

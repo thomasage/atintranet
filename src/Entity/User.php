@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -78,6 +79,7 @@ class User implements UserInterface
 
     /**
      * User constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -134,6 +136,7 @@ class User implements UserInterface
 
     /**
      * @param string $password
+     *
      * @return User
      */
     public function setPassword(string $password): self
@@ -169,6 +172,7 @@ class User implements UserInterface
 
     /**
      * @param string $username
+     *
      * @return User
      */
     public function setUsername(string $username): self
@@ -188,6 +192,7 @@ class User implements UserInterface
 
     /**
      * @param bool $enabled
+     *
      * @return User
      */
     public function setEnabled(bool $enabled): self
@@ -207,6 +212,7 @@ class User implements UserInterface
 
     /**
      * @param Client|null $client
+     *
      * @return User
      */
     public function setClient(?Client $client): self
@@ -226,6 +232,7 @@ class User implements UserInterface
 
     /**
      * @param string $role
+     *
      * @return User
      */
     public function setRole(string $role): self

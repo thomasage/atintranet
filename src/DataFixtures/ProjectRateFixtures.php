@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -11,8 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class ProjectRateFixtures
- * @package App\DataFixtures
+ * Class ProjectRateFixtures.
  */
 class ProjectRateFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -23,15 +23,13 @@ class ProjectRateFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($p = 0; $p < 10; $p++) {
-
+        for ($p = 0; $p < 10; ++$p) {
             /** @var Project $project */
             $project = $this->getReference('project'.$p);
 
             $rates = $faker->randomDigit;
 
-            for ($r = 0; $r < $rates; $r++) {
-
+            for ($r = 0; $r < $rates; ++$r) {
                 $rate = new ProjectRate();
                 $rate
                     ->setHourlyRateOffSite($faker->boolean ? $faker->randomFloat(2, 50, 200) : null)
@@ -39,9 +37,7 @@ class ProjectRateFixtures extends Fixture implements DependentFixtureInterface
                     ->setProject($project)
                     ->setStartedAt($faker->dateTime());
                 $manager->persist($rate);
-
             }
-
         }
 
         $manager->flush();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -127,6 +128,7 @@ class Client
 
     /**
      * @param string|null $code
+     *
      * @return Client
      */
     public function setCode(?string $code): self
@@ -146,6 +148,7 @@ class Client
 
     /**
      * @param string $name
+     *
      * @return Client
      */
     public function setName(string $name): self
@@ -165,6 +168,7 @@ class Client
 
     /**
      * @param string|null $externalReference
+     *
      * @return Client
      */
     public function setExternalReference(?string $externalReference): self
@@ -184,6 +188,7 @@ class Client
 
     /**
      * @param Address $addressPrimary
+     *
      * @return Client
      */
     public function setAddressPrimary(Address $addressPrimary): self
@@ -203,6 +208,7 @@ class Client
 
     /**
      * @param Invoice $invoice
+     *
      * @return Client
      */
     public function addInvoice(Invoice $invoice): self
@@ -217,6 +223,7 @@ class Client
 
     /**
      * @param Invoice $invoice
+     *
      * @return Client
      */
     public function removeInvoice(Invoice $invoice): self
@@ -242,6 +249,7 @@ class Client
 
     /**
      * @param bool $active
+     *
      * @return Client
      */
     public function setActive(bool $active): self
@@ -261,6 +269,7 @@ class Client
 
     /**
      * @param string|null $accountNumber
+     *
      * @return Client
      */
     public function setAccountNumber(?string $accountNumber): self
@@ -280,6 +289,7 @@ class Client
 
     /**
      * @param string|null $vatNumber
+     *
      * @return Client
      */
     public function setVatNumber(?string $vatNumber): self
@@ -299,6 +309,7 @@ class Client
 
     /**
      * @param string|null $comment
+     *
      * @return Client
      */
     public function setComment(?string $comment): self
@@ -318,6 +329,7 @@ class Client
 
     /**
      * @param Project $project
+     *
      * @return Client
      */
     public function addProject(Project $project): self
@@ -332,6 +344,7 @@ class Client
 
     /**
      * @param Project $project
+     *
      * @return Client
      */
     public function removeProject(Project $project): self

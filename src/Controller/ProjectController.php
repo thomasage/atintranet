@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -24,10 +25,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProjectController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Project $project
+     * @param TranslatorInterface    $translator
+     * @param Project                $project
+     *
      * @return Response
      *
      * @Route("/{uuid}/edit",
@@ -40,18 +42,15 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator,
         Project $project
     ): Response {
-
         $formEdit = $this->createForm(ProjectType::class, $project);
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.project_updated'));
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
-
         }
 
         return $this->render(
@@ -65,6 +64,7 @@ class ProjectController extends AbstractController
 
     /**
      * @param ProjectRepository $repository
+     *
      * @return Response
      *
      * @Route("/",
@@ -84,9 +84,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface    $translator
+     *
      * @return Response
      *
      * @Route("/new",
@@ -101,14 +102,12 @@ class ProjectController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->persist($project);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.project_added'));
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
-
         }
 
         return $this->render(
@@ -120,10 +119,11 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ProjectRate $rate
+     * @param TranslatorInterface    $translator
+     * @param ProjectRate            $rate
+     *
      * @return Response
      *
      * @Route("/rate/{uuid}/delete",
@@ -136,7 +136,6 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator,
         ProjectRate $rate
     ): Response {
-
         /** @var Project $project */
         $project = $rate->getProject();
 
@@ -144,14 +143,12 @@ class ProjectController extends AbstractController
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
-
             $em->remove($rate);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.project_rate_removed'));
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
-
         }
 
         return $this->render(
@@ -164,10 +161,11 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ProjectRate $rate
+     * @param TranslatorInterface    $translator
+     * @param ProjectRate            $rate
+     *
      * @return Response
      *
      * @Route("/rate/{uuid}/edit",
@@ -180,7 +178,6 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator,
         ProjectRate $rate
     ): Response {
-
         /** @var Project $project */
         $project = $rate->getProject();
 
@@ -188,13 +185,11 @@ class ProjectController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.project_rate_updated'));
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
-
         }
 
         return $this->render(
@@ -207,10 +202,11 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Project $project
+     * @param TranslatorInterface    $translator
+     * @param Project                $project
+     *
      * @return Response
      *
      * @Route("/rate/new/{uuid}",
@@ -223,7 +219,6 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator,
         Project $project
     ): Response {
-
         $rate = new ProjectRate();
         $rate->setProject($project);
 
@@ -231,14 +226,12 @@ class ProjectController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->persist($rate);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.project_rate_added'));
 
             return $this->redirectToRoute('app_project_show', ['uuid' => $project->getUuid()]);
-
         }
 
         return $this->render(
@@ -252,6 +245,7 @@ class ProjectController extends AbstractController
 
     /**
      * @param Project $project
+     *
      * @return Response
      *
      * @Route("/{uuid}",

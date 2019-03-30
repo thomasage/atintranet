@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -17,18 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class StatController
- * @package App\Controller
+ * Class StatController.
+ *
  * @Route("/stat")
  */
 class StatController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param TaskRepository $taskRepository
-     * @param ClientRepository $clientRepository
-     * @param TrackerManager $tm
+     * @param Request             $request
+     * @param TaskRepository      $taskRepository
+     * @param ClientRepository    $clientRepository
+     * @param TrackerManager      $tm
      * @param TranslatorInterface $translator
+     *
      * @return Response
      *
      * @Route("/report/time",
@@ -42,9 +44,7 @@ class StatController extends AbstractController
         TrackerManager $tm,
         TranslatorInterface $translator
     ): Response {
-
         if ($request->query->has('client') && $request->query->has('month')) {
-
             $client = $clientRepository->findOneBy(['uuid' => $request->query->get('client')]);
             if (!$client instanceof Client) {
                 return $this->redirectToRoute('app_stat_report_time');
@@ -61,7 +61,6 @@ class StatController extends AbstractController
             }
 
             return $response;
-
         }
 
         $reports = $taskRepository->findReports();
@@ -76,7 +75,8 @@ class StatController extends AbstractController
 
     /**
      * @param TaskRepository $repository
-     * @param string $period
+     * @param string         $period
+     *
      * @return Response
      *
      * @Route("/time/chart/{period}",
@@ -99,8 +99,9 @@ class StatController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request           $request
      * @param InvoiceRepository $repository
+     *
      * @return Response
      *
      * @Route("/turnover/client",
@@ -130,7 +131,8 @@ class StatController extends AbstractController
 
     /**
      * @param InvoiceRepository $repository
-     * @param string $period
+     * @param string            $period
+     *
      * @return Response
      *
      * @Route("/turnover/period/{period}",

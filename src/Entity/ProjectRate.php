@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -66,6 +67,7 @@ class ProjectRate
 
     /**
      * @param Project $project
+     *
      * @return ProjectRate
      */
     public function setProject(Project $project): self
@@ -85,6 +87,7 @@ class ProjectRate
 
     /**
      * @param float|null $hourlyRateOnSite
+     *
      * @return ProjectRate
      */
     public function setHourlyRateOnSite(?float $hourlyRateOnSite): self
@@ -104,6 +107,7 @@ class ProjectRate
 
     /**
      * @param float|null $hourlyRateOffSite
+     *
      * @return ProjectRate
      */
     public function setHourlyRateOffSite(?float $hourlyRateOffSite): self
@@ -123,6 +127,7 @@ class ProjectRate
 
     /**
      * @param \DateTimeInterface $startedAt
+     *
      * @return ProjectRate
      */
     public function setStartedAt(\DateTimeInterface $startedAt): self

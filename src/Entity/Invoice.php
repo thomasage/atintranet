@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -165,6 +166,7 @@ class Invoice
 
     /**
      * Invoice constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -211,6 +213,7 @@ class Invoice
 
     /**
      * @param Client $client
+     *
      * @return Invoice
      */
     public function setClient(Client $client): self
@@ -230,6 +233,7 @@ class Invoice
 
     /**
      * @param string $number
+     *
      * @return Invoice
      */
     public function setNumber(string $number): self
@@ -249,6 +253,7 @@ class Invoice
 
     /**
      * @param \DateTimeInterface $issueDate
+     *
      * @return Invoice
      */
     public function setIssueDate(\DateTimeInterface $issueDate): self
@@ -268,6 +273,7 @@ class Invoice
 
     /**
      * @param \DateTimeInterface $dueDate
+     *
      * @return Invoice
      */
     public function setDueDate(\DateTimeInterface $dueDate): self
@@ -287,6 +293,7 @@ class Invoice
 
     /**
      * @param Address $address
+     *
      * @return Invoice
      */
     public function setAddress(Address $address): self
@@ -306,6 +313,7 @@ class Invoice
 
     /**
      * @param string $amountExcludingTax
+     *
      * @return Invoice
      */
     public function setAmountExcludingTax(string $amountExcludingTax): self
@@ -325,6 +333,7 @@ class Invoice
 
     /**
      * @param string $amountIncludingTax
+     *
      * @return Invoice
      */
     public function setAmountIncludingTax(string $amountIncludingTax): self
@@ -344,6 +353,7 @@ class Invoice
 
     /**
      * @param string $amountPaid
+     *
      * @return Invoice
      */
     public function setAmountPaid(string $amountPaid): self
@@ -363,6 +373,7 @@ class Invoice
 
     /**
      * @param string $currency
+     *
      * @return Invoice
      */
     public function setCurrency(string $currency): self
@@ -382,6 +393,7 @@ class Invoice
 
     /**
      * @param string|null $comment
+     *
      * @return Invoice
      */
     public function setComment(?string $comment): self
@@ -401,6 +413,7 @@ class Invoice
 
     /**
      * @param string|null $commentInternal
+     *
      * @return Invoice
      */
     public function setCommentInternal(?string $commentInternal): self
@@ -420,6 +433,7 @@ class Invoice
 
     /**
      * @param bool $closed
+     *
      * @return Invoice
      */
     public function setClosed(bool $closed): self
@@ -439,6 +453,7 @@ class Invoice
 
     /**
      * @param bool $locked
+     *
      * @return Invoice
      */
     public function setLocked(bool $locked): self
@@ -458,6 +473,7 @@ class Invoice
 
     /**
      * @param InvoiceDetail $detail
+     *
      * @return Invoice
      */
     public function addDetail(InvoiceDetail $detail): self
@@ -478,12 +494,13 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 2);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount);
     }
 
     /**
      * @param InvoiceDetail $detail
+     *
      * @return Invoice
      */
     public function removeDetail(InvoiceDetail $detail): self
@@ -511,6 +528,7 @@ class Invoice
 
     /**
      * @param string $type
+     *
      * @return Invoice
      */
     public function setType(string $type): self
@@ -530,6 +548,7 @@ class Invoice
 
     /**
      * @param string $taxAmount
+     *
      * @return Invoice
      */
     public function setTaxAmount(string $taxAmount): self
@@ -549,6 +568,7 @@ class Invoice
 
     /**
      * @param float $taxRate
+     *
      * @return Invoice
      */
     public function setTaxRate(float $taxRate): self
@@ -568,6 +588,7 @@ class Invoice
 
     /**
      * @param PaymentInvoice $paymentInvoice
+     *
      * @return Invoice
      */
     public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
@@ -582,6 +603,7 @@ class Invoice
 
     /**
      * @param PaymentInvoice $paymentInvoice
+     *
      * @return Invoice
      */
     public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self

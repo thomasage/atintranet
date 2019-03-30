@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -20,18 +21,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class PaymentController
- * @package App\Controller
+ * Class PaymentController.
+ *
  * @Route("/payment")
  * @IsGranted("ROLE_ADMIN")
  */
 class PaymentController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Payment $payment
+     * @param TranslatorInterface    $translator
+     * @param Payment                $payment
+     *
      * @return Response
      *
      * @Route("/{uuid}/delete",
@@ -44,19 +46,16 @@ class PaymentController extends AbstractController
         TranslatorInterface $translator,
         Payment $payment
     ): Response {
-
         $formDelete = $this->createForm(PaymentDeleteType::class, $payment);
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
-
             $em->remove($payment);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.payment_removed'));
 
             return $this->redirectToRoute('app_payment_index');
-
         }
 
         return $this->render(
@@ -70,6 +69,7 @@ class PaymentController extends AbstractController
 
     /**
      * @param PaymentManager $pm
+     *
      * @return Response
      *
      * @Route("/download",
@@ -88,10 +88,11 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Payment $payment
+     * @param TranslatorInterface    $translator
+     * @param Payment                $payment
+     *
      * @return Response
      *
      * @Route("/{uuid}/edit",
@@ -104,18 +105,15 @@ class PaymentController extends AbstractController
         TranslatorInterface $translator,
         Payment $payment
     ): Response {
-
         $formEdit = $this->createForm(PaymentType::class, $payment);
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.payment_updated'));
 
             return $this->redirectToRoute('app_payment_show', ['uuid' => $payment->getUuid()]);
-
         }
 
         return $this->render(
@@ -129,9 +127,10 @@ class PaymentController extends AbstractController
 
     /**
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Payment $payment
-     * @param bool $lock
+     * @param TranslatorInterface    $translator
+     * @param Payment                $payment
+     * @param bool                   $lock
+     *
      * @return Response
      *
      * @Route("/{uuid}/lock/{lock}",
@@ -145,7 +144,6 @@ class PaymentController extends AbstractController
         Payment $payment,
         bool $lock
     ): Response {
-
         $payment->setLocked($lock);
 
         $em->flush();
@@ -162,9 +160,10 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
+     * @param Request           $request
+     * @param SearchManager     $sm
      * @param PaymentRepository $repository
+     *
      * @return Response
      *
      * @Route("/",
@@ -194,9 +193,10 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface    $translator
+     *
      * @return Response
      *
      * @Route("/new",
@@ -210,14 +210,12 @@ class PaymentController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $em->persist($payment);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.payment_added'));
 
             return $this->redirectToRoute('app_payment_show', ['uuid' => $payment->getUuid()]);
-
         }
 
         return $this->render(
@@ -230,6 +228,7 @@ class PaymentController extends AbstractController
 
     /**
      * @param Payment $payment
+     *
      * @return Response
      *
      * @Route("/{uuid}",

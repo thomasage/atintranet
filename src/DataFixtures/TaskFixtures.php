@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -11,8 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class TaskFixtures
- * @package App\DataFixtures
+ * Class TaskFixtures.
  */
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -23,15 +23,13 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
-
+        for ($i = 0; $i < 10; ++$i) {
             /**
-             * @var Project $project
+             * @var Project
              */
             $project = $this->getReference('project'.$i);
 
-            for ($j = 0; $j < $faker->numberBetween(50, 100); $j++) {
-
+            for ($j = 0; $j < $faker->numberBetween(50, 100); ++$j) {
                 $start = $faker->dateTimeBetween('-2 years');
                 $stop = clone $start;
                 $stop->modify(sprintf('+%d minutes', $faker->numberBetween(5, 60 * 2)));
@@ -45,9 +43,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
                     ->setStart($start)
                     ->setStop($stop);
                 $manager->persist($task);
-
             }
-
         }
 
         $manager->flush();

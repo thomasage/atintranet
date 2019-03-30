@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Form\Type;
@@ -10,8 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class InvoiceSelector
- * @package App\Form\Type
+ * Class InvoiceSelector.
  */
 class InvoiceSelectorType extends AbstractType
 {
@@ -22,6 +22,7 @@ class InvoiceSelectorType extends AbstractType
 
     /**
      * InvoiceSelector constructor.
+     *
      * @param InvoiceToNumberTransformer $transformer
      */
     public function __construct(InvoiceToNumberTransformer $transformer)
@@ -31,7 +32,7 @@ class InvoiceSelectorType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

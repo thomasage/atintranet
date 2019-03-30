@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model;
@@ -11,8 +12,7 @@ use Symfony\Component\Intl\Intl;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class InvoicePDF
- * @package App\Model
+ * Class InvoicePDF.
  */
 class InvoicePDF extends \TCPDF
 {
@@ -60,10 +60,11 @@ class InvoicePDF extends \TCPDF
 
     /**
      * InvoicePDF constructor.
-     * @param string $companyName
-     * @param string $companyAddress
-     * @param string $footer
-     * @param string $bankAccount
+     *
+     * @param string              $companyName
+     * @param string              $companyAddress
+     * @param string              $footer
+     * @param string              $bankAccount
      * @param TranslatorInterface $translator
      */
     public function __construct(
@@ -128,7 +129,7 @@ class InvoicePDF extends \TCPDF
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string)$client->getAccountNumber()) {
+        if ('' !== (string) $client->getAccountNumber()) {
             $this->SetY(60);
             $this->Cell(35, 6, $this->translator->trans('field.account_number'), 0, 0, 'L');
             $this->Cell(0, 6, $client->getAccountNumber(), 0, 1, 'L');
@@ -214,7 +215,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -226,7 +227,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -238,7 +239,7 @@ class InvoicePDF extends \TCPDF
             }
         }
 
-        if ('' !== (string)$this->invoice->getComment()) {
+        if ('' !== (string) $this->invoice->getComment()) {
             $this->Ln();
             if ($this->GetY() > 215) {
                 $this->AddPage();
@@ -320,8 +321,8 @@ class InvoicePDF extends \TCPDF
     /**
      * @param string $orientation
      * @param string $format
-     * @param bool $keepmargins
-     * @param bool $tocpage
+     * @param bool   $keepmargins
+     * @param bool   $tocpage
      */
     public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false): void
     {
@@ -331,7 +332,8 @@ class InvoicePDF extends \TCPDF
 
     /**
      * @param string $input
-     * @param int $maxWidth
+     * @param int    $maxWidth
+     *
      * @return array
      */
     private function stringToArray(string $input, int $maxWidth): array

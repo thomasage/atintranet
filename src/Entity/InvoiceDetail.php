@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -67,6 +68,7 @@ class InvoiceDetail
 
     /**
      * InvoiceDetail constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -95,6 +97,7 @@ class InvoiceDetail
 
     /**
      * @param Invoice|null $invoice
+     *
      * @return InvoiceDetail
      */
     public function setInvoice(?Invoice $invoice): self
@@ -114,6 +117,7 @@ class InvoiceDetail
 
     /**
      * @param string $designation
+     *
      * @return InvoiceDetail
      */
     public function setDesignation(string $designation): self
@@ -133,6 +137,7 @@ class InvoiceDetail
 
     /**
      * @param float $quantity
+     *
      * @return InvoiceDetail
      */
     public function setQuantity(float $quantity): self
@@ -145,7 +150,7 @@ class InvoiceDetail
 
     private function updateAmounts(): void
     {
-        $this->amountTotal = bcmul($this->amountUnit, (string)$this->quantity, 2);
+        $this->amountTotal = bcmul($this->amountUnit, (string) $this->quantity, 2);
     }
 
     /**
@@ -158,6 +163,7 @@ class InvoiceDetail
 
     /**
      * @param string $amountUnit
+     *
      * @return InvoiceDetail
      */
     public function setAmountUnit(string $amountUnit): self
@@ -178,6 +184,7 @@ class InvoiceDetail
 
     /**
      * @param string $amountTotal
+     *
      * @return InvoiceDetail
      */
     public function setAmountTotal(string $amountTotal): self

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -26,10 +27,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AdminUserController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param User $user
+     * @param TranslatorInterface    $translator
+     * @param User                   $user
+     *
      * @return Response
      *
      * @Route("/{uuid}/delete",
@@ -42,7 +44,6 @@ class AdminUserController extends AbstractController
         TranslatorInterface $translator,
         User $user
     ): Response {
-
         // Can't delete current user
         if ($this->getUser()->getId() === $user->getId()) {
             return $this->redirectToRoute('app_admin_user_show', ['uuid' => $user->getUuid()]);
@@ -52,14 +53,12 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->remove($user);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.user_removed'));
 
             return $this->redirectToRoute('app_admin_user_index');
-
         }
 
         return $this->render(
@@ -72,10 +71,11 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param User $user
+     * @param TranslatorInterface    $translator
+     * @param User                   $user
+     *
      * @return Response
      *
      * @Route("/{uuid}/edit",
@@ -88,18 +88,15 @@ class AdminUserController extends AbstractController
         TranslatorInterface $translator,
         User $user
     ): Response {
-
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.user_updated'));
 
             return $this->redirectToRoute('app_admin_user_show', ['uuid' => $user->getUuid()]);
-
         }
 
         return $this->render(
@@ -113,6 +110,7 @@ class AdminUserController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/client-select",
@@ -137,9 +135,10 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
+     * @param Request        $request
+     * @param SearchManager  $sm
      * @param UserRepository $repository
+     *
      * @return Response
      *
      * @Route("/",
@@ -169,10 +168,11 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
+     * @param Request                      $request
+     * @param EntityManagerInterface       $em
+     * @param TranslatorInterface          $translator
      * @param UserPasswordEncoderInterface $passwordEncoder
+     *
      * @return Response
      *
      * @Route("/new",
@@ -185,7 +185,6 @@ class AdminUserController extends AbstractController
         TranslatorInterface $translator,
         UserPasswordEncoderInterface $passwordEncoder
     ): Response {
-
         try {
             $user = new User();
         } catch (\Exception $e) {
@@ -197,7 +196,6 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $user->setPassword($passwordEncoder->encodePassword($user, $form->get('password')->getData()));
             $em->persist($user);
             $em->flush();
@@ -205,7 +203,6 @@ class AdminUserController extends AbstractController
             $this->addFlash('success', $translator->trans('notification.user_added'));
 
             return $this->redirectToRoute('app_admin_user_show', ['uuid' => $user->getUuid()]);
-
         }
 
         return $this->render(
@@ -218,6 +215,7 @@ class AdminUserController extends AbstractController
 
     /**
      * @param User $user
+     *
      * @return Response
      *
      * @Route("/{uuid}",

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Form\Type;
@@ -18,14 +19,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class UserType
- * @package App\Form\Type
+ * Class UserType.
  */
 class UserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -89,7 +89,7 @@ class UserType extends AbstractType
 
     /**
      * @param FormInterface $form
-     * @param string $role
+     * @param string        $role
      */
     private function setupClientField(FormInterface $form, string $role): void
     {

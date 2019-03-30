@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -11,13 +12,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class InvoiceRepository
- * @package App\Repository
+ * Class InvoiceRepository.
  */
 class InvoiceRepository extends ServiceEntityRepository
 {
     /**
      * InvoiceRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -28,6 +29,7 @@ class InvoiceRepository extends ServiceEntityRepository
     /**
      * @param \DateTime|null $start
      * @param \DateTime|null $stop
+     *
      * @return array
      */
     public function findStatByClient(?\DateTime $start = null, ?\DateTime $stop = null): array
@@ -55,12 +57,10 @@ class InvoiceRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-
-            $series[0]['data'][] = (object)[
+            $series[0]['data'][] = (object) [
                 'name' => $result['client_name'],
-                'y' => (float)$result['amount'],
+                'y' => (float) $result['amount'],
             ];
-
         }
 
         return ['series' => $series];
@@ -68,6 +68,7 @@ class InvoiceRepository extends ServiceEntityRepository
 
     /**
      * @param string $period
+     *
      * @return array
      */
     public function findStatByPeriod(string $period = 'm'): array
@@ -75,7 +76,6 @@ class InvoiceRepository extends ServiceEntityRepository
         $categories = $series = [];
 
         try {
-
             if ('y' === $period) {
                 $start = new \DateTime('-9 years');
                 $stop = new \DateTime('+1 second');
@@ -96,14 +96,11 @@ class InvoiceRepository extends ServiceEntityRepository
                 }
                 $categories[] = $d->format($format);
             }
-
         } catch (\Exception $e) {
-
             return [
                 'categories' => [],
                 'series' => [],
             ];
-
         }
 
         $countCategories = count($categories);
@@ -124,7 +121,6 @@ class InvoiceRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-
             if (!isset($series[$result['client_name']])) {
                 $series[$result['client_name']] = [
                     'name' => $result['client_name'],
@@ -133,8 +129,7 @@ class InvoiceRepository extends ServiceEntityRepository
             }
 
             $c = array_search($result['period'], $categories, true);
-            $series[$result['client_name']]['data'][$c] = (float)$result['amount'];
-
+            $series[$result['client_name']]['data'][$c] = (float) $result['amount'];
         }
 
         return [
@@ -145,6 +140,7 @@ class InvoiceRepository extends ServiceEntityRepository
 
     /**
      * @param Search $search
+     *
      * @return Paginator
      */
     public function findBySearch(Search $search): Paginator
@@ -195,12 +191,12 @@ class InvoiceRepository extends ServiceEntityRepository
 
     /**
      * @param Invoice $invoice
+     *
      * @return string|null
      */
     public function findNextNumber(Invoice $invoice): ?string
     {
         try {
-
             $result = $this
                 ->createQueryBuilder('invoice')
                 ->select('MAX( invoice.number ) number')
@@ -218,13 +214,10 @@ class InvoiceRepository extends ServiceEntityRepository
             return sprintf(
                 '%s%s',
                 substr($result, 0, 4),
-                str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT)
+                str_pad((string) (substr($result, -3) + 1), 3, '0', STR_PAD_LEFT)
             );
-
         } catch (NonUniqueResultException $e) {
-
             return null;
-
         }
     }
 }

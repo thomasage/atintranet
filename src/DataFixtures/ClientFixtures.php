@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -10,8 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class ClientFixtures
- * @package App\DataFixtures
+ * Class ClientFixtures.
  */
 class ClientFixtures extends Fixture
 {
@@ -22,8 +22,7 @@ class ClientFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 20; $i++) {
-
+        for ($i = 0; $i < 20; ++$i) {
             $address = new Address();
             $address
                 ->setAddress($faker->streetAddress)
@@ -42,7 +41,6 @@ class ClientFixtures extends Fixture
                 ->setVatNumber(preg_replace('/[^0-9A-Z]/', '', $faker->vat));
             $manager->persist($client);
             $this->setReference('client'.$i, $client);
-
         }
 
         $manager->flush();

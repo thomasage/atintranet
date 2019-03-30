@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Twig;
@@ -8,8 +9,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Class LocaleExtension
- * @package App\Twig
+ * Class LocaleExtension.
  */
 class LocaleExtension extends AbstractExtension
 {
@@ -26,6 +26,7 @@ class LocaleExtension extends AbstractExtension
 
     /**
      * @param int|null $value
+     *
      * @return string|null
      */
     public function localizedDuration(?int $value): ?string
@@ -49,15 +50,16 @@ class LocaleExtension extends AbstractExtension
 
         return sprintf(
             '%s:%s:%s',
-            str_pad((string)$hours, 2, '0', STR_PAD_LEFT),
-            str_pad((string)$minutes, 2, '0', STR_PAD_LEFT),
-            str_pad((string)$seconds, 2, '0', STR_PAD_LEFT)
+            str_pad((string) $hours, 2, '0', STR_PAD_LEFT),
+            str_pad((string) $minutes, 2, '0', STR_PAD_LEFT),
+            str_pad((string) $seconds, 2, '0', STR_PAD_LEFT)
         );
     }
 
     /**
-     * @param null|string $country
-     * @return null|string
+     * @param string|null $country
+     *
+     * @return string|null
      */
     public function localizedCountry(?string $country): ?string
     {

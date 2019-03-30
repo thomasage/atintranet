@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Helper;
@@ -8,8 +9,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * Trait IdTrait
- * @package App\Helper
+ * Trait IdTrait.
  */
 trait IdTrait
 {
@@ -31,6 +31,7 @@ trait IdTrait
 
     /**
      * IdTrait constructor.
+     *
      * @throws \Exception
      */
     public function __construct()

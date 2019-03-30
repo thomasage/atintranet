@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -24,10 +25,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ClientController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Client $client
+     * @param TranslatorInterface    $translator
+     * @param Client                 $client
+     *
      * @return Response
      *
      * @Route("/{uuid}/delete",
@@ -40,7 +42,6 @@ class ClientController extends AbstractController
         TranslatorInterface $translator,
         Client $client
     ): Response {
-
         if (count($client->getInvoices()) > 0) {
             return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
         }
@@ -49,14 +50,12 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->remove($client);
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.client_removed'));
 
             return $this->redirectToRoute('app_client_index');
-
         }
 
         return $this->render(
@@ -69,10 +68,11 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Client $client
+     * @param TranslatorInterface    $translator
+     * @param Client                 $client
+     *
      * @return Response
      *
      * @Route("/{uuid}/edit",
@@ -85,18 +85,15 @@ class ClientController extends AbstractController
         TranslatorInterface $translator,
         Client $client
     ): Response {
-
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->flush();
 
             $this->addFlash('success', $translator->trans('notification.client_updated'));
 
             return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
-
         }
 
         return $this->render(
@@ -109,9 +106,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
+     * @param Request          $request
+     * @param SearchManager    $sm
      * @param ClientRepository $clientRepository
+     *
      * @return Response
      *
      * @Route("/",
@@ -142,6 +140,7 @@ class ClientController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/new",
@@ -172,6 +171,7 @@ class ClientController extends AbstractController
 
     /**
      * @param Client $client
+     *
      * @return Response
      *
      * @Route("/{uuid}",

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -14,8 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class InvoiceFixtures
- * @package App\DataFixtures
+ * Class InvoiceFixtures.
  */
 class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -26,6 +26,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * InvoiceFixtures constructor.
+     *
      * @param ClientRepository $clientRepository
      */
     public function __construct(ClientRepository $clientRepository)
@@ -35,14 +36,14 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
+     *
      * @throws \Exception
      */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
-
+        for ($i = 0; $i < 10; ++$i) {
             $address = new Address();
             $address
                 ->setAddress($faker->streetAddress)
@@ -67,20 +68,17 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 
             $j = 0;
             while ($j < $countDetails) {
-
                 $detail = new InvoiceDetail();
                 $detail
-                    ->setAmountUnit((string)$faker->randomFloat(2, 50, 100))
+                    ->setAmountUnit((string) $faker->randomFloat(2, 50, 100))
                     ->setDesignation(ucfirst($faker->words(3, true)))
                     ->setQuantity($faker->numberBetween(1, 10));
                 $manager->persist($detail);
 
                 $invoice->addDetail($detail);
 
-                $j++;
-
+                ++$j;
             }
-
         }
 
         $manager->flush();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Form\Type\ChoiceType;
@@ -7,12 +8,10 @@ use App\Entity\Client;
 use App\Repository\ClientRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ClientChoiceType
- * @package App\Form\Type
+ * Class ClientChoiceType.
  */
 class ClientChoiceType extends AbstractType
 {
@@ -23,19 +22,17 @@ class ClientChoiceType extends AbstractType
 
     /**
      * ClientChoiceType constructor.
-     * @param RequestStack $rs
+     *
      * @param ClientRepository $repo
      */
-    public function __construct(RequestStack $rs, ClientRepository $repo)
+    public function __construct(ClientRepository $repo)
     {
-        /**
-         * @var Client[] $clients
-         */
+        /** @var Client[] $clients */
         $clients = $repo->findBy([], ['name' => 'ASC', 'id' => 'ASC']);
 
         $this->choices = [];
         foreach ($clients as $c) {
-            $this->choices[(string)$c->getName()] = $c->getId();
+            $this->choices[(string) $c->getName()] = $c->getId();
         }
     }
 
@@ -45,7 +42,6 @@ class ClientChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['choices' => $this->choices]);
-
     }
 
     /**

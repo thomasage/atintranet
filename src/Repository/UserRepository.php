@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -10,13 +11,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class UserRepository
- * @package App\Repository
+ * Class UserRepository.
  */
 class UserRepository extends ServiceEntityRepository
 {
     /**
      * UserRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -26,6 +27,7 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param Search $search
+     *
      * @return Paginator
      */
     public function findBySearch(Search $search): Paginator

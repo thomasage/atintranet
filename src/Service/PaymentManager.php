@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -18,8 +19,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class PaymentManager
- * @package App\Service
+ * Class PaymentManager.
  */
 class PaymentManager implements ServiceSubscriberInterface
 {
@@ -30,6 +30,7 @@ class PaymentManager implements ServiceSubscriberInterface
 
     /**
      * PaymentManager constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -70,7 +71,6 @@ class PaymentManager implements ServiceSubscriberInterface
         $formatter = new \IntlDateFormatter($request->getLocale(), \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
 
         try {
-
             $spreadsheet = new Spreadsheet();
 
             $spreadsheet->getDefaultStyle()->getFont()->setName('arial')->setSize(10);
@@ -103,8 +103,7 @@ class PaymentManager implements ServiceSubscriberInterface
             $rownum = 1;
 
             foreach ($payments as $payment) {
-
-                $rownum++;
+                ++$rownum;
                 $sheet->setCellValue('A'.$rownum, $formatter->format($payment->getOperationDate()));
                 if ($payment->getValueDate()) {
                     $sheet->setCellValue('B'.$rownum, $formatter->format($payment->getValueDate()));
@@ -116,7 +115,6 @@ class PaymentManager implements ServiceSubscriberInterface
                 $sheet->setCellValue('G'.$rownum, $payment->getBankName());
                 $sheet->setCellValue('H'.$rownum, $translator->trans($payment->getLocked() ? 'yes' : 'no'));
                 $sheet->setCellValue('I'.$rownum, $payment->getComment());
-
             }
 
             $sheet
@@ -153,11 +151,8 @@ class PaymentManager implements ServiceSubscriberInterface
             $response->headers->set('Cache-Control', 'max-age=0');
 
             return $response;
-
         } catch (\Exception $e) {
-
             return null;
-
         }
     }
 }

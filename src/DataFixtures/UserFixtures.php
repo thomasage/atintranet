@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataFixtures;
@@ -12,8 +13,7 @@ use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * Class UserFixtures
- * @package App\DataFixtures
+ * Class UserFixtures.
  */
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -24,6 +24,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * UserFixtures constructor.
+     *
      * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
@@ -45,11 +46,9 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setUsername('admin');
         $manager->persist($user);
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
 
-            /**
-             * @var Client $client
-             */
+            /** @var Client $client */
             $client = $this->getReference('client'.$i);
 
             $user = new User();
