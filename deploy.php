@@ -25,6 +25,7 @@ set('allow_anonymous_stats', false);
 
 inventory('deploy/hosts.yaml');
 set('bin/php', '/usr/local/php7.3/bin/php');
+set('writable_use_sudo', false);
 
 // Tasks
 
@@ -44,10 +45,26 @@ task(
 )
     ->desc('Load environment vars from shared/.env.local');
 
-// [Optional] if deploy fails automatically unlock.
+desc('Deploy project');
+task(
+    'deploy',
+    [
+        'deploy:info',
+        'deploy:prepare',
+        'deploy:lock',
+        'deploy:env:load',
+        'deploy:release',
+        'deploy:update_code',
+        'deploy:shared',
+        'deploy:vendors',
+        'deploy:cache:clear',
+        'deploy:cache:warmup',
+        'database:migrate',
+        'deploy:symlink',
+        'deploy:unlock',
+        'cleanup',
+    ]
+);
+
+// If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-
-// Migrate database before symlink new release.
-
-before('deploy:symlink', 'database:migrate');
-before('deploy:release', 'deploy:env:load');
