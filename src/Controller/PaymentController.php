@@ -135,8 +135,7 @@ class PaymentController extends AbstractController
      *
      * @Route("/{uuid}/lock/{lock}",
      *     name="app_payment_lock",
-     *     methods={"GET"},
-     *     requirements={"lock", "uuid"})
+     *     methods={"GET"})
      */
     public function lock(
         EntityManagerInterface $em,

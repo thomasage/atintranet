@@ -36,7 +36,7 @@ class PaymentInvoiceListener
 
         $amount = '0.0';
         foreach ($invoice->getPaymentInvoices() as $paymentInvoice) {
-            $amount = bcadd($amount, $paymentInvoice->getAmount());
+            $amount = bcadd($amount, $paymentInvoice->getAmount(), 2);
         }
 
         $invoice->setAmountPaid($amount);

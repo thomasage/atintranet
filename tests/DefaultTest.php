@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests;
@@ -7,8 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
- * Class DefaultTest
- * @package App\Tests
+ * Class DefaultTest.
  */
 class DefaultTest extends WebTestCase
 {
