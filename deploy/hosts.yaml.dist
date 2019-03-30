@@ -1,0 +1,19 @@
+# See: https://deployer.org/docs/hosts.html#inventory-file
+
+domain.com:
+  hostname: domain.com
+  user: name
+  port: 22
+  configFile: ~/.ssh/config
+  identityFile: ~/.ssh/id_rsa
+  forwardAgent: true
+  multiplexing: true
+  sshOptions:
+    UserKnownHostsFile: /dev/null
+    StrictHostKeyChecking: no
+  stage: production
+  roles:
+    - app
+    - db
+  deploy_path: ~/app
+  extra_param: "foo {{hostname}}"

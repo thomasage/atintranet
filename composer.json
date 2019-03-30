@@ -33,11 +33,13 @@
     "symfony/twig-bundle": "4.2.*",
     "symfony/validator": "4.2.*",
     "symfony/web-link": "4.2.*",
+    "symfony/webpack-encore-bundle": "^1.4",
     "symfony/yaml": "4.2.*",
     "tecnickcom/tcpdf": "^6.2",
     "twig/extensions": "^1.5"
   },
   "require-dev": {
+    "deployer/deployer": "^6.4",
     "doctrine/doctrine-fixtures-bundle": "^3.0",
     "friendsofphp/php-cs-fixer": "^2.14",
     "fzaninotto/faker": "^1.8",
@@ -46,8 +48,7 @@
     "symfony/maker-bundle": "^1.0",
     "symfony/profiler-pack": "*",
     "symfony/test-pack": "*",
-    "symfony/web-server-bundle": "4.2.*",
-    "symfony/webpack-encore-bundle": "^1.0"
+    "symfony/web-server-bundle": "4.2.*"
   },
   "config": {
     "preferred-install": {
