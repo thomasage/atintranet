@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="app_client")
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client
+class Client implements \JsonSerializable
 {
     use IdTrait {
         IdTrait::__construct as IdTraitConstruct;
@@ -101,6 +101,7 @@ class Client
 
     /**
      * Client constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -358,5 +359,17 @@ class Client
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'addressPrimary' => $this->addressPrimary,
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

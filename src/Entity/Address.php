@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="app_address")
  * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")
  */
-class Address
+class Address implements \JsonSerializable
 {
     use IdTrait {
         IdTrait::__construct as IdTraitConstruct;
@@ -71,6 +71,7 @@ class Address
 
     /**
      * Address constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -184,5 +185,19 @@ class Address
         $this->country = $country;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'address' => $this->address,
+            'city' => $this->city,
+            'country' => $this->country,
+            'name' => $this->name,
+            'postcode' => $this->postcode,
+        ];
     }
 }

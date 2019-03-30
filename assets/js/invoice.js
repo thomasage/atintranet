@@ -49,4 +49,23 @@ $(function () {
 
     InvoiceApp.initialize($('#invoice_details'), $('.js-detail-add'));
 
+    $('#invoice_client').on('change', function () {
+        let client = $(this).val();
+        let url = $(this).data('url');
+        $.ajax({
+            url: url,
+            method: 'GET',
+            data: {
+                client: client,
+            },
+            success: function (data) {
+                $('#invoice_address_address').val(data.addressPrimary.address);
+                $('#invoice_address_city').val(data.addressPrimary.city);
+                $('#invoice_address_country').val(data.addressPrimary.country);
+                $('#invoice_address_name').val(data.addressPrimary.name);
+                $('#invoice_address_postcode').val(data.addressPrimary.postcode);
+            }
+        });
+    }).change();
+
 });

@@ -19,12 +19,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class InvoiceType.
  */
 class InvoiceType extends AbstractType
 {
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * InvoiceType constructor.
+     *
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -44,6 +60,9 @@ class InvoiceType extends AbstractType
                 'client',
                 EntityType::class,
                 [
+                    'attr' => [
+                        'data-url' => $this->router->generate('app_client_info'),
+                    ],
                     'class' => Client::class,
                     'label' => 'field.client',
                     'query_builder' => function (ClientRepository $er): QueryBuilder {

@@ -705,6 +705,10 @@
         <source>notification.unable_to_create_user</source>
         <target>Impossible de créer un utilisateur</target>
       </trans-unit>
+      <trans-unit id="IgRQxo7" resname="notification.unable_to_create_client">
+        <source>notification.unable_to_create_client</source>
+        <target>Impossible de créer un client</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

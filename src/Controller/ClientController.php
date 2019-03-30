@@ -13,6 +13,7 @@ use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,10 +26,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ClientController extends AbstractController
 {
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Client                 $client
+     * @param TranslatorInterface $translator
+     * @param Client $client
      *
      * @return Response
      *
@@ -68,10 +69,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Client                 $client
+     * @param TranslatorInterface $translator
+     * @param Client $client
      *
      * @return Response
      *
@@ -106,8 +107,8 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request          $request
-     * @param SearchManager    $sm
+     * @param Request $request
+     * @param SearchManager $sm
      * @param ClientRepository $clientRepository
      *
      * @return Response
@@ -140,15 +141,39 @@ class ClientController extends AbstractController
 
     /**
      * @param Request $request
+     * @param ClientRepository $repository
+     *
+     * @return Response
+     *
+     * @Route("/info",
+     *     name="app_client_info",
+     *     methods={"GET"})
+     */
+    public function info(Request $request, ClientRepository $repository): Response
+    {
+        $client = $repository->find($request->query->get('client'));
+
+        return new JsonResponse($client);
+    }
+
+    /**
+     * @param Request $request
+     * @param TranslatorInterface $translator
      *
      * @return Response
      *
      * @Route("/new",
      *     name="app_client_new", methods={"GET", "POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TranslatorInterface $translator): Response
     {
-        $client = new Client();
+        try {
+            $client = new Client();
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $translator->trans('notification.unable_to_create_client'));
+
+            return $this->redirectToRoute('app_client_index');
+        }
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
