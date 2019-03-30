@@ -488,7 +488,7 @@ class Invoice
         return $this;
     }
 
-    private function updateAmounts(): void
+    public function updateAmounts(): void
     {
         $this->amountExcludingTax = '0';
         foreach ($this->details as $detail) {
