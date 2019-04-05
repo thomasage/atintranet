@@ -7,7 +7,13 @@ namespace App\Repository;
 use App\Entity\Client;
 use App\Entity\Task;
 use App\Entity\User;
+use DateInterval;
+use DatePeriod;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Exception;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -40,36 +46,36 @@ class TaskRepository extends ServiceEntityRepository
 
         try {
             if ('y' === $period) {
-                $start = new \DateTime('-9 years');
-                $stop = new \DateTime('+1 second');
+                $start = new DateTime('-9 years');
+                $stop = new DateTime('+1 second');
                 $interval = 'P1Y';
                 $format = 'Y';
             } elseif ('m' === $period) {
-                $start = new \DateTime('-11 months');
-                $stop = new \DateTime('+1 second');
+                $start = new DateTime('-11 months');
+                $stop = new DateTime('+1 second');
                 $interval = 'P1M';
                 $format = 'Y-m';
             } elseif ('w' === $period) {
-                $start = new \DateTime('-8 weeks');
-                $stop = new \DateTime('+1 second');
+                $start = new DateTime('-8 weeks');
+                $stop = new DateTime('+1 second');
                 $interval = 'P1W';
                 $format = 'W';
             } else {
-                $start = new \DateTime('-13 days');
-                $stop = new \DateTime('+1 second');
+                $start = new DateTime('-13 days');
+                $stop = new DateTime('+1 second');
                 $interval = 'P1D';
                 $format = 'd';
             }
             $start->setTime(0, 0);
             $stop->setTime(23, 59, 59);
 
-            foreach (new \DatePeriod($start, new \DateInterval($interval), $stop) as $d) {
-                if (!$d instanceof \DateTime) {
+            foreach (new DatePeriod($start, new DateInterval($interval), $stop) as $d) {
+                if (!$d instanceof DateTime) {
                     continue;
                 }
                 $data['categories'][] = $d->format($format);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $data;
         }
 
@@ -129,18 +135,18 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client             $client
-     * @param \DateTimeInterface $month
+     * @param Client            $client
+     * @param DateTimeInterface $month
      *
      * @return array
      */
-    public function summaryByClientAndMonth(Client $client, \DateTimeInterface $month): array
+    public function summaryByClientAndMonth(Client $client, DateTimeInterface $month): array
     {
-        $monthStart = \DateTime::createFromFormat('Y-m-d H:i:s', $month->format('Y-m-01 00:00:00'));
+        $monthStart = DateTime::createFromFormat('Y-m-d H:i:s', $month->format('Y-m-01 00:00:00'));
         $monthStop = clone $monthStart;
         $monthStop->modify('+1 month -1 day +23 hours +59 minutes +59 seconds');
 
-        $yearStart = \DateTime::createFromFormat('Y-m-d H:i:s', $monthStop->format('Y-01-01 00:00:00'));
+        $yearStart = DateTime::createFromFormat('Y-m-d H:i:s', $monthStop->format('Y-01-01 00:00:00'));
         $yearStop = clone $yearStart;
         $yearStop->modify('+12 months -1 day +23 hours +59 minutes +59 seconds');
 
@@ -179,14 +185,14 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client             $client
-     * @param \DateTimeInterface $month
+     * @param Client            $client
+     * @param DateTimeInterface $month
      *
      * @return Task[]
      */
-    public function detailByClientAndMonth(Client $client, \DateTimeInterface $month): array
+    public function detailByClientAndMonth(Client $client, DateTimeInterface $month): array
     {
-        $monthStart = \DateTime::createFromFormat('Y-m-d H:i:s', $month->format('Y-m-01 00:00:00'));
+        $monthStart = DateTime::createFromFormat('Y-m-d H:i:s', $month->format('Y-m-01 00:00:00'));
         $monthStop = clone $monthStart;
         $monthStop->modify('+1 month -1 day +23 hours +59 minutes +59 seconds');
 
@@ -284,5 +290,19 @@ class TaskRepository extends ServiceEntityRepository
         }
 
         return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * @return Paginator
+     */
+    public function findBySearch(): Paginator
+    {
+        $builder = $this
+            ->createQueryBuilder('task')
+            ->addOrderBy('task.start', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(20);
+
+        return new Paginator($builder->getQuery());
     }
 }

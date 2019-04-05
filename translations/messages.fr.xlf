@@ -709,6 +709,10 @@
         <source>notification.unable_to_create_client</source>
         <target>Impossible de créer un client</target>
       </trans-unit>
+      <trans-unit id="bmp98lX" resname="notification.unable_to_create_payment">
+        <source>notification.unable_to_create_payment</source>
+        <target>Impossible de créer un règlement</target>
+      </trans-unit>
       <trans-unit id="SBcJfBW" resname="action.duplicate">
         <source>action.duplicate</source>
         <target>Dupliquer</target>

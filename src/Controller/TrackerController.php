@@ -27,7 +27,7 @@ class TrackerController extends AbstractController
      */
     public function index(TaskRepository $repository): Response
     {
-        $tasks = $repository->findBy([], ['start' => 'DESC']);
+        $tasks = $repository->findBySearch();
 
         return $this->render(
             'tracker/index.html.twig',

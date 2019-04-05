@@ -204,7 +204,14 @@ class PaymentController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
-        $payment = new Payment();
+        try {
+            $payment = new Payment();
+        } catch (\Exception $e) {
+            $this->addFlash('error', $translator->trans('notification.unable_to_create_payment'));
+
+            return $this->redirectToRoute('app_payment_index');
+        }
+
         $formEdit = $this->createForm(PaymentType::class, $payment);
         $formEdit->handleRequest($request);
 
