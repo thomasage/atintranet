@@ -1,0 +1,7 @@
+hostname:
+    stage: prod
+    deploy_path: ~/
+    env:
+        APP_ENV: prod
+    http_user: my_user
+    writable_mode: chown
