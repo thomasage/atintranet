@@ -36,6 +36,14 @@ inventory(__DIR__.'/deploy/hosts.yaml');
 
 // Tasks
 
+desc('Execute tests');
+task(
+    'deploy:tests',
+    function () {
+        runLocally('vendor/bin/simple-phpunit');
+    }
+);
+
 desc('Setup env variables');
 task(
     'deploy:env:setup',
@@ -74,6 +82,7 @@ desc('Deploy project');
 task(
     'deploy',
     [
+        'deploy:tests',
         'deploy:info',
         'deploy:prepare',
         'deploy:lock',
