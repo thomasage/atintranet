@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-exec(sprintf('php %s/../bin/console app:import-toggl 2019-01-01', __DIR__), $output, $return_var);
+exec(sprintf('/usr/local/php7.3/bin/php %s/../bin/console app:import-toggl 2019-01-01', __DIR__), $output, $return_var);
 
 if (0 !== $return_var) {
 
