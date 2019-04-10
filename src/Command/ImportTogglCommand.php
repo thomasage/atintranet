@@ -45,7 +45,7 @@ class ImportTogglCommand extends Command
      * ImportTogglCommand constructor.
      *
      * @param EntityManagerInterface $em
-     * @param string                 $togglApiKey
+     * @param string $togglApiKey
      */
     public function __construct(EntityManagerInterface $em, string $togglApiKey)
     {
@@ -67,7 +67,7 @@ class ImportTogglCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int
@@ -88,6 +88,16 @@ class ImportTogglCommand extends Command
                 'timeout' => 10.0,
             ]
         );
+
+        $response = $guzzleClient->get('me');
+        if (200 !== $response->getStatusCode()) {
+            $io->error(sprintf('Unable to fetch user (%d)', $response->getStatusCode()));
+
+            return 1;
+        }
+        $data = json_decode($response->getBody()->getContents());
+
+        date_default_timezone_set($data->data->timezone);
 
         $response = $guzzleClient->get('workspaces');
         if (200 !== $response->getStatusCode()) {
@@ -125,7 +135,7 @@ class ImportTogglCommand extends Command
                     $localClient = new Client();
                     $localClient
                         ->setAddressPrimary($address)
-                        ->setExternalReference((string) $client->id)
+                        ->setExternalReference((string)$client->id)
                         ->setName($client->name);
                     $this->em->persist($localClient);
                 }
@@ -161,7 +171,7 @@ class ImportTogglCommand extends Command
                     $localProject = new Project();
                     $localProject
                         ->setClient($localClient)
-                        ->setExternalReference((string) $project->id)
+                        ->setExternalReference((string)$project->id)
                         ->setName($project->name);
                     $this->em->persist($localProject);
 
@@ -172,13 +182,13 @@ class ImportTogglCommand extends Command
 
         $this->em->flush();
 
-        $start = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('start'));
+        $start = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('start'));
         if (!$start instanceof \DateTime) {
-            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int) date('n'), 1)));
+            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int)date('n'), 1)));
         }
         $start->setTime(0, 0);
 
-        $stop = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('stop'));
+        $stop = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('stop'));
         if (!$stop instanceof \DateTime) {
             $stop = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, date('n') + 1, 0)));
         }
@@ -219,7 +229,7 @@ class ImportTogglCommand extends Command
 
                     $task = new Task();
                     $task
-                        ->setExternalReference((string) $timeEntry->id)
+                        ->setExternalReference((string)$timeEntry->id)
                         ->setName($timeEntry->description)
                         ->setProject($localProject)
                         ->setStart(new \DateTime($timeEntry->start))
