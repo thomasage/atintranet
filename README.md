@@ -47,3 +47,7 @@ vendor/bin/phpstan analyse src --level 1 \
 ## Changelog
 
 * See [CHANGELOG](CHANGELOG.md)
+
+## TODO
+
+* Remove company informations of .env file

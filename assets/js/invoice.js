@@ -17,6 +17,12 @@ $(function () {
             InvoiceApp.$detailsContainer.append($element);
             scrollToElement($element);
             $element.find(':input').eq(0).focus();
+            InvoiceApp.handleDetailsUpdateAmounts($element.closest('div[id^="invoice_details_"]'));
+            let $parent = $element.closest('div[id^="invoice_details_"]');
+            InvoiceApp.handleDetailsUpdateAmounts($parent);
+            $parent.find('input').on('change', function () {
+                InvoiceApp.handleDetailsUpdateAmounts($parent);
+            });
         },
         handleDetailsLinkCopy: function (e) {
             let $row = $(e.target).closest('div[id]');
@@ -34,16 +40,21 @@ $(function () {
             InvoiceApp.$detailsContainer.append($element);
             scrollToElement($element);
             $element.find(':input').eq(0).focus();
+            let $parent = $element.closest('div[id^="invoice_details_"]');
+            InvoiceApp.handleDetailsUpdateAmounts($parent);
+            $parent.find('input').on('change', function () {
+                InvoiceApp.handleDetailsUpdateAmounts($parent);
+            });
         },
         handleDetailsLinkDelete: function (e) {
             $(e.target).closest('div[id]').slideUp('normal', function () {
                 $(this).remove();
             });
         },
-        handleDetailsUpdateAmounts: function (element) {
-            let amount = InvoiceApp.moneyUnFormat(element.find('[id$="_amountUnit"]').val());
-            let quantity = InvoiceApp.moneyUnFormat(element.find('[id$="_quantity"]').val());
-            element.find('[id$="_amountTotal"]').val(InvoiceApp.moneyFormat(amount * quantity));
+        handleDetailsUpdateAmounts: function ($element) {
+            let amount = InvoiceApp.moneyUnFormat($element.find('[id$="_amountUnit"]').val());
+            let quantity = InvoiceApp.moneyUnFormat($element.find('[id$="_quantity"]').val());
+            $element.find('[id$="_amountTotal"]').val(InvoiceApp.moneyFormat(amount * quantity));
             this.handleUpdateAmounts();
         },
         handleUpdateAmounts: function () {
@@ -75,6 +86,9 @@ $(function () {
             var unformatted = string;
             unformatted = unformatted.split(parts[0]).join("");
             unformatted = unformatted.split(parts[1]).join(".");
+            if ('' === unformatted) {
+                unformatted = 0;
+            }
             return parseFloat(unformatted);
         }
     };
