@@ -301,7 +301,7 @@ class TaskRepository extends ServiceEntityRepository
             ->createQueryBuilder('task')
             ->addOrderBy('task.start', 'DESC')
             ->setFirstResult(0)
-            ->setMaxResults(20);
+            ->setMaxResults(50);
 
         return new Paginator($builder->getQuery());
     }

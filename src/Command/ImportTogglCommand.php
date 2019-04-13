@@ -16,9 +16,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * Class ImportTogglCommand.
- */
 class ImportTogglCommand extends Command
 {
     /**
@@ -41,12 +38,6 @@ class ImportTogglCommand extends Command
      */
     private $em;
 
-    /**
-     * ImportTogglCommand constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param string $togglApiKey
-     */
     public function __construct(EntityManagerInterface $em, string $togglApiKey)
     {
         if ('' === $togglApiKey || 'null' === $togglApiKey) {
@@ -66,12 +57,6 @@ class ImportTogglCommand extends Command
             ->addArgument('stop', InputArgument::OPTIONAL, 'Import to date (YYYY-MM-DD)');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -135,7 +120,7 @@ class ImportTogglCommand extends Command
                     $localClient = new Client();
                     $localClient
                         ->setAddressPrimary($address)
-                        ->setExternalReference((string)$client->id)
+                        ->setExternalReference((string) $client->id)
                         ->setName($client->name);
                     $this->em->persist($localClient);
                 }
@@ -171,7 +156,7 @@ class ImportTogglCommand extends Command
                     $localProject = new Project();
                     $localProject
                         ->setClient($localClient)
-                        ->setExternalReference((string)$project->id)
+                        ->setExternalReference((string) $project->id)
                         ->setName($project->name);
                     $this->em->persist($localProject);
 
@@ -182,13 +167,13 @@ class ImportTogglCommand extends Command
 
         $this->em->flush();
 
-        $start = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('start'));
+        $start = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('start'));
         if (!$start instanceof \DateTime) {
-            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int)date('n'), 1)));
+            $start = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, (int) date('n'), 1)));
         }
         $start->setTime(0, 0);
 
-        $stop = \DateTime::createFromFormat('Y-m-d', (string)$input->getArgument('stop'));
+        $stop = \DateTime::createFromFormat('Y-m-d', (string) $input->getArgument('stop'));
         if (!$stop instanceof \DateTime) {
             $stop = \DateTime::createFromFormat('Y-m-d', date('Y-m-d', mktime(0, 0, 0, date('n') + 1, 0)));
         }
@@ -227,13 +212,21 @@ class ImportTogglCommand extends Command
                         continue;
                     }
 
+                    // Fix timezone
+                    $start = new \DateTime($timeEntry->start);
+                    $offset = timezone_offset_get(new \DateTimeZone($data->data->timezone), $start);
+                    $start->modify(sprintf('+%d seconds', $offset));
+                    $stop = new \DateTime($timeEntry->stop);
+                    $offset = timezone_offset_get(new \DateTimeZone($data->data->timezone), $stop);
+                    $stop->modify(sprintf('+%d seconds', $offset));
+
                     $task = new Task();
                     $task
-                        ->setExternalReference((string)$timeEntry->id)
+                        ->setExternalReference((string) $timeEntry->id)
                         ->setName($timeEntry->description)
                         ->setProject($localProject)
-                        ->setStart(new \DateTime($timeEntry->start))
-                        ->setStop(new \DateTime($timeEntry->stop));
+                        ->setStart($start)
+                        ->setStop($stop);
 
                     if (isset($timeEntry->tags)) {
                         foreach ($timeEntry->tags as $tag) {
