@@ -10,6 +10,7 @@ use App\Repository\ClientRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -43,7 +44,7 @@ class InvoiceType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -54,6 +55,18 @@ class InvoiceType extends AbstractType
                 [
                     'disabled' => true,
                     'label' => 'field.number',
+                ]
+            )
+            ->add(
+                'type',
+                ChoiceType::class,
+                [
+                    'choices' => [
+                        'invoice' => 'invoice',
+                        'credit' => 'credit',
+                    ],
+                    'label' => 'field.type',
+                    'required' => true,
                 ]
             )
             ->add(

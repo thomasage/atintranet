@@ -50,4 +50,5 @@ vendor/bin/phpstan analyse src --level 1 \
 
 ## TODO
 
-* Remove company informations of .env file
+* General: remove company informations of .env file
+* Invoice: update due date when issue date is updated

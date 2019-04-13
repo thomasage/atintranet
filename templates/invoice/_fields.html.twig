@@ -15,6 +15,19 @@
     </div>
 {%- endblock -%}
 
+{%- block _invoice_type_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
 {%- block _invoice_comment_row -%}
     <div class="mb-3 row align-items-center">
         <div class="col-12 col-md-4">
