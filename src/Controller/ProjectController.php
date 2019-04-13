@@ -25,10 +25,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProjectController extends AbstractController
 {
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Project                $project
+     * @param TranslatorInterface $translator
+     * @param Project $project
      *
      * @return Response
      *
@@ -84,9 +84,9 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
+     * @param TranslatorInterface $translator
      *
      * @return Response
      *
@@ -119,10 +119,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param ProjectRate            $rate
+     * @param TranslatorInterface $translator
+     * @param ProjectRate $rate
      *
      * @return Response
      *
@@ -161,10 +161,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param ProjectRate            $rate
+     * @param TranslatorInterface $translator
+     * @param ProjectRate $rate
      *
      * @return Response
      *
@@ -202,10 +202,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Project                $project
+     * @param TranslatorInterface $translator
+     * @param Project $project
      *
      * @return Response
      *

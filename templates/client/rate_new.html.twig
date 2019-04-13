@@ -1,9 +1,9 @@
-{% extends 'project/base.html.twig' %}
+{% extends 'client/base.html.twig' %}
 
-{% block page_title %}{{ 'title.project_rate_add'|trans }}{% endblock %}
+{% block page_title %}{{ 'title.client_rate_add'|trans }}{% endblock %}
 
 {% block page_menu %}
-    <a href="{{ path('app_project_show',{uuid:project.uuid}) }}" class="btn btn-outline-secondary">
+    <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="btn btn-outline-secondary">
         <span class="fa fa-undo"></span>
         <span class="d-none d-sm-inline">{{ 'action.back'|trans }}</span>
     </a>
@@ -20,7 +20,7 @@
                 <span class="fa fa-save"></span>
                 {{ 'action.save'|trans }}
             </button>
-            <a href="{{ path('app_project_show',{uuid:project.uuid}) }}" class="btn btn-outline-secondary">
+            <a href="{{ path('app_client_show',{uuid:client.uuid}) }}" class="btn btn-outline-secondary">
                 <span class="fa fa-undo"></span>
                 {{ 'action.cancel'|trans }}
             </a>

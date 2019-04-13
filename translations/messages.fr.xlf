@@ -209,6 +209,18 @@
         <source>notification.project_rate_removed</source>
         <target>Le tarif a été supprimé.</target>
       </trans-unit>
+      <trans-unit id="BY4Rv0y" resname="notification.client_rate_added">
+        <source>notification.client_rate_added</source>
+        <target>Le tarif a été ajouté.</target>
+      </trans-unit>
+      <trans-unit id="FLAe2Xa" resname="notification.client_rate_updated">
+        <source>notification.client_rate_updated</source>
+        <target>Le tarif a été modifié.</target>
+      </trans-unit>
+      <trans-unit id="ngW8MJ9" resname="notification.client_rate_removed">
+        <source>notification.client_rate_removed</source>
+        <target>Le tarif a été supprimé.</target>
+      </trans-unit>
       <trans-unit id=".NuLF.M" resname="notification.invoice_updated">
         <source>notification.invoice_updated</source>
         <target>La facture est modifiée.</target>
@@ -489,6 +501,10 @@
         <source>confirmation.delete_project_rate</source>
         <target>Je souhaite supprimer définitivement ce tarif</target>
       </trans-unit>
+      <trans-unit id="YeNiGYN" resname="confirmation.delete_client_rate">
+        <source>confirmation.delete_client_rate</source>
+        <target>Je souhaite supprimer définitivement ce tarif</target>
+      </trans-unit>
       <trans-unit id="yvxArGk" resname="confirmation.delete_invoice">
         <source>confirmation.delete_invoice</source>
         <target>Je souhaite supprimer définitivement cette facture</target>
@@ -716,6 +732,18 @@
       <trans-unit id="SBcJfBW" resname="action.duplicate">
         <source>action.duplicate</source>
         <target>Dupliquer</target>
+      </trans-unit>
+      <trans-unit id="cFQFvU2" resname="title.client_rate_add">
+        <source>title.client_rate_add</source>
+        <target>Ajouter un tarif</target>
+      </trans-unit>
+      <trans-unit id="XHcdU9Y" resname="title.client_rate_delete">
+        <source>title.client_rate_delete</source>
+        <target>Supprimer un tarif</target>
+      </trans-unit>
+      <trans-unit id="n0uxz.y" resname="title.client_rate_edit">
+        <source>title.client_rate_edit</source>
+        <target>Modifier un tarif</target>
       </trans-unit>
     </body>
   </file>

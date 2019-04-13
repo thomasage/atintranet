@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Client;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
+use App\Entity\RateInterface;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
@@ -23,9 +24,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class TrackerManager.
- */
 class TrackerManager implements ServiceSubscriberInterface
 {
     /**
@@ -33,19 +31,11 @@ class TrackerManager implements ServiceSubscriberInterface
      */
     private $container;
 
-    /**
-     * TrackerManager constructor.
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedServices(): array
     {
         return [
@@ -55,12 +45,6 @@ class TrackerManager implements ServiceSubscriberInterface
         ];
     }
 
-    /**
-     * @param \DateTime $month
-     * @param Client    $client
-     *
-     * @return Response|null
-     */
     public function export(\DateTime $month, Client $client): ?Response
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
@@ -191,9 +175,7 @@ class TrackerManager implements ServiceSubscriberInterface
                 $rate = $project->getRateOfDate($detail->getStart());
 
                 if (isset($coordinates[$date][$project->getId()][$detail->getName()][$detail->getOnSite()])) {
-                    /**
-                     * @var Cell
-                     */
+                    /** @var Cell $cell */
                     $cell = $sheet->getCell(
                         sprintf(
                             'D%d',
@@ -209,7 +191,7 @@ class TrackerManager implements ServiceSubscriberInterface
                 $sheet->setCellValue('B'.$rownum, $project);
                 $sheet->setCellValue('C'.$rownum, $detail->getName());
                 $sheet->setCellValue('D'.$rownum, sprintf('=%f', $detail->getDuration() / 3600));
-                if ($rate instanceof ProjectRate) {
+                if ($rate instanceof RateInterface) {
                     if ($detail->getOnSite()) {
                         $sheet->setCellValue('E'.$rownum, $rate->getHourlyRateOnSite());
                     } else {

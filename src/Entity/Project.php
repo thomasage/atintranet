@@ -72,9 +72,6 @@ class Project
      */
     private $rates;
 
-    /**
-     * Project constructor.
-     */
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -83,27 +80,16 @@ class Project
         $this->tasks = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Project
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -111,19 +97,11 @@ class Project
         return $this;
     }
 
-    /**
-     * @return Client|null
-     */
     public function getClient(): ?Client
     {
         return $this->client;
     }
 
-    /**
-     * @param Client $client
-     *
-     * @return Project
-     */
     public function setClient(Client $client): self
     {
         $this->client = $client;
@@ -139,11 +117,6 @@ class Project
         return $this->tasks;
     }
 
-    /**
-     * @param Task $task
-     *
-     * @return Project
-     */
     public function addTask(Task $task): self
     {
         if (!$this->tasks->contains($task)) {
@@ -154,11 +127,6 @@ class Project
         return $this;
     }
 
-    /**
-     * @param Task $task
-     *
-     * @return Project
-     */
     public function removeTask(Task $task): self
     {
         if ($this->tasks->contains($task)) {
@@ -180,11 +148,6 @@ class Project
         return $this->rates;
     }
 
-    /**
-     * @param ProjectRate $rate
-     *
-     * @return Project
-     */
     public function addRate(ProjectRate $rate): self
     {
         if (!$this->rates->contains($rate)) {
@@ -195,11 +158,6 @@ class Project
         return $this;
     }
 
-    /**
-     * @param ProjectRate $rate
-     *
-     * @return Project
-     */
     public function removeRate(ProjectRate $rate): self
     {
         if ($this->rates->contains($rate)) {
@@ -213,19 +171,11 @@ class Project
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getExternalReference(): ?string
     {
         return $this->externalReference;
     }
 
-    /**
-     * @param string|null $externalReference
-     *
-     * @return Project
-     */
     public function setExternalReference(?string $externalReference): self
     {
         $this->externalReference = $externalReference;
@@ -233,14 +183,14 @@ class Project
         return $this;
     }
 
-    /**
-     * @param \DateTimeInterface $date
-     *
-     * @return ProjectRate|null
-     */
-    public function getRateOfDate(\DateTimeInterface $date): ?ProjectRate
+    public function getRateOfDate(\DateTimeInterface $date): ?RateInterface
     {
-        foreach ($this->rates as $r => $rate) {
+        $rates = $this->rates;
+        if (0 === count($rates)) {
+            $rates = $this->client->getRates();
+        }
+
+        foreach ($rates as $r => $rate) {
             if ($rate->getStartedAt()->format('Y-m-d') > $date->format('Y-m-d')) {
                 if ($r > 0) {
                     return $this->rates[$r - 1];
@@ -252,19 +202,11 @@ class Project
         return $rate ?? null;
     }
 
-    /**
-     * @return bool
-     */
     public function getActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $active
-     *
-     * @return Project
-     */
     public function setActive(bool $active): self
     {
         $this->active = $active;

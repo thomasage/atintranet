@@ -9,10 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Table(name="app_project_rate")
- * @ORM\Entity(repositoryClass="App\Repository\ProjectRateRepository")
+ * @ORM\Table(name="app_client_rate")
+ * @ORM\Entity(repositoryClass="App\Repository\ClientRateRepository")
  */
-class ProjectRate implements RateInterface
+class ClientRate implements RateInterface
 {
     use IdTrait {
         IdTrait::__construct as protected IdTraitConstruct;
@@ -20,10 +20,10 @@ class ProjectRate implements RateInterface
     use TimestampableEntity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="rates")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="rates")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $project;
+    private $client;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -46,14 +46,14 @@ class ProjectRate implements RateInterface
         $this->startedAt = new \DateTime();
     }
 
-    public function getProject(): ?Project
+    public function getClient(): ?Client
     {
-        return $this->project;
+        return $this->client;
     }
 
-    public function setProject(Project $project): self
+    public function setClient(Client $client): self
     {
-        $this->project = $project;
+        $this->client = $client;
 
         return $this;
     }

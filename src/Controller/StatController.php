@@ -18,8 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class StatController.
- *
  * @Route("/stat")
  */
 class StatController extends AbstractController

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\ClientRate;
 use App\Form\Type\ClientDeleteType;
+use App\Form\Type\ClientRateDeleteType;
+use App\Form\Type\ClientRateType;
 use App\Form\Type\ClientSearchType;
 use App\Form\Type\ClientType;
 use App\Repository\ClientRepository;
@@ -190,6 +193,131 @@ class ClientController extends AbstractController
             [
                 'client' => $client,
                 'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param ClientRate $rate
+     *
+     * @return Response
+     *
+     * @Route("/rate/{uuid}/delete",
+     *     name="app_client_rate_delete",
+     *     methods={"GET", "POST"})
+     */
+    public function rateDelete(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        ClientRate $rate
+    ): Response {
+        /** @var Client $client */
+        $client = $rate->getClient();
+
+        $formDelete = $this->createForm(ClientRateDeleteType::class, $rate);
+        $formDelete->handleRequest($request);
+
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            $em->remove($rate);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.client_rate_removed'));
+
+            return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
+        }
+
+        return $this->render(
+            'client/rate_delete.html.twig',
+            [
+                'formDelete' => $formDelete->createView(),
+                'client' => $client,
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param ClientRate $rate
+     *
+     * @return Response
+     *
+     * @Route("/rate/{uuid}/edit",
+     *     name="app_client_rate_edit",
+     *     methods={"GET", "POST"})
+     */
+    public function rateEdit(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        ClientRate $rate
+    ): Response {
+        /** @var Client $client */
+        $client = $rate->getClient();
+
+        $formEdit = $this->createForm(ClientRateType::class, $rate);
+        $formEdit->handleRequest($request);
+
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.client_rate_updated'));
+
+            return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
+        }
+
+        return $this->render(
+            'client/rate_edit.html.twig',
+            [
+                'formEdit' => $formEdit->createView(),
+                'client' => $client,
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
+     * @param Client $client
+     *
+     * @return Response
+     *
+     * @Route("/rate/new/{uuid}",
+     *     name="app_client_rate_new",
+     *     methods={"GET", "POST"})
+     */
+    public function rateNew(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        Client $client
+    ): Response {
+        $rate = new ClientRate();
+        $rate->setClient($client);
+
+        $formEdit = $this->createForm(ClientRateType::class, $rate);
+        $formEdit->handleRequest($request);
+
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
+            $em->persist($rate);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('notification.client_rate_added'));
+
+            return $this->redirectToRoute('app_client_show', ['uuid' => $client->getUuid()]);
+        }
+
+        return $this->render(
+            'client/rate_new.html.twig',
+            [
+                'formEdit' => $formEdit->createView(),
+                'client' => $client,
             ]
         );
     }
