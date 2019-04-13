@@ -11,27 +11,13 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class InvoiceRepository.
- */
 class InvoiceRepository extends ServiceEntityRepository
 {
-    /**
-     * InvoiceRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Invoice::class);
     }
 
-    /**
-     * @param \DateTime|null $start
-     * @param \DateTime|null $stop
-     *
-     * @return array
-     */
     public function findStatByClient(?\DateTime $start = null, ?\DateTime $stop = null): array
     {
         $series = [];
@@ -66,11 +52,6 @@ class InvoiceRepository extends ServiceEntityRepository
         return ['series' => $series];
     }
 
-    /**
-     * @param string $period
-     *
-     * @return array
-     */
     public function findStatByPeriod(string $period = 'm'): array
     {
         $categories = $series = [];
@@ -138,11 +119,6 @@ class InvoiceRepository extends ServiceEntityRepository
         ];
     }
 
-    /**
-     * @param Search $search
-     *
-     * @return Paginator
-     */
     public function findBySearch(Search $search): Paginator
     {
         $builder = $this
@@ -189,20 +165,15 @@ class InvoiceRepository extends ServiceEntityRepository
         return new Paginator($builder->getQuery());
     }
 
-    /**
-     * @param Invoice $invoice
-     *
-     * @return string|null
-     */
     public function findNextNumber(Invoice $invoice): ?string
     {
         try {
             $result = $this
                 ->createQueryBuilder('invoice')
                 ->select('MAX( invoice.number ) number')
-                ->andWhere('invoice.issueDate LIKE :month')
+                ->andWhere('invoice.issueDate LIKE :year')
                 ->andWhere('invoice.type = :type')
-                ->setParameter(':month', $invoice->getIssueDate()->format('Y-m').'-%')
+                ->setParameter(':year', $invoice->getIssueDate()->format('Y').'-%')
                 ->setParameter(':type', $invoice->getType())
                 ->getQuery()
                 ->getSingleScalarResult();
