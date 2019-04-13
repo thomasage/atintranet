@@ -112,9 +112,9 @@
                 <tbody>
                 {% for rate in client.rates %}
                     <tr>
-                        <td>{{ rate.startedAt|localizeddate('short','none') }}</td>
-                        <td>{{ rate.hourlyRateOnSite|localizedcurrency('EUR') }}</td>
-                        <td>{{ rate.hourlyRateOffSite|localizedcurrency('EUR') }}</td>
+                        <td class="align-middle">{{ rate.startedAt|localizeddate('short','none') }}</td>
+                        <td class="align-middle">{{ rate.hourlyRateOnSite|localizedcurrency('EUR') }}</td>
+                        <td class="align-middle">{{ rate.hourlyRateOffSite|localizedcurrency('EUR') }}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="{{ path('app_client_rate_edit',{uuid:rate.uuid}) }}"
@@ -141,6 +141,28 @@
                     <span class="fa fa-plus"></span>
                     {{ 'action.add'|trans }}
                 </a>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <h3 class="mt-5">{{ 'projects'|trans }}</h3>
+
+            <div class="list-group mt-3">
+                {% for project in client.projects %}
+                    <a href="{{ path('app_project_show',{uuid:project.uuid}) }}"
+                       class="list-group-item list-group-item-action">
+                        <div><strong>{{ project }}</strong></div>
+                        <div>
+                            {% if project.active %}
+                                <span class="badge badge-success">{{ 'active'|trans }}</span>
+                            {% else %}
+                                <span class="badge badge-danger">{{ 'inactive'|trans }}</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
 
         </div>

@@ -30,7 +30,9 @@
 
             <div class="mt-2">
                 <div class="text-muted small">{{ 'field.client'|trans }}</div>
-                <div>{{ project.client.name }}</div>
+                <div>
+                    <a href="{{ path('app_client_show',{uuid:project.client.uuid}) }}">{{ project.client.name }}</a>
+                </div>
             </div>
 
         </div>
