@@ -79,7 +79,7 @@ $(function () {
             });
         },
         moneyFormat: function (string) {
-            return string.toLocaleString(lang, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            return string.toFixed(2).toLocaleString(lang, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         },
         moneyUnFormat: function (string) {
             var parts = (1234.5).toLocaleString(lang).match(/(\D+)/g);
