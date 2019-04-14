@@ -124,4 +124,12 @@ $(function () {
         client.change();
     }
 
+    let issueDate = $('#invoice_issueDate');
+    let dueDate = $('#invoice_dueDate');
+    issueDate.on('change', function () {
+        let value = new Date($(this).val());
+        value.setMonth(value.getMonth() + 1);
+        dueDate.val(value.toISOString().substr(0, 10));
+    });
+
 });
