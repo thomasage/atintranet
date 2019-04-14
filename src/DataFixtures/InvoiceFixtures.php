@@ -44,12 +44,13 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         for ($i = 0; $i < 10; ++$i) {
+            $client = $this->getRandomClient();
             $address = new Address();
             $address
                 ->setAddress($faker->streetAddress)
                 ->setCity($faker->city)
                 ->setCountry($faker->countryCode)
-                ->setName($faker->company)
+                ->setName($client->getName())
                 ->setPostcode(preg_replace('[^0-9]', '', $faker->postcode));
             $manager->persist($address);
 
@@ -58,7 +59,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             $invoice = new Invoice();
             $invoice
                 ->setAddress($address)
-                ->setClient($this->getRandomClient())
+                ->setClient($client)
                 ->setIssueDate($issue)
                 ->setLocked($faker->boolean);
             $manager->persist($invoice);

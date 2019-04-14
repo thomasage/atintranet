@@ -95,7 +95,9 @@ $(function () {
 
     InvoiceApp.initialize($('#invoice_details'), $('.js-detail-add'));
 
-    $('#invoice_client').on('change', function () {
+    let client = $('#invoice_client');
+
+    client.on('change', function () {
         let client = $(this).val();
         let url = $(this).data('url');
         $.ajax({
@@ -105,13 +107,21 @@ $(function () {
                 client: client,
             },
             success: function (data) {
-                $('#invoice_address_address').val(data.addressPrimary.address);
-                $('#invoice_address_city').val(data.addressPrimary.city);
-                $('#invoice_address_country').val(data.addressPrimary.country);
-                $('#invoice_address_name').val(data.addressPrimary.name);
-                $('#invoice_address_postcode').val(data.addressPrimary.postcode);
+                if (data.addressPrimary) {
+                    $('#invoice_address_address').val(data.addressPrimary.address);
+                    $('#invoice_address_city').val(data.addressPrimary.city);
+                    $('#invoice_address_country').val(data.addressPrimary.country);
+                    $('#invoice_address_name').val(data.addressPrimary.name);
+                    $('#invoice_address_postcode').val(data.addressPrimary.postcode);
+                }
             }
         });
-    }).change();
+    });
+
+    let addressName = $('#invoice_address_name');
+
+    if (1 === addressName.length && 0 === addressName.val().length) {
+        client.change();
+    }
 
 });

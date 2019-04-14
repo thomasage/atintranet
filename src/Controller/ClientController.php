@@ -29,10 +29,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ClientController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Client $client
+     * @param TranslatorInterface    $translator
+     * @param Client                 $client
      *
      * @return Response
      *
@@ -72,10 +72,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Client $client
+     * @param TranslatorInterface    $translator
+     * @param Client                 $client
      *
      * @return Response
      *
@@ -110,8 +110,8 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
+     * @param Request          $request
+     * @param SearchManager    $sm
      * @param ClientRepository $clientRepository
      *
      * @return Response
@@ -143,7 +143,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request          $request
      * @param ClientRepository $repository
      *
      * @return Response
@@ -154,13 +154,13 @@ class ClientController extends AbstractController
      */
     public function info(Request $request, ClientRepository $repository): Response
     {
-        $client = $repository->find($request->query->get('client'));
+        $client = $repository->findOneBy(['uuid' => $request->query->get('client')]);
 
         return new JsonResponse($client);
     }
 
     /**
-     * @param Request $request
+     * @param Request             $request
      * @param TranslatorInterface $translator
      *
      * @return Response
@@ -198,10 +198,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ClientRate $rate
+     * @param TranslatorInterface    $translator
+     * @param ClientRate             $rate
      *
      * @return Response
      *
@@ -240,10 +240,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ClientRate $rate
+     * @param TranslatorInterface    $translator
+     * @param ClientRate             $rate
      *
      * @return Response
      *
@@ -281,10 +281,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Client $client
+     * @param TranslatorInterface    $translator
+     * @param Client                 $client
      *
      * @return Response
      *

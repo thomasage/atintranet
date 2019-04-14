@@ -76,6 +76,7 @@ class InvoiceType extends AbstractType
                     'attr' => [
                         'data-url' => $this->router->generate('app_client_info'),
                     ],
+                    'choice_value' => 'uuid',
                     'class' => Client::class,
                     'label' => 'field.client',
                     'query_builder' => function (ClientRepository $er): QueryBuilder {
