@@ -25,23 +25,20 @@ class Invoice
     use TimestampableEntity;
 
     /**
-     * @var Client
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Valid()
      */
     private $client;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=7)
      */
     private $number;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=10)
      *
      * @Assert\NotBlank()
@@ -50,65 +47,55 @@ class Invoice
     private $type;
 
     /**
-     * @var \DateTimeInterface
-     *
      * @ORM\Column(type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $issueDate;
 
     /**
-     * @var \DateTimeInterface
-     *
      * @ORM\Column(type="date")
+     *
+     * @Assert\Date()
      */
     private $dueDate;
 
     /**
-     * @var Address
-     *
      * @ORM\OneToOne(targetEntity="App\Entity\Address", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Valid()
      */
     private $address;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
     private $amountExcludingTax;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float"))
      */
     private $taxRate;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
     private $taxAmount;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
     private $amountIncludingTax;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
     private $amountPaid;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=3)
      *
      * @Assert\NotBlank()
@@ -117,7 +104,6 @@ class Invoice
     private $currency;
 
     /**
-     * @var string|null
      * @ORM\Column(type="text", nullable=true)
      *
      * @Assert\Length(min=1)
@@ -125,8 +111,6 @@ class Invoice
     private $comment;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      *
      * @Assert\Length(min=1)
@@ -134,15 +118,11 @@ class Invoice
     private $commentInternal;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $closed;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $locked;
@@ -160,15 +140,12 @@ class Invoice
     /**
      * @var Collection|PaymentInvoice[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice", mappedBy="invoice", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice",
+     *     mappedBy="invoice",
+     *     orphanRemoval=true)
      */
     private $paymentInvoices;
 
-    /**
-     * Invoice constructor.
-     *
-     * @throws \Exception
-     */
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -187,35 +164,21 @@ class Invoice
         $this->type = 'invoice';
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
-        return $this->number;
+        return (string)$this->number;
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Client|null
-     */
     public function getClient(): ?Client
     {
         return $this->client;
     }
 
-    /**
-     * @param Client $client
-     *
-     * @return Invoice
-     */
     public function setClient(Client $client): self
     {
         $this->client = $client;
@@ -223,19 +186,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getNumber(): ?string
     {
         return $this->number;
     }
 
-    /**
-     * @param string $number
-     *
-     * @return Invoice
-     */
     public function setNumber(string $number): self
     {
         $this->number = $number;
@@ -243,19 +198,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getIssueDate(): \DateTimeInterface
     {
         return $this->issueDate;
     }
 
-    /**
-     * @param \DateTimeInterface $issueDate
-     *
-     * @return Invoice
-     */
     public function setIssueDate(\DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
@@ -263,19 +210,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getDueDate(): \DateTimeInterface
     {
         return $this->dueDate;
     }
 
-    /**
-     * @param \DateTimeInterface $dueDate
-     *
-     * @return Invoice
-     */
     public function setDueDate(\DateTimeInterface $dueDate): self
     {
         $this->dueDate = $dueDate;
@@ -283,19 +222,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return Address|null
-     */
     public function getAddress(): ?Address
     {
         return $this->address;
     }
 
-    /**
-     * @param Address $address
-     *
-     * @return Invoice
-     */
     public function setAddress(Address $address): self
     {
         $this->address = $address;
@@ -303,19 +234,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAmountExcludingTax(): string
     {
         return $this->amountExcludingTax;
     }
 
-    /**
-     * @param string $amountExcludingTax
-     *
-     * @return Invoice
-     */
     public function setAmountExcludingTax(string $amountExcludingTax): self
     {
         $this->amountExcludingTax = $amountExcludingTax;
@@ -323,19 +246,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAmountIncludingTax(): string
     {
         return $this->amountIncludingTax;
     }
 
-    /**
-     * @param string $amountIncludingTax
-     *
-     * @return Invoice
-     */
     public function setAmountIncludingTax(string $amountIncludingTax): self
     {
         $this->amountIncludingTax = $amountIncludingTax;
@@ -343,19 +258,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAmountPaid(): string
     {
         return $this->amountPaid;
     }
 
-    /**
-     * @param string $amountPaid
-     *
-     * @return Invoice
-     */
     public function setAmountPaid(string $amountPaid): self
     {
         $this->amountPaid = $amountPaid;
@@ -363,19 +270,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     *
-     * @return Invoice
-     */
     public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
@@ -383,19 +282,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string|null $comment
-     *
-     * @return Invoice
-     */
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
@@ -403,19 +294,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCommentInternal(): ?string
     {
         return $this->commentInternal;
     }
 
-    /**
-     * @param string|null $commentInternal
-     *
-     * @return Invoice
-     */
     public function setCommentInternal(?string $commentInternal): self
     {
         $this->commentInternal = $commentInternal;
@@ -423,19 +306,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getClosed(): bool
     {
         return $this->closed;
     }
 
-    /**
-     * @param bool $closed
-     *
-     * @return Invoice
-     */
     public function setClosed(bool $closed): self
     {
         $this->closed = $closed;
@@ -443,19 +318,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getLocked(): bool
     {
         return $this->locked;
     }
 
-    /**
-     * @param bool $locked
-     *
-     * @return Invoice
-     */
     public function setLocked(bool $locked): self
     {
         $this->locked = $locked;
@@ -463,19 +330,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return Collection|InvoiceDetail[]
-     */
     public function getDetails(): Collection
     {
         return $this->details;
     }
 
-    /**
-     * @param InvoiceDetail $detail
-     *
-     * @return Invoice
-     */
     public function addDetail(InvoiceDetail $detail): self
     {
         if (!$this->details->contains($detail)) {
@@ -492,17 +351,12 @@ class Invoice
     {
         $this->amountExcludingTax = '0';
         foreach ($this->details as $detail) {
-            $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 2);
+            $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 2);
-        $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 2);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
+        $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 
-    /**
-     * @param InvoiceDetail $detail
-     *
-     * @return Invoice
-     */
     public function removeDetail(InvoiceDetail $detail): self
     {
         if ($this->details->contains($detail)) {
@@ -518,19 +372,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Invoice
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -538,19 +384,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getTaxAmount(): string
     {
         return $this->taxAmount;
     }
 
-    /**
-     * @param string $taxAmount
-     *
-     * @return Invoice
-     */
     public function setTaxAmount(string $taxAmount): self
     {
         $this->taxAmount = $taxAmount;
@@ -558,19 +396,11 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getTaxRate(): float
     {
         return $this->taxRate;
     }
 
-    /**
-     * @param float $taxRate
-     *
-     * @return Invoice
-     */
     public function setTaxRate(float $taxRate): self
     {
         $this->taxRate = $taxRate;
@@ -586,11 +416,6 @@ class Invoice
         return $this->paymentInvoices;
     }
 
-    /**
-     * @param PaymentInvoice $paymentInvoice
-     *
-     * @return Invoice
-     */
     public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
     {
         if (!$this->paymentInvoices->contains($paymentInvoice)) {
@@ -601,11 +426,6 @@ class Invoice
         return $this;
     }
 
-    /**
-     * @param PaymentInvoice $paymentInvoice
-     *
-     * @return Invoice
-     */
     public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self
     {
         if ($this->paymentInvoices->contains($paymentInvoice)) {

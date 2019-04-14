@@ -22,16 +22,15 @@ class InvoiceDetail
     use TimestampableEntity;
 
     /**
-     * @var Invoice
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="details")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Valid()
      */
     private $invoice;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      *
      * @Assert\NotBlank()
@@ -40,8 +39,6 @@ class InvoiceDetail
     private $designation;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      *
      * @Assert\NotBlank()
@@ -49,8 +46,6 @@ class InvoiceDetail
     private $quantity;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      *
      * @Assert\NotBlank()
@@ -58,19 +53,12 @@ class InvoiceDetail
     private $amountUnit;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="decimal", precision=15, scale=2)
      *
      * @Assert\NotBlank()
      */
     private $amountTotal;
 
-    /**
-     * InvoiceDetail constructor.
-     *
-     * @throws \Exception
-     */
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -79,27 +67,16 @@ class InvoiceDetail
         $this->quantity = 1.0;
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Invoice|null
-     */
     public function getInvoice(): ?Invoice
     {
         return $this->invoice;
     }
 
-    /**
-     * @param Invoice|null $invoice
-     *
-     * @return InvoiceDetail
-     */
     public function setInvoice(?Invoice $invoice): self
     {
         $this->invoice = $invoice;
@@ -107,19 +84,11 @@ class InvoiceDetail
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDesignation(): ?string
     {
         return $this->designation;
     }
 
-    /**
-     * @param string $designation
-     *
-     * @return InvoiceDetail
-     */
     public function setDesignation(string $designation): self
     {
         $this->designation = $designation;
@@ -127,19 +96,11 @@ class InvoiceDetail
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getQuantity(): float
     {
         return $this->quantity;
     }
 
-    /**
-     * @param float $quantity
-     *
-     * @return InvoiceDetail
-     */
     public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
@@ -150,25 +111,17 @@ class InvoiceDetail
 
     private function updateAmounts(): void
     {
-        $this->amountTotal = bcmul($this->amountUnit, (string) $this->quantity, 2);
+        $this->amountTotal = bcmul($this->amountUnit, (string)$this->quantity, 5);
         if ($this->invoice instanceof Invoice) {
             $this->invoice->updateAmounts();
         }
     }
 
-    /**
-     * @return string
-     */
     public function getAmountUnit(): string
     {
         return $this->amountUnit;
     }
 
-    /**
-     * @param string $amountUnit
-     *
-     * @return InvoiceDetail
-     */
     public function setAmountUnit(string $amountUnit): self
     {
         $this->amountUnit = $amountUnit;
@@ -177,19 +130,11 @@ class InvoiceDetail
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAmountTotal(): string
     {
         return $this->amountTotal;
     }
 
-    /**
-     * @param string $amountTotal
-     *
-     * @return InvoiceDetail
-     */
     public function setAmountTotal(string $amountTotal): self
     {
         $this->amountTotal = $amountTotal;
