@@ -138,7 +138,7 @@ class InvoicePDF extends \TCPDF
         }
         $this->SetFont(self::FONT_FAMILY, 'B', 11);
         $this->Cell(35, 6, $this->translator->trans('invoice_number'), 0, 0, 'L');
-        $this->Cell(0, 6, $this->invoice->getNumber(), 0, 1, 'L');
+        $this->Cell(0, 6, $this->invoice->getNumberComplete(), 0, 1, 'L');
         $this->SetFont(self::FONT_FAMILY, '', 11);
         $this->Cell(35, 6, $this->translator->trans('field.issue_date'), 0, 0, 'L');
         $this->Cell(0, 6, $this->intl->format($this->invoice->getIssueDate()), 0, 1, 'L');

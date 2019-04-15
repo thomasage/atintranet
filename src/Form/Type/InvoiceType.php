@@ -17,14 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class InvoiceType.
- */
 class InvoiceType extends AbstractType
 {
     /**
@@ -33,30 +30,19 @@ class InvoiceType extends AbstractType
     private $router;
 
     /**
-     * InvoiceType constructor.
-     *
-     * @param RouterInterface $router
+     * @var TranslatorInterface
      */
-    public function __construct(RouterInterface $router)
+    private $translator;
+
+    public function __construct(RouterInterface $router, TranslatorInterface $translator)
     {
         $this->router = $router;
+        $this->translator = $translator;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'number',
-                TextType::class,
-                [
-                    'disabled' => true,
-                    'label' => 'field.number',
-                ]
-            )
             ->add(
                 'type',
                 ChoiceType::class,
@@ -78,6 +64,9 @@ class InvoiceType extends AbstractType
                     ],
                     'choice_value' => 'uuid',
                     'class' => Client::class,
+                    'group_by' => function (Client $client): string {
+                        return $this->translator->trans($client->getActive() ? 'active' : 'inactive');
+                    },
                     'label' => 'field.client',
                     'query_builder' => function (ClientRepository $er): QueryBuilder {
                         return $er->createQueryBuilder('client')->addOrderBy('client.name', 'ASC');
@@ -189,9 +178,6 @@ class InvoiceType extends AbstractType
             );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(

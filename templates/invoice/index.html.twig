@@ -50,7 +50,7 @@
                 <td>
                     <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
                         <span class="mr-1 d-sm-none">{{ invoice.type|trans|first }}</span>
-                        {{- invoice.number -}}
+                        {{- invoice.numberComplete -}}
                     </a>
                     {%- if invoice.locked -%}
                         <span class="fa fa-lock ml-1 text-success"></span>

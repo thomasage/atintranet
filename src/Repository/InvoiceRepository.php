@@ -43,9 +43,9 @@ class InvoiceRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-            $series[0]['data'][] = (object) [
+            $series[0]['data'][] = (object)[
                 'name' => $result['client_name'],
-                'y' => (float) $result['amount'],
+                'y' => (float)$result['amount'],
             ];
         }
 
@@ -110,7 +110,7 @@ class InvoiceRepository extends ServiceEntityRepository
             }
 
             $c = array_search($result['period'], $categories, true);
-            $series[$result['client_name']]['data'][$c] = (float) $result['amount'];
+            $series[$result['client_name']]['data'][$c] = (float)$result['amount'];
         }
 
         return [
@@ -173,20 +173,16 @@ class InvoiceRepository extends ServiceEntityRepository
                 ->select('MAX( invoice.number ) number')
                 ->andWhere('invoice.issueDate LIKE :year')
                 ->andWhere('invoice.type = :type')
-                ->setParameter(':year', $invoice->getIssueDate()->format('Y').'-%')
+                ->setParameter(':year', sprintf('%s-%%', $invoice->getIssueDate()->format('Y')))
                 ->setParameter(':type', $invoice->getType())
                 ->getQuery()
                 ->getSingleScalarResult();
 
             if (null === $result) {
-                return sprintf('%s001', $invoice->getIssueDate()->format('ym'));
+                return '001';
             }
 
-            return sprintf(
-                '%s%s',
-                substr($result, 0, 4),
-                str_pad((string) (substr($result, -3) + 1), 3, '0', STR_PAD_LEFT)
-            );
+            return str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
         } catch (NonUniqueResultException $e) {
             return null;
         }

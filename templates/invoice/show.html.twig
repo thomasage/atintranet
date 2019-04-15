@@ -1,6 +1,6 @@
 {% extends 'invoice/base.html.twig' %}
 
-{% block page_title %}{{ invoice.type|trans }} {{ invoice.number }}{% endblock %}
+{% block page_title %}{{ invoice.type|trans }} {{ invoice.numberComplete }}{% endblock %}
 
 {% block page_menu %}
     <a href="{{ path('app_invoice_index') }}" class="btn btn-outline-secondary">
@@ -46,7 +46,7 @@
 
             <div class="mt-2">
                 <div class="text-muted small">{{ 'field.number'|trans }}</div>
-                <div>{{ invoice.type|trans }} {{ invoice.number }}</div>
+                <div>{{ invoice.type|trans }} {{ invoice.numberComplete }}</div>
             </div>
 
             <div class="mt-2">

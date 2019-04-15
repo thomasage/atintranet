@@ -245,8 +245,8 @@ class InvoiceController extends AbstractController
                 '%s - %s %s - %s.pdf',
                 $invoice->getIssueDate()->format('Y-m-d'),
                 $translator->trans($invoice->getType()),
-                $invoice->getNumber(),
-                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', $invoice->getClient()->getName()))
+                $invoice->getNumberComplete(),
+                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', $invoice->getClient()->getCode()))
             )
         );
 

@@ -34,7 +34,7 @@ class Invoice
     private $client;
 
     /**
-     * @ORM\Column(type="string", length=7)
+     * @ORM\Column(type="string", length=3)
      */
     private $number;
 
@@ -166,7 +166,7 @@ class Invoice
 
     public function __toString(): string
     {
-        return (string)$this->number;
+        return (string) $this->number;
     }
 
     public function getId(): ?int
@@ -353,7 +353,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 
@@ -437,5 +437,10 @@ class Invoice
         }
 
         return $this;
+    }
+
+    public function getNumberComplete(): string
+    {
+        return sprintf('%s%s', $this->issueDate->format('ym'), $this->number);
     }
 }
