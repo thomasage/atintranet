@@ -69,7 +69,9 @@ class InvoiceType extends AbstractType
                     },
                     'label' => 'field.client',
                     'query_builder' => function (ClientRepository $er): QueryBuilder {
-                        return $er->createQueryBuilder('client')->addOrderBy('client.name', 'ASC');
+                        return $er->createQueryBuilder('client')
+                            ->addOrderBy('client.active', 'DESC')
+                            ->addOrderBy('client.name', 'ASC');
                     },
                     'required' => true,
                 ]
