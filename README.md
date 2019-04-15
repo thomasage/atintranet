@@ -52,3 +52,4 @@ vendor/bin/phpstan analyse src --level 1 \
 
 * General: remove company informations of .env file
 * Duplicate invoice
+* Add offers
