@@ -7,6 +7,10 @@
         <span class="fa fa-list"></span>
         <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
     </a>
+    <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
     <a href="{{ path('app_invoice_print',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
         <span class="fa fa-print"></span>
         <span class="d-none d-md-inline">{{ 'action.print'|trans }}</span>
