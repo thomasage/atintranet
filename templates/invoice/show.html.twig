@@ -124,7 +124,7 @@
         </div>
         {% for detail in invoice.details %}
             <div class="mt-2 row border-top pt-2">
-                <div class="col-12 col-md-6 text-truncate-under-md">{{ detail.designation }}</div>
+                <div class="col-12 col-md-6 text-truncate-under-md">{{ detail.designation|nl2br }}</div>
                 <div class="col-12 col-md-2">
                     <div class="row">
                         <div class="col-6 d-md-none">{{ 'field.quantity'|trans }}</div>
