@@ -8,6 +8,8 @@ use App\Entity\Address;
 use App\Entity\Client;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDetail;
+use App\Entity\Param;
+use App\Repository\ParamRepository;
 use Symfony\Component\Intl\Intl;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -58,29 +60,25 @@ class InvoicePDF extends \TCPDF
      */
     private $translator;
 
-    /**
-     * InvoicePDF constructor.
-     *
-     * @param string              $companyName
-     * @param string              $companyAddress
-     * @param string              $footer
-     * @param string              $bankAccount
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(
-        string $companyName,
-        string $companyAddress,
-        string $footer,
-        string $bankAccount,
-        TranslatorInterface $translator
-    ) {
+    public function __construct(ParamRepository $repository, TranslatorInterface $translator)
+    {
         parent::__construct();
         $this->SetAuthor($this->companyName);
 
-        $this->bankAccount = $bankAccount;
-        $this->companyAddress = $companyAddress;
-        $this->companyName = $companyName;
-        $this->footer = $footer;
+        /** @var Param[] $params */
+        $params = $repository->findAll();
+        foreach ($params as $param) {
+            if ('company_address' === $param->getCode()) {
+                $this->companyAddress = $param->getValue();
+            } elseif ('company_name' === $param->getCode()) {
+                $this->companyName = $param->getValue();
+            } elseif ('invoice_bank_account' === $param->getCode()) {
+                $this->bankAccount = $param->getValue();
+            } elseif ('invoice_footer' === $param->getCode()) {
+                $this->footer = $param->getValue();
+            }
+        }
+
         $this->intl = new \IntlDateFormatter(
             \Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE
         );

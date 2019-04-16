@@ -31,13 +31,6 @@ services:
     arguments:
       $togglApiKey: '%env(TOGGL_API_KEY)%'
 
-  App\Model\InvoicePDF:
-    arguments:
-      $bankAccount: '%env(INVOICE_BANK_ACCOUNT)%'
-      $companyAddress: '%env(COMPANY_ADDRESS)%'
-      $companyName: '%env(COMPANY_NAME)%'
-      $footer: '%env(INVOICE_FOOTER)%'
-
   App\EventListener\InvoiceListener:
     tags:
       - { name: doctrine.event_listener, event: prePersist }

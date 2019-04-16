@@ -745,6 +745,14 @@
         <source>title.client_rate_edit</source>
         <target>Modifier un tarif</target>
       </trans-unit>
+      <trans-unit id="G30ffu8" resname="menu.admin.param">
+        <source>menu.admin.param</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="a" resname="notification.param_updated">
+        <source>notification.param_updated</source>
+        <target>Les paramètres sont modifiés.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,0 +1,17 @@
+{% extends 'admin/param/base.html.twig' %}
+
+{% block page_title %}{{ 'menu.admin.param'|trans }}{% endblock %}
+
+{% block body %}
+
+    {{ form_start(formEdit) }}
+    {{ form_widget(formEdit) }}
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-save"></span>
+            {{ 'action.save'|trans }}
+        </button>
+    </div>
+    {{ form_end(formEdit) }}
+
+{% endblock %}

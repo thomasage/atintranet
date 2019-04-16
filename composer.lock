@@ -2797,29 +2797,29 @@
         },
         {
             "name": "rollerworks/password-strength-bundle",
-            "version": "v2.0.3",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollerworks/PasswordStrengthBundle.git",
-                "reference": "1ae996e0bbb7898357e2889159d3e74269555c8a"
+                "reference": "b37eebff9488d82e528a2b80910e9dc8e987d90a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollerworks/PasswordStrengthBundle/zipball/1ae996e0bbb7898357e2889159d3e74269555c8a",
-                "reference": "1ae996e0bbb7898357e2889159d3e74269555c8a",
+                "url": "https://api.github.com/repos/rollerworks/PasswordStrengthBundle/zipball/b37eebff9488d82e528a2b80910e9dc8e987d90a",
+                "reference": "b37eebff9488d82e528a2b80910e9dc8e987d90a",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "rollerworks/password-strength-validator": "^1.0.1",
-                "symfony/framework-bundle": "^3.3.6 || ^4.0"
+                "symfony/framework-bundle": "^3.4.22 || ^4.0"
             },
             "require-dev": {
-                "matthiasnoback/symfony-dependency-injection-test": "^1.1.0",
-                "matthiasnoback/symfony-service-definition-validator": "^1.2.2",
-                "symfony/console": "^3.3 || ^4.0",
-                "symfony/phpunit-bridge": "^3.3.6 || ^4.0",
-                "symfony/var-dumper": "^3.3 || ^4.0"
+                "matthiasnoback/symfony-dependency-injection-test": "^3.1.0",
+                "matthiasnoback/symfony-service-definition-validator": "^1.2.8",
+                "symfony/console": "^3.4.22 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4.22 || ^4.0",
+                "symfony/var-dumper": "^3.4.22 || ^4.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2860,7 +2860,7 @@
                 "symfony",
                 "validator"
             ],
-            "time": "2018-11-03T18:12:58+00:00"
+            "time": "2019-04-14T10:34:26+00:00"
         },
         {
             "name": "rollerworks/password-strength-validator",
