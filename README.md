@@ -50,5 +50,6 @@ vendor/bin/phpstan analyse src --level 1 \
 
 ## TODO
 
-* Duplicate an invoice
-* Add offers
+* Add action to duplicate an invoice
+* Add feature: offers
+* Fix unable to update invoice
