@@ -30,4 +30,5 @@ doctrine:
         dql:
             datetime_functions:
                 date_format: DoctrineExtensions\Query\Mysql\DateFormat
+                if: DoctrineExtensions\Query\Mysql\IfElse
                 unix_timestamp: DoctrineExtensions\Query\Mysql\UnixTimestamp
