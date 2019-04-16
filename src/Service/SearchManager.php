@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class SearchManager.
- */
 class SearchManager
 {
     /**
@@ -20,22 +17,11 @@ class SearchManager
      */
     private $em;
 
-    /**
-     * SearchManager constructor.
-     *
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @param User   $user
-     * @param string $route
-     *
-     * @return Search
-     */
     public function find(User $user, string $route): Search
     {
         $search = $this->em->getRepository(Search::class)->findOneBy(['user' => $user, 'route' => $route]);
@@ -52,13 +38,6 @@ class SearchManager
         return $search;
     }
 
-    /**
-     * @param Search        $search
-     * @param Request       $request
-     * @param FormInterface $form
-     *
-     * @return bool
-     */
     public function handleRequest(Search $search, Request $request, FormInterface $form): bool
     {
         $reload = false;
@@ -92,6 +71,7 @@ class SearchManager
                     $search->addFilter($k, $v);
                 }
             }
+            $search->setPage(0);
             $this->em->flush();
             $reload = true;
         }
