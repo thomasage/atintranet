@@ -13,9 +13,6 @@ use App\Repository\ParamRepository;
 use Symfony\Component\Intl\Intl;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class InvoicePDF.
- */
 class InvoicePDF extends \TCPDF
 {
     private const FONT_FAMILY = 'helvetica';
@@ -127,7 +124,7 @@ class InvoicePDF extends \TCPDF
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string) $client->getAccountNumber()) {
+        if ('' !== (string)$client->getAccountNumber()) {
             $this->SetY(60);
             $this->Cell(35, 6, $this->translator->trans('field.account_number'), 0, 0, 'L');
             $this->Cell(0, 6, $client->getAccountNumber(), 0, 1, 'L');
@@ -185,9 +182,6 @@ class InvoicePDF extends \TCPDF
         $this->MultiCell(0, 4, $this->footer, 0, 'C');
     }
 
-    /**
-     * @param Invoice $invoice
-     */
     public function build(Invoice $invoice): void
     {
         $this->currency = Intl::getCurrencyBundle()->getCurrencySymbol($invoice->getCurrency());
@@ -213,7 +207,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
+                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -225,7 +219,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
+                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -237,7 +231,7 @@ class InvoicePDF extends \TCPDF
             }
         }
 
-        if ('' !== (string) $this->invoice->getComment()) {
+        if ('' !== (string)$this->invoice->getComment()) {
             $this->Ln();
             if ($this->GetY() > 215) {
                 $this->AddPage();
@@ -316,34 +310,26 @@ class InvoicePDF extends \TCPDF
         );
     }
 
-    /**
-     * @param string $orientation
-     * @param string $format
-     * @param bool   $keepmargins
-     * @param bool   $tocpage
-     */
     public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false): void
     {
         parent::AddPage($orientation, $format, $keepmargins, $tocpage);
         $this->SetY(99);
     }
 
-    /**
-     * @param string $input
-     * @param int    $maxWidth
-     *
-     * @return array
-     */
     private function stringToArray(string $input, int $maxWidth): array
     {
         $output = [''];
         $index = 0;
-        foreach (explode("\n", wordwrap($input, 1)) as $word) {
-            if (ceil($this->GetStringWidth(trim($output[$index].' '.$word))) > $maxWidth) {
-                $output[++$index] = '';
+        foreach (explode("\n", $input) as $paragraph) {
+            foreach (explode("\n", wordwrap($paragraph, 1)) as $w => $word) {
+                if (ceil($this->GetStringWidth(trim($output[$index].' '.$word))) > $maxWidth) {
+                    $output[++$index] = '';
+                }
+                $output[$index] = trim($output[$index].' '.$word);
             }
-            $output[$index] = trim($output[$index].' '.$word);
+            $output[++$index] = '';
         }
+        array_pop($output);
 
         return $output;
     }
