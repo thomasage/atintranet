@@ -13,9 +13,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="app_invoice")
+ * @ORM\Table(name="app_invoice",
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="number_type_year", columns={"number", "type", "year"})
+ *     })
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
- * @UniqueEntity(fields={"number", "type"})
+ * @UniqueEntity(fields={"type", "number", "year"}, message="notification.invoice_number_must_be_unique")
  */
 class Invoice
 {
@@ -143,6 +146,13 @@ class Invoice
      */
     private $paymentInvoices;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $year;
+
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -159,11 +169,12 @@ class Invoice
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
+        $this->year = (int)$this->issueDate->format('Y');
     }
 
     public function __toString(): string
     {
-        return (string) $this->number;
+        return (string)$this->number;
     }
 
     public function getId(): ?int
@@ -203,6 +214,7 @@ class Invoice
     public function setIssueDate(\DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
+        $this->year = (int)$issueDate->format('Y');
 
         return $this;
     }
@@ -350,7 +362,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 
@@ -439,5 +451,17 @@ class Invoice
     public function getNumberComplete(): string
     {
         return sprintf('%s%s', $this->issueDate->format('ym'), $this->number);
+    }
+
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): self
+    {
+        $this->year = $year;
+
+        return $this;
     }
 }

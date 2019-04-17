@@ -749,7 +749,7 @@
         <source>menu.admin.param</source>
         <target>Paramètres</target>
       </trans-unit>
-      <trans-unit id="a" resname="notification.param_updated">
+      <trans-unit id="kroPw_D" resname="notification.param_updated">
         <source>notification.param_updated</source>
         <target>Les paramètres sont modifiés.</target>
       </trans-unit>
