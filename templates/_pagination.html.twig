@@ -33,8 +33,8 @@
             </ul>
 
             <div class="mt-1 small text-muted">
-                {{ 'count_results'|transchoice(results) }} &ndash;
-                {{ 'count_pages'|transchoice(pages) }}
+                {{ 'count_results'|trans({'%count%':results}) }} &ndash;
+                {{ 'count_pages'|trans({'%count%':pages}) }}
             </div>
 
         </div>

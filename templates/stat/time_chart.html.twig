@@ -9,19 +9,19 @@
         <nav class="nav nav-pills mt-4">
             <a href="{{ path('app_stat_time_chart',{period:'d'}) }}"
                class="nav-link{% if 'd'==period %} active{% endif %}">
-                {{ 'last_x_days'|transchoice(14) }}
+                {{ 'last_x_days'|trans({'%count%':14}) }}
             </a>
             <a href="{{ path('app_stat_time_chart',{period:'w'}) }}"
                class="nav-link{% if 'w'==period %} active{% endif %}">
-                {{ 'last_x_weeks'|transchoice(9) }}
+                {{ 'last_x_weeks'|trans({'%count%':9}) }}
             </a>
             <a href="{{ path('app_stat_time_chart',{period:'m'}) }}"
                class="nav-link{% if 'm'==period %} active{% endif %}">
-                {{ 'last_x_months'|transchoice(12) }}
+                {{ 'last_x_months'|trans({'%count%':12}) }}
             </a>
             <a href="{{ path('app_stat_time_chart',{period:'y'}) }}"
                class="nav-link{% if 'y'==period %} active{% endif %}">
-                {{ 'last_x_years'|transchoice(10) }}
+                {{ 'last_x_years'|trans({'%count%':10}) }}
             </a>
         </nav>
 

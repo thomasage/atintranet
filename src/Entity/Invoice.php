@@ -50,14 +50,11 @@ class Invoice
      * @ORM\Column(type="date")
      *
      * @Assert\NotBlank()
-     * @Assert\Date()
      */
     private $issueDate;
 
     /**
      * @ORM\Column(type="date")
-     *
-     * @Assert\Date()
      */
     private $dueDate;
 
