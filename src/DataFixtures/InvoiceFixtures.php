@@ -14,9 +14,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-/**
- * Class InvoiceFixtures.
- */
 class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
@@ -24,27 +21,18 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
      */
     private $clientRepository;
 
-    /**
-     * InvoiceFixtures constructor.
-     *
-     * @param ClientRepository $clientRepository
-     */
     public function __construct(ClientRepository $clientRepository)
     {
         $this->clientRepository = $clientRepository;
     }
 
-    /**
-     * @param ObjectManager $manager
-     *
-     * @throws \Exception
-     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
 
         for ($i = 0; $i < 10; ++$i) {
             $client = $this->getRandomClient();
+
             $address = new Address();
             $address
                 ->setAddress($faker->streetAddress)
@@ -71,7 +59,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             while ($j < $countDetails) {
                 $detail = new InvoiceDetail();
                 $detail
-                    ->setAmountUnit((string) $faker->randomFloat(2, 50, 100))
+                    ->setAmountUnit((string)$faker->randomFloat(2, 50, 100))
                     ->setDesignation(ucfirst($faker->words(3, true)))
                     ->setQuantity($faker->numberBetween(1, 10));
                 $manager->persist($detail);
@@ -80,14 +68,11 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
 
                 ++$j;
             }
-        }
 
-        $manager->flush();
+            $manager->flush();
+        }
     }
 
-    /**
-     * @return Client
-     */
     private function getRandomClient(): Client
     {
         $clients = $this->clientRepository->findAll();
@@ -96,9 +81,6 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
         return $clients[0];
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return [
