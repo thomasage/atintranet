@@ -100,7 +100,7 @@ class InvoiceController extends AbstractController
 
             $this->addFlash('success', $translator->trans('notification.invoice_updated'));
 
-            return $this->redirectToRoute('app_invoice_edit', ['uuid' => $invoice->getUuid()]);
+            return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
         }
 
         return $this->render(
