@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Invoice;
 use App\Form\Type\InvoiceDeleteType;
 use App\Form\Type\InvoiceSearchType;
@@ -239,6 +240,9 @@ class InvoiceController extends AbstractController
         $generator->build($invoice);
         $generator->Output($filename, 'F');
 
+        /** @var Client $client */
+        $client = $invoice->getClient();
+
         $response = new BinaryFileResponse($filename);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
@@ -247,7 +251,7 @@ class InvoiceController extends AbstractController
                 $invoice->getIssueDate()->format('Y-m-d'),
                 $translator->trans($invoice->getType()),
                 $invoice->getNumberComplete(),
-                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', $invoice->getClient()->getCode()))
+                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', $client->getCode()))
             )
         );
 
