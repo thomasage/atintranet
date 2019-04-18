@@ -8,6 +8,7 @@ use App\Entity\Invoice;
 use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -189,6 +190,26 @@ class InvoiceRepository extends ServiceEntityRepository
             return str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
         } catch (NonUniqueResultException $e) {
             return null;
+        }
+    }
+
+    public function findByCompleteNumber($number, string $type = 'invoice'): ?Invoice
+    {
+        try {
+
+            return $this->createQueryBuilder('invoice')
+                ->andWhere('CONCAT( DATE_FORMAT( invoice.issueDate, \'%y%m\' ), invoice.number ) = :number')
+                ->andWhere('invoice.type = :type')
+                ->setParameter('number', $number)
+                ->setParameter('type', $type)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException|NonUniqueResultException $e) {
+
+            return null;
+
         }
     }
 }

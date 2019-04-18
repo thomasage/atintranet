@@ -103,7 +103,7 @@
                 <tr>
                     <td>
                         <a href="{{ path('app_invoice_show',{uuid:paymentInvoice.invoice.uuid}) }}">
-                            {{ paymentInvoice.invoice.type|trans }} {{ paymentInvoice.invoice.number }}
+                            {{ paymentInvoice.invoice.type|trans }} {{ paymentInvoice.invoice.numberComplete }}
                         </a>
                     </td>
                     <td class="d-none d-md-table-cell">{{ paymentInvoice.invoice.issueDate|localizeddate('short','none') }}</td>

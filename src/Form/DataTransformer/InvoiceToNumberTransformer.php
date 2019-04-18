@@ -5,56 +5,38 @@ declare(strict_types=1);
 namespace App\Form\DataTransformer;
 
 use App\Entity\Invoice;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\InvoiceRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * Class InvoiceToNumberTransformer.
- */
 class InvoiceToNumberTransformer implements DataTransformerInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var InvoiceRepository
      */
-    private $em;
+    private $repository;
 
-    /**
-     * InvoiceToNumberTransformer constructor.
-     *
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(InvoiceRepository $repository)
     {
-        $this->em = $em;
+        $this->repository = $repository;
     }
 
-    /**
-     * @param Invoice|null $value
-     *
-     * @return string
-     */
     public function transform($value): string
     {
         if (!$value instanceof Invoice) {
             return '';
         }
 
-        return (string) $value->getNumber();
+        return (string)$value->getNumberComplete();
     }
 
-    /**
-     * @param string $value
-     *
-     * @return Invoice|null
-     */
     public function reverseTransform($value): ?Invoice
     {
         if (!$value) {
             return null;
         }
 
-        $invoice = $this->em->getRepository(Invoice::class)->findOneBy(['number' => $value]);
+        $invoice = $this->repository->findByCompleteNumber($value);
         if (!$invoice instanceof Invoice) {
             throw new TransformationFailedException(sprintf('An invoice with number "%s" does not exist.', $value));
         }
