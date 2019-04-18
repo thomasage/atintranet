@@ -729,6 +729,10 @@
         <source>notification.unable_to_create_payment</source>
         <target>Impossible de créer un règlement</target>
       </trans-unit>
+      <trans-unit id="vAqXm1d" resname="notification.unable_to_create_invoice">
+        <source>notification.unable_to_create_invoice</source>
+        <target>Impossible de créer une facture</target>
+      </trans-unit>
       <trans-unit id="SBcJfBW" resname="action.duplicate">
         <source>action.duplicate</source>
         <target>Dupliquer</target>

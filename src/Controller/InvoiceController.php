@@ -194,14 +194,19 @@ class InvoiceController extends AbstractController
      *
      * @return Response
      *
-     * @throws \Exception
      * @Route("/new",
      *     name="app_invoice_new",
      *     methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
-        $invoice = new Invoice();
+        try {
+            $invoice = new Invoice();
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $translator->trans('notification.unable_to_create_invoice'));
+
+            return $this->redirectToRoute('app_invoice_index');
+        }
         $formEdit = $this->createForm(InvoiceType::class, $invoice);
         $formEdit->handleRequest($request);
 
