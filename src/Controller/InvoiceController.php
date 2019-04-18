@@ -149,6 +149,7 @@ class InvoiceController extends AbstractController
      * @param EntityManagerInterface $em
      * @param TranslatorInterface    $translator
      * @param Invoice                $invoice
+     * @param string                 $lock
      *
      * @return Response
      *
