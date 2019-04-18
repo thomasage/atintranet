@@ -61,10 +61,10 @@ class ClientType extends AbstractType
                 ]
             )
             ->add(
-                'accountNumber',
+                'supplierNumber',
                 TextType::class,
                 [
-                    'label' => 'field.account_number',
+                    'label' => 'field.supplier_number',
                     'required' => false,
                 ]
             )

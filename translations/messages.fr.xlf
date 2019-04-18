@@ -417,10 +417,6 @@
         <source>field.vat_number</source>
         <target>N° T.V.A.</target>
       </trans-unit>
-      <trans-unit id="rGPo__a" resname="field.account_number">
-        <source>field.account_number</source>
-        <target>N° compte</target>
-      </trans-unit>
       <trans-unit id="XBUoa5V" resname="field.active">
         <source>field.active</source>
         <target>Actif</target>
@@ -756,6 +752,14 @@
       <trans-unit id="kroPw_D" resname="notification.param_updated">
         <source>notification.param_updated</source>
         <target>Les paramètres sont modifiés.</target>
+      </trans-unit>
+      <trans-unit id="HqWxbP3" resname="field.order_number">
+        <source>field.order_number</source>
+        <target>N° de commande</target>
+      </trans-unit>
+      <trans-unit id="PfMv7YD" resname="field.supplier_number">
+        <source>field.supplier_number</source>
+        <target>N° fournisseur</target>
       </trans-unit>
     </body>
   </file>

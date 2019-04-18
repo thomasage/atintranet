@@ -69,8 +69,9 @@
                         <span class="badge badge-danger"><span class="fa fa-unlock"></span> unlocked</span>
                     {% endif %}
                     {% if invoice.closed %}
-                        <span class="ml-2 badge badge-success"><span
-                                    class="fa fa-check-square-o"></span> closed</span>
+                        <span class="ml-2 badge badge-success">
+                            <span class="fa fa-check-square-o"></span> closed
+                        </span>
                     {% else %}
                         <span class="ml-2 badge badge-secondary"><span class="fa fa-square-o"></span> open</span>
                     {% endif %}
@@ -91,6 +92,20 @@
                 <div>{{ invoice.dueDate|localizeddate('full','none')|capitalize }}</div>
             </div>
 
+            {% if invoice.client.supplierNumber %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.supplier_number'|trans }}</div>
+                    <div>{{ invoice.client.supplierNumber }}</div>
+                </div>
+            {% endif %}
+
+            {% if invoice.orderNumber %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.order_number'|trans }}</div>
+                    <div>{{ invoice.orderNumber }}</div>
+                </div>
+            {% endif %}
+
         </div>
 
         <div class="col-12 col-md-4 mt-2 mt-md-0">
@@ -106,14 +121,14 @@
         {% if invoice.comment|length>0 %}
             <div class="col-12 mt-2">
                 <div class="text-muted small">{{ 'field.comment'|trans }}</div>
-                <div>{{ invoice.comment }}</div>
+                <div>{{ invoice.comment|nl2br }}</div>
             </div>
         {% endif %}
 
         {% if invoice.commentInternal|length>0 %}
             <div class="col-12 mt-2">
                 <div class="text-muted small">{{ 'field.internal_comment'|trans }}</div>
-                <div>{{ invoice.commentInternal }}</div>
+                <div>{{ invoice.commentInternal|nl2br }}</div>
             </div>
         {% endif %}
 

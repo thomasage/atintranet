@@ -52,7 +52,7 @@ class Client implements \JsonSerializable
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $accountNumber;
+    private $supplierNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -194,14 +194,14 @@ class Client implements \JsonSerializable
         return $this;
     }
 
-    public function getAccountNumber(): ?string
+    public function getSupplierNumber(): ?string
     {
-        return $this->accountNumber;
+        return $this->supplierNumber;
     }
 
-    public function setAccountNumber(?string $accountNumber): self
+    public function setSupplierNumber(?string $supplierNumber): self
     {
-        $this->accountNumber = $accountNumber;
+        $this->supplierNumber = $supplierNumber;
 
         return $this;
     }

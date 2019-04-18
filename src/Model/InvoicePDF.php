@@ -124,10 +124,17 @@ class InvoicePDF extends \TCPDF
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string)$client->getAccountNumber()) {
+        if ('' !== (string) $client->getSupplierNumber()) {
+            $this->SetY(54);
+            $this->Cell(35, 6, $this->translator->trans('field.supplier_number'), 0, 0, 'L');
+            $this->Cell(0, 6, $client->getSupplierNumber(), 0, 1, 'L');
+        } else {
             $this->SetY(60);
-            $this->Cell(35, 6, $this->translator->trans('field.account_number'), 0, 0, 'L');
-            $this->Cell(0, 6, $client->getAccountNumber(), 0, 1, 'L');
+        }
+        if ('' !== (string) $this->invoice->getOrderNumber()) {
+            $this->SetY(60);
+            $this->Cell(35, 6, $this->translator->trans('field.order_number'), 0, 0, 'L');
+            $this->Cell(0, 6, $this->invoice->getOrderNumber(), 0, 1, 'L');
         } else {
             $this->SetY(66);
         }
@@ -207,7 +214,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -219,7 +226,7 @@ class InvoicePDF extends \TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -231,7 +238,7 @@ class InvoicePDF extends \TCPDF
             }
         }
 
-        if ('' !== (string)$this->invoice->getComment()) {
+        if ('' !== (string) $this->invoice->getComment()) {
             $this->Ln();
             if ($this->GetY() > 215) {
                 $this->AddPage();

@@ -153,6 +153,15 @@ class Invoice
      */
     private $year;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Length(min=1, max=255)
+     */
+    private $orderNumber;
+
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -169,12 +178,12 @@ class Invoice
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
-        $this->year = (int)$this->issueDate->format('Y');
+        $this->year = (int) $this->issueDate->format('Y');
     }
 
     public function __toString(): string
     {
-        return (string)$this->number;
+        return (string) $this->number;
     }
 
     public function getId(): ?int
@@ -214,7 +223,7 @@ class Invoice
     public function setIssueDate(\DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
-        $this->year = (int)$issueDate->format('Y');
+        $this->year = (int) $issueDate->format('Y');
 
         return $this;
     }
@@ -362,7 +371,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 
@@ -461,6 +470,18 @@ class Invoice
     public function setYear(int $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getOrderNumber(): ?string
+    {
+        return $this->orderNumber;
+    }
+
+    public function setOrderNumber(?string $orderNumber): self
+    {
+        $this->orderNumber = $orderNumber;
 
         return $this;
     }

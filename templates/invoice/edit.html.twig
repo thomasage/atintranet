@@ -28,8 +28,8 @@
                 {{ form_row(formEdit.issueDate) }}
                 {{ form_row(formEdit.dueDate) }}
                 {{ form_row(formEdit.currency) }}
-                {{ form_row(formEdit.comment) }}
-                {{ form_row(formEdit.commentInternal) }}
+                {% if formEdit.supplierNumber is defined %}{{ form_row(formEdit.supplierNumber) }}{% endif %}
+                {{ form_row(formEdit.orderNumber) }}
             </fieldset>
 
         </div>
@@ -45,6 +45,8 @@
                     <div class="col-8 col-md-9 pl-0">{{ form_widget(formEdit.address.city) }}</div>
                 </div>
                 <div class="mt-2">{{ form_widget(formEdit.address.country) }}</div>
+                <div class="mt-2">{{ form_widget(formEdit.comment) }}</div>
+                <div class="mt-2">{{ form_widget(formEdit.commentInternal) }}</div>
             </fieldset>
 
         </div>

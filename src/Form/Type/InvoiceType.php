@@ -17,7 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -107,6 +110,10 @@ class InvoiceType extends AbstractType
                 'comment',
                 TextareaType::class,
                 [
+                    'attr' => [
+                        'class' => 'external_comment',
+                        'placeholder' => 'field.comment',
+                    ],
                     'label' => 'field.comment',
                     'required' => false,
                 ]
@@ -115,6 +122,10 @@ class InvoiceType extends AbstractType
                 'commentInternal',
                 TextareaType::class,
                 [
+                    'attr' => [
+                        'class' => 'internal_comment',
+                        'placeholder' => 'field.internal_comment',
+                    ],
                     'label' => 'field.internal_comment',
                     'required' => false,
                 ]
@@ -177,7 +188,40 @@ class InvoiceType extends AbstractType
                     'entry_type' => InvoiceDetailType::class,
                     'label' => 'field.details',
                 ]
+            )
+            ->add(
+                'orderNumber',
+                TextType::class,
+                [
+                    'label' => 'field.order_number',
+                    'required' => false,
+                ]
             );
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event): void {
+                $invoice = $event->getData();
+                if (!$invoice instanceof Invoice) {
+                    return;
+                }
+                $client = $invoice->getClient();
+                if (!$client instanceof Client || '' === (string)$client->getSupplierNumber()) {
+                    return;
+                }
+                $event->getForm()
+                    ->add(
+                        'supplierNumber',
+                        TextType::class,
+                        [
+                            'data' => $client->getSupplierNumber(),
+                            'disabled' => true,
+                            'label' => 'field.supplier_number',
+                            'mapped' => false,
+                        ]
+                    );
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
