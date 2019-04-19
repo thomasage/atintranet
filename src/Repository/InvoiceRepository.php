@@ -44,9 +44,9 @@ class InvoiceRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-            $series[0]['data'][] = (object)[
+            $series[0]['data'][] = (object) [
                 'name' => $result['client_name'],
-                'y' => (float)$result['amount'],
+                'y' => (float) $result['amount'],
             ];
         }
 
@@ -115,7 +115,7 @@ class InvoiceRepository extends ServiceEntityRepository
             }
 
             $c = array_search($result['period'], $categories, true);
-            $series[$result['client_name']]['data'][$c] = (float)$result['amount'];
+            $series[$result['client_name']]['data'][$c] = (float) $result['amount'];
         }
 
         return [
@@ -129,7 +129,9 @@ class InvoiceRepository extends ServiceEntityRepository
         $builder = $this
             ->createQueryBuilder('i')
             ->innerJoin('i.client', 'c')
-            ->addSelect('c');
+            ->leftJoin('i.credit', 'credit')
+            ->addSelect('c')
+            ->addSelect('credit');
 
         if (null !== ($client = $search->getFilter('client'))) {
             $builder
@@ -187,7 +189,7 @@ class InvoiceRepository extends ServiceEntityRepository
                 return '001';
             }
 
-            return str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
+            return str_pad((string) (substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
         } catch (NonUniqueResultException $e) {
             return null;
         }
@@ -196,7 +198,6 @@ class InvoiceRepository extends ServiceEntityRepository
     public function findByCompleteNumber($number, string $type = 'invoice'): ?Invoice
     {
         try {
-
             return $this->createQueryBuilder('invoice')
                 ->andWhere('CONCAT( DATE_FORMAT( invoice.issueDate, \'%y%m\' ), invoice.number ) = :number')
                 ->andWhere('invoice.type = :type')
@@ -205,11 +206,8 @@ class InvoiceRepository extends ServiceEntityRepository
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getSingleResult();
-
-        } catch (NoResultException|NonUniqueResultException $e) {
-
+        } catch (NoResultException | NonUniqueResultException $e) {
             return null;
-
         }
     }
 }

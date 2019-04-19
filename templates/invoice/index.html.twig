@@ -46,7 +46,7 @@
         </thead>
         <tbody>
         {% for invoice in invoices %}
-            <tr>
+            <tr {% if 'credit'==invoice.type %}class="text-danger"{% endif %}>
                 <td>
                     <a href="{{ path('app_invoice_show',{uuid:invoice.uuid}) }}">
                         <span class="mr-1 d-sm-none">{{ invoice.type|trans|first }}</span>
@@ -61,9 +61,15 @@
                 <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
                 <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
                 <td class="d-none d-sm-table-cell">
-                    {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
-                    {% if invoice.amountPaid==invoice.amountIncludingTax %}
-                        <span class="fa fa-check text-success ml-1"></span>
+                    {% if invoice.credit is not null %}
+                        <a href="{{ path('app_invoice_show',{uuid:invoice.credit.uuid}) }}">
+                            <em class="text-muted">{{ 'credit'|trans }} {{ invoice.credit.numberComplete }}</em>
+                        </a>
+                    {% elseif 'invoice'==invoice.type %}
+                        {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
+                        {% if invoice.amountPaid==invoice.amountIncludingTax %}
+                            <span class="fa fa-check text-success ml-1"></span>
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td class="d-none d-sm-table-cell">

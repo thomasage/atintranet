@@ -168,6 +168,13 @@ class Invoice
      */
     private $orderNumber;
 
+    /**
+     * @var Invoice|null
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Invoice")
+     */
+    private $credit;
+
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -488,6 +495,18 @@ class Invoice
     public function setOrderNumber(?string $orderNumber): self
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getCredit(): ?self
+    {
+        return $this->credit;
+    }
+
+    public function setCredit(?self $credit): self
+    {
+        $this->credit = $credit;
 
         return $this;
     }
