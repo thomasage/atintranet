@@ -2,42 +2,37 @@
 
 {% form_theme formEdit 'payment/_fields.html.twig' %}
 
+{% block page_title %}{{ 'title.payment_edit'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
-    <div id="page-payment-edit">
-
-        <div class="d-flex flex-row align-items-center">
-            <h2 class="flex-grow-1 mb-0 text-truncate">{{ 'title.payment_edit'|trans }}</h2>
-            <div class="btn-group ml-2">
-                <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}" class="btn btn-outline-secondary">
-                    <span class="fa fa-list"></span>
-                    <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
-                </a>
-            </div>
-        </div>
-
-        {{ form_start(formEdit,{attr:{class:'mt-4 mt-md-5'}}) }}
-        {{ form_widget(formEdit) }}
-        <div class="row">
-            <div class="col-sm-10 offset-sm-2">
-                <a href="#" class="btn btn-outline-primary js-invoice-add">
-                    <span class="fa fa-plus"></span>
-                    {{ 'action.add'|trans }}
-                </a>
-            </div>
-        </div>
-        <div class="mt-5">
-            <button type="submit" class="btn btn-success">
-                <span class="fa fa-save"></span>
-                {{ 'action.save'|trans }}
-            </button>
-            <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}" class="btn btn-outline-secondary">
-                <span class="fa fa-undo"></span>
-                {{ 'action.cancel'|trans }}
+    {{ form_start(formEdit) }}
+    {{ form_widget(formEdit) }}
+    <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+            <a href="#" class="btn btn-outline-primary js-invoice-add">
+                <span class="fa fa-plus"></span>
+                {{ 'action.add'|trans }}
             </a>
         </div>
-        {{ form_end(formEdit) }}
-
     </div>
+    <div class="mt-5">
+        <button type="submit" class="btn btn-success">
+            <span class="fa fa-save"></span>
+            {{ 'action.save'|trans }}
+        </button>
+        <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}" class="btn btn-outline-secondary">
+            <span class="fa fa-undo"></span>
+            {{ 'action.cancel'|trans }}
+        </a>
+    </div>
+    {{ form_end(formEdit) }}
 
 {% endblock %}

@@ -26,7 +26,7 @@ class PaymentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -64,8 +64,10 @@ class PaymentType extends AbstractType
                 'amount',
                 NumberType::class,
                 [
+                    'grouping' => true,
                     'label' => 'field.amount',
                     'required' => true,
+                    'scale' => 2,
                 ]
             )
             ->add(

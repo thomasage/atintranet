@@ -3,6 +3,10 @@
 {% block page_title %}{{ 'title.payment_show'|trans }}{% endblock %}
 
 {% block page_menu %}
+    <a href="{{ path('app_payment_new') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
     {% if payment.locked==false %}
         <a href="{{ path('app_payment_edit',{uuid:payment.uuid}) }}" class="btn btn-outline-primary">
             <span class="fa fa-pencil"></span>
