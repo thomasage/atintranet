@@ -34,20 +34,4 @@ $(function () {
 
     PaymentApp.initialize($('#payment_paymentInvoices'), $('a.js-invoice-add'));
 
-    let cache = {};
-    $('#payment_thirdPartyName').autocomplete({
-        minLength: 1,
-        source: function (request, response) {
-            let term = request.term;
-            if (term in cache) {
-                response(cache[term]);
-                return;
-            }
-            $.getJSON('/payment/autocomplete/thirdPartyName', request, function (data, status, xhr) {
-                cache[term] = data;
-                response(data);
-            });
-        }
-    });
-
 });

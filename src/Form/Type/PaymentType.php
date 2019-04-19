@@ -18,16 +18,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class PaymentType.
- */
 class PaymentType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @var RouterInterface
      */
+    private $router;
+
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -82,6 +86,9 @@ class PaymentType extends AbstractType
                 'thirdPartyName',
                 TextType::class,
                 [
+                    'attr' => [
+                        'data-autocomplete' => $this->router->generate('app_payment_autocomplete_third_party_name'),
+                    ],
                     'label' => 'field.third_party',
                     'required' => true,
                 ]
@@ -115,9 +122,6 @@ class PaymentType extends AbstractType
             );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(

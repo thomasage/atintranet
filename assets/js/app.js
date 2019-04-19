@@ -17,6 +17,25 @@ $(function () {
         window.location.href = $(this).data('url');
     });
 
+    $(':input[data-autocomplete]').each(function () {
+        let url = $(this).data('autocomplete');
+        let cache = {};
+        $(this).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                let term = request.term;
+                if (term in cache) {
+                    response(cache[term]);
+                    return;
+                }
+                $.getJSON(url, request, function (data) {
+                    cache[term] = data;
+                    response(data);
+                });
+            }
+        });
+    });
+
 });
 
 global.scrollToElement = function (element, increment = 0) {
