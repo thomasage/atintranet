@@ -102,6 +102,23 @@
                 <th class="d-none d-md-table-cell">{{ 'field.client'|trans }}</th>
             </tr>
             </thead>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th class="d-none d-md-table-cell"></th>
+                <th class="d-none d-md-table-cell"></th>
+                <th>
+                    {% set total=payment.totalPaid %}
+                    {{ total|localizedcurrency(payment.currency) }}
+                    {% if payment.amount==total %}
+                        <span class="fa fa-check text-success ml-1"></span>
+                    {% else %}
+                        <span class="fa fa-warning text-danger ml-1"></span>
+                    {% endif %}
+                </th>
+                <th class="d-none d-md-table-cell"></th>
+            </tr>
+            </tfoot>
             <tbody>
             {% for paymentInvoice in payment.paymentInvoices %}
                 <tr>

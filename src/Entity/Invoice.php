@@ -28,6 +28,8 @@ class Invoice
     use TimestampableEntity;
 
     /**
+     * @var Client|null
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -37,11 +39,15 @@ class Invoice
     private $client;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=3)
      */
     private $number;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=10)
      *
      * @Assert\NotBlank()

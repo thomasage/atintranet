@@ -107,11 +107,6 @@ class Payment
      */
     private $comment;
 
-    /**
-     * Payment constructor.
-     *
-     * @throws \Exception
-     */
     public function __construct()
     {
         $this->IdTraitConstruct();
@@ -130,11 +125,6 @@ class Payment
         return $this->paymentInvoices;
     }
 
-    /**
-     * @param PaymentInvoice $paymentInvoice
-     *
-     * @return Payment
-     */
     public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
     {
         if (!$this->paymentInvoices->contains($paymentInvoice)) {
@@ -145,11 +135,6 @@ class Payment
         return $this;
     }
 
-    /**
-     * @param PaymentInvoice $paymentInvoice
-     *
-     * @return Payment
-     */
     public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self
     {
         if ($this->paymentInvoices->contains($paymentInvoice)) {
@@ -163,19 +148,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getOperationDate(): \DateTimeInterface
     {
         return $this->operationDate;
     }
 
-    /**
-     * @param \DateTimeInterface $operationDate
-     *
-     * @return Payment
-     */
     public function setOperationDate(\DateTimeInterface $operationDate): self
     {
         $this->operationDate = $operationDate;
@@ -183,19 +160,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
     public function getValueDate(): ?\DateTimeInterface
     {
         return $this->valueDate;
     }
 
-    /**
-     * @param \DateTimeInterface|null $valueDate
-     *
-     * @return Payment
-     */
     public function setValueDate(?\DateTimeInterface $valueDate): self
     {
         $this->valueDate = $valueDate;
@@ -203,19 +172,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAmount(): string
     {
         return $this->amount;
     }
 
-    /**
-     * @param string $amount
-     *
-     * @return Payment
-     */
     public function setAmount(string $amount): self
     {
         $this->amount = $amount;
@@ -223,19 +184,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string $currency
-     *
-     * @return Payment
-     */
     public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
@@ -243,19 +196,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getLocked(): bool
     {
         return $this->locked;
     }
 
-    /**
-     * @param bool $locked
-     *
-     * @return Payment
-     */
     public function setLocked(bool $locked): self
     {
         $this->locked = $locked;
@@ -263,19 +208,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return OptionPaymentMethod|null
-     */
     public function getMethod(): ?OptionPaymentMethod
     {
         return $this->method;
     }
 
-    /**
-     * @param OptionPaymentMethod $method
-     *
-     * @return Payment
-     */
     public function setMethod(OptionPaymentMethod $method): self
     {
         $this->method = $method;
@@ -283,19 +220,11 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBankName(): ?string
     {
         return $this->bankName;
     }
 
-    /**
-     * @param string|null $bankName
-     *
-     * @return Payment
-     */
     public function setBankName(?string $bankName): self
     {
         $this->bankName = $bankName;
@@ -303,9 +232,6 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCssClass(): string
     {
         if ((float) $this->amount < 0.0) {
@@ -315,19 +241,11 @@ class Payment
         return '';
     }
 
-    /**
-     * @return string|null
-     */
     public function getThirdPartyName(): ?string
     {
         return $this->thirdPartyName;
     }
 
-    /**
-     * @param string $thirdPartyName
-     *
-     * @return Payment
-     */
     public function setThirdPartyName(string $thirdPartyName): self
     {
         $this->thirdPartyName = $thirdPartyName;
@@ -335,23 +253,25 @@ class Payment
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string|null $comment
-     *
-     * @return Payment
-     */
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
 
         return $this;
+    }
+
+    public function getTotalPaid(): float
+    {
+        $total = '0';
+        foreach ($this->paymentInvoices as $paymentInvoice) {
+            $total = bcadd($total, $paymentInvoice->getAmount(), 5);
+        }
+
+        return (float) $total;
     }
 }
