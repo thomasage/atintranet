@@ -20,7 +20,7 @@ class PaymentInvoiceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,6 +29,9 @@ class PaymentInvoiceType extends AbstractType
                 'invoice',
                 InvoiceSelectorType::class,
                 [
+                    'attr' => [
+                        'placeholder' => 'field.number',
+                    ],
                     'label' => 'field.invoice',
                     'required' => true,
                 ]
@@ -53,6 +56,9 @@ class PaymentInvoiceType extends AbstractType
                             'amount',
                             MoneyType::class,
                             [
+                                'attr' => [
+                                    'placeholder' => 'field.amount',
+                                ],
                                 'currency' => $currency,
                                 'label' => 'field.amount',
                                 'required' => true,
