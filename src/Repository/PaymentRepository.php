@@ -10,26 +10,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class PaymentRepository.
- */
 class PaymentRepository extends ServiceEntityRepository
 {
-    /**
-     * PaymentRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Payment::class);
     }
 
-    /**
-     * @param Search $search
-     *
-     * @return Paginator
-     */
     public function findBySearch(Search $search): Paginator
     {
         $builder = $this
@@ -70,5 +57,15 @@ class PaymentRepository extends ServiceEntityRepository
         }
 
         return new Paginator($builder->getQuery());
+    }
+
+    public function findAutocompleteThirdPartyName(string $term): array
+    {
+        return $this->createQueryBuilder('payment')
+            ->andWhere('payment.thirdPartyName LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+            ->select('DISTINCT payment.thirdPartyName')
+            ->getQuery()
+            ->getScalarResult();
     }
 }

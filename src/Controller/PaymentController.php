@@ -14,6 +14,7 @@ use App\Service\SearchManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -28,6 +29,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PaymentController extends AbstractController
 {
+    /**
+     * @param Request           $request
+     * @param PaymentRepository $repository
+     *
+     * @return JsonResponse
+     *
+     * @Route("/autocomplete/thirdPartyName",
+     *     name="app_payment_autocomplete_third_party_name",
+     *     methods={"GET"})
+     */
+    public function autocompleteThirdPartyName(Request $request, PaymentRepository $repository): JsonResponse
+    {
+        $terms = $repository->findAutocompleteThirdPartyName($request->get('term'));
+
+        $options = [];
+        foreach ($terms as $t) {
+            $options[] = $t['thirdPartyName'];
+        }
+
+        return new JsonResponse($options);
+    }
+
     /**
      * @param Request                $request
      * @param EntityManagerInterface $em

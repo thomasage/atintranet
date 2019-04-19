@@ -1,6 +1,8 @@
 require('../css/app.scss');
 
 let $ = require('jquery');
+require('jquery-ui/themes/base/all.css');
+require('jquery-ui/ui/widgets/autocomplete');
 
 require('bootstrap');
 require('font-awesome/scss/font-awesome.scss');
