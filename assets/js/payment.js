@@ -14,6 +14,7 @@ $(function () {
             PaymentApp.$detailsContainer.data('index', index + 1);
             PaymentApp.$detailsContainer.append($element);
             scrollToElement($element);
+            $element.find(':input').eq(0).focus();
         },
         handleDetailsLinkDelete: function (e) {
             e.preventDefault();
