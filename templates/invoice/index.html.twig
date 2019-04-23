@@ -55,15 +55,15 @@
                 </td>
                 <td class="d-none d-sm-table-cell">{{ invoice.type|trans }}</td>
                 <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>
-                <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(invoice.currency) }}</td>
-                <td>{{ invoice.amountIncludingTax|localizedcurrency(invoice.currency) }}</td>
+                <td class="d-none d-md-table-cell">{{ invoice.amountExcludingTax|localizedcurrency(currency) }}</td>
+                <td>{{ invoice.amountIncludingTax|localizedcurrency(currency) }}</td>
                 <td class="d-none d-sm-table-cell">
                     {% if invoice.credit is not null %}
                         <a href="{{ path('app_invoice_show',{uuid:invoice.credit.uuid}) }}">
                             <em class="text-muted">{{ 'credit'|trans }} {{ invoice.credit.numberComplete }}</em>
                         </a>
                     {% elseif 'invoice'==invoice.type %}
-                        {{ invoice.amountPaid|localizedcurrency(invoice.currency) }}
+                        {{ invoice.amountPaid|localizedcurrency(currency) }}
                         {% if invoice.amountPaid==invoice.amountIncludingTax %}
                             <span class="fa fa-check text-success ml-1"></span>
                         {% endif %}

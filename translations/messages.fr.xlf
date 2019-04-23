@@ -181,10 +181,6 @@
         <source>notification.user_removed</source>
         <target>L'utilisateur est supprimé.</target>
       </trans-unit>
-      <trans-unit id="oCzGhEn" resname="notification.payment_removed">
-        <source>notification.payment_removed</source>
-        <target>Le règlement est supprimé.</target>
-      </trans-unit>
       <trans-unit id="2orqhMK" resname="notification.client_updated">
         <source>notification.client_updated</source>
         <target>Le client est modifié.</target>
@@ -268,10 +264,6 @@
       <trans-unit id="iiKp8uq" resname="title.invoice_add">
         <source>title.invoice_add</source>
         <target>Ajouter une facture</target>
-      </trans-unit>
-      <trans-unit id="fcXZ4IH" resname="field.currency">
-        <source>field.currency</source>
-        <target>Devise</target>
       </trans-unit>
       <trans-unit id="uFYQ.qu" resname="field.internal_comment">
         <source>field.internal_comment</source>
@@ -457,17 +449,9 @@
         <source>action.delete_user</source>
         <target>Supprimer l'utilisateur</target>
       </trans-unit>
-      <trans-unit id="BEexc88" resname="action.delete_payment">
-        <source>action.delete_payment</source>
-        <target>Supprimer le règlement</target>
-      </trans-unit>
       <trans-unit id="aHw5Vzp" resname="confirmation.delete_user">
         <source>confirmation.delete_user</source>
         <target>Je souhaite supprimer définitivement cet utilisateur</target>
-      </trans-unit>
-      <trans-unit id="gCfeo7U" resname="confirmation.delete_payment">
-        <source>confirmation.delete_payment</source>
-        <target>Je souhaite supprimer définitivement ce règlement</target>
       </trans-unit>
       <trans-unit id="Qe9EIZE" resname="confirmation.delete_project_rate">
         <source>confirmation.delete_project_rate</source>
@@ -505,25 +489,9 @@
         <source>notification.invoice_added</source>
         <target>La facture est créée</target>
       </trans-unit>
-      <trans-unit id="Cdog0_O" resname="notification.payment_updated">
-        <source>notification.payment_updated</source>
-        <target>Le règlement est modifié.</target>
-      </trans-unit>
-      <trans-unit id="i_lS6Od" resname="notification.payment_added">
-        <source>notification.payment_added</source>
-        <target>Le règlement est ajouté.</target>
-      </trans-unit>
-      <trans-unit id="JbYt_2v" resname="menu.payments">
-        <source>menu.payments</source>
-        <target>Règlements</target>
-      </trans-unit>
       <trans-unit id="Npm5EiI" resname="action.download">
         <source>action.download</source>
         <target>Télécharger</target>
-      </trans-unit>
-      <trans-unit id="uTdiEnj" resname="title.payment_show">
-        <source>title.payment_show</source>
-        <target>Afficher un règlement</target>
       </trans-unit>
       <trans-unit id="1bYiV8w" resname="field.operation_date">
         <source>field.operation_date</source>
@@ -536,38 +504,6 @@
       <trans-unit id="tf7JNd9" resname="field.amount">
         <source>field.amount</source>
         <target>Montant</target>
-      </trans-unit>
-      <trans-unit id="S1L3unw" resname="field.payment_method">
-        <source>field.payment_method</source>
-        <target>Mode règlement</target>
-      </trans-unit>
-      <trans-unit id="Ws.eAbb" resname="field.third_party">
-        <source>field.third_party</source>
-        <target>Tiers</target>
-      </trans-unit>
-      <trans-unit id="LkCWmzM" resname="field.bank_name">
-        <source>field.bank_name</source>
-        <target>Banque</target>
-      </trans-unit>
-      <trans-unit id="fAKPzY2" resname="title.payment_edit">
-        <source>title.payment_edit</source>
-        <target>Modifier un règlement</target>
-      </trans-unit>
-      <trans-unit id="JZrr6SV" resname="title.payment_add">
-        <source>title.payment_add</source>
-        <target>Ajouter un règlement</target>
-      </trans-unit>
-      <trans-unit id="QQEITq1" resname="title.payment_delete">
-        <source>title.payment_delete</source>
-        <target>Supprimer un règlement</target>
-      </trans-unit>
-      <trans-unit id="tiUSl8k" resname="field.invoices">
-        <source>field.invoices</source>
-        <target>Factures</target>
-      </trans-unit>
-      <trans-unit id="kiEwLD5" resname="field.invoice">
-        <source>field.invoice</source>
-        <target>Facture</target>
       </trans-unit>
       <trans-unit id="o8H6_LT" resname="title.client_list">
         <source>title.client_list</source>
@@ -677,10 +613,6 @@
         <source>actions</source>
         <target>Actions</target>
       </trans-unit>
-      <trans-unit id="U8Eg7bO" resname="title.payment_list">
-        <source>title.payment_list</source>
-        <target>Règlements</target>
-      </trans-unit>
       <trans-unit id="ybpIDD3" resname="notification.unable_to_create_user">
         <source>notification.unable_to_create_user</source>
         <target>Impossible de créer un utilisateur</target>
@@ -688,10 +620,6 @@
       <trans-unit id="IgRQxo7" resname="notification.unable_to_create_client">
         <source>notification.unable_to_create_client</source>
         <target>Impossible de créer un client</target>
-      </trans-unit>
-      <trans-unit id="bmp98lX" resname="notification.unable_to_create_payment">
-        <source>notification.unable_to_create_payment</source>
-        <target>Impossible de créer un règlement</target>
       </trans-unit>
       <trans-unit id="vAqXm1d" resname="notification.unable_to_create_invoice">
         <source>notification.unable_to_create_invoice</source>

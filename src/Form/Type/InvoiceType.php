@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
@@ -95,15 +94,6 @@ class InvoiceType extends AbstractType
                     'label' => 'field.due_date',
                     'required' => true,
                     'widget' => 'single_text',
-                ]
-            )
-            ->add(
-                'currency',
-                CurrencyType::class,
-                [
-                    'label' => 'field.currency',
-                    'preferred_choices' => ['EUR'],
-                    'required' => true,
                 ]
             )
             ->add(

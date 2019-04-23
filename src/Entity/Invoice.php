@@ -102,14 +102,6 @@ class Invoice
     private $amountPaid;
 
     /**
-     * @ORM\Column(type="string", length=3)
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=3)
-     */
-    private $currency;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      *
      * @Assert\Length(min=1)
@@ -132,15 +124,6 @@ class Invoice
      *     cascade={"persist", "remove"})
      */
     private $details;
-
-    /**
-     * @var Collection|PaymentInvoice[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice",
-     *     mappedBy="invoice",
-     *     orphanRemoval=true)
-     */
-    private $paymentInvoices;
 
     /**
      * @var int
@@ -171,20 +154,18 @@ class Invoice
         $this->amountExcludingTax = '0.0';
         $this->amountIncludingTax = '0.0';
         $this->amountPaid = '0.0';
-        $this->currency = 'EUR';
         $this->details = new ArrayCollection();
         $this->dueDate = new \DateTime('+1 month');
         $this->issueDate = new \DateTime();
-        $this->paymentInvoices = new ArrayCollection();
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
-        $this->year = (int) $this->issueDate->format('Y');
+        $this->year = (int)$this->issueDate->format('Y');
     }
 
     public function __toString(): string
     {
-        return (string) $this->number;
+        return (string)$this->number;
     }
 
     public function getId(): ?int
@@ -224,7 +205,7 @@ class Invoice
     public function setIssueDate(\DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
-        $this->year = (int) $issueDate->format('Y');
+        $this->year = (int)$issueDate->format('Y');
 
         return $this;
     }
@@ -289,18 +270,6 @@ class Invoice
         return $this;
     }
 
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(string $currency): self
-    {
-        $this->currency = $currency;
-
-        return $this;
-    }
-
     public function getComment(): ?string
     {
         return $this->comment;
@@ -348,7 +317,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 
@@ -399,37 +368,6 @@ class Invoice
     public function setTaxRate(float $taxRate): self
     {
         $this->taxRate = $taxRate;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|PaymentInvoice[]
-     */
-    public function getPaymentInvoices(): Collection
-    {
-        return $this->paymentInvoices;
-    }
-
-    public function addPaymentInvoice(PaymentInvoice $paymentInvoice): self
-    {
-        if (!$this->paymentInvoices->contains($paymentInvoice)) {
-            $this->paymentInvoices[] = $paymentInvoice;
-            $paymentInvoice->setInvoice($this);
-        }
-
-        return $this;
-    }
-
-    public function removePaymentInvoice(PaymentInvoice $paymentInvoice): self
-    {
-        if ($this->paymentInvoices->contains($paymentInvoice)) {
-            $this->paymentInvoices->removeElement($paymentInvoice);
-            // set the owning side to null (unless already changed)
-            if ($paymentInvoice->getInvoice() === $this) {
-                $paymentInvoice->setInvoice(null);
-            }
-        }
 
         return $this;
     }

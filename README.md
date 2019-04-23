@@ -17,7 +17,9 @@
 
 ### Production
 
-TODO
+1. Copy `deploy/hosts.yaml.dist` to `deploy/hosts.yaml`
+2. Customize `deploy/hosts.yaml`
+3. Run `vendor/bin/dep deploy prod`
 
 ### Development
 
