@@ -63,6 +63,7 @@ class PaymentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('payment')
             ->andWhere('payment.thirdPartyName LIKE :term')
+            ->orderBy('payment.thirdPartyName', 'ASC')
             ->setParameter('term', '%'.$term.'%')
             ->select('DISTINCT payment.thirdPartyName')
             ->getQuery()
