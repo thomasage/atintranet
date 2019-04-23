@@ -124,16 +124,6 @@ class Invoice
     private $commentInternal;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $closed;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $locked;
-
-    /**
      * @var Collection|InvoiceDetail[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\InvoiceDetail",
@@ -181,12 +171,10 @@ class Invoice
         $this->amountExcludingTax = '0.0';
         $this->amountIncludingTax = '0.0';
         $this->amountPaid = '0.0';
-        $this->closed = false;
         $this->currency = 'EUR';
         $this->details = new ArrayCollection();
         $this->dueDate = new \DateTime('+1 month');
         $this->issueDate = new \DateTime();
-        $this->locked = false;
         $this->paymentInvoices = new ArrayCollection();
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
@@ -333,30 +321,6 @@ class Invoice
     public function setCommentInternal(?string $commentInternal): self
     {
         $this->commentInternal = $commentInternal;
-
-        return $this;
-    }
-
-    public function getClosed(): bool
-    {
-        return $this->closed;
-    }
-
-    public function setClosed(bool $closed): self
-    {
-        $this->closed = $closed;
-
-        return $this;
-    }
-
-    public function getLocked(): bool
-    {
-        return $this->locked;
-    }
-
-    public function setLocked(bool $locked): self
-    {
-        $this->locked = $locked;
 
         return $this;
     }

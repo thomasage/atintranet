@@ -46,9 +46,6 @@ class InvoiceController extends AbstractController
         TranslatorInterface $translator,
         Invoice $invoice
     ): Response {
-        if ($invoice->getLocked()) {
-            return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
-        }
 
         $formDelete = $this->createForm(InvoiceDeleteType::class, $invoice);
         $formDelete->handleRequest($request);
@@ -89,9 +86,6 @@ class InvoiceController extends AbstractController
         EntityManagerInterface $em,
         Invoice $invoice
     ): Response {
-        if ($invoice->getLocked()) {
-            return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
-        }
 
         $formEdit = $this->createForm(InvoiceType::class, $invoice);
         $formEdit->handleRequest($request);
@@ -142,47 +136,6 @@ class InvoiceController extends AbstractController
                 'formSearch' => $formSearch->createView(),
                 'invoices' => $invoices,
                 'search' => $search,
-            ]
-        );
-    }
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Invoice                $invoice
-     * @param string                 $lock
-     *
-     * @return Response
-     *
-     * @Route("/{uuid}/lock/{lock}",
-     *     name="app_invoice_lock",
-     *     methods={"GET"},
-     *     requirements={"lock"="0|1"})
-     */
-    public function lock(
-        EntityManagerInterface $em,
-        TranslatorInterface $translator,
-        Invoice $invoice,
-        string $lock
-    ): Response {
-        $invoice->setLocked((bool) $lock);
-
-        $em->flush();
-
-        if ($invoice->getLocked()) {
-            $type = 'success';
-            $message = 'notification.invoice_locked';
-        } else {
-            $type = 'danger';
-            $message = 'notification.invoice_unlocked';
-        }
-
-        $this->addFlash($type, $translator->trans($message, ['%number%' => $invoice->getNumber()]));
-
-        return $this->redirectToRoute(
-            'app_invoice_show',
-            [
-                'uuid' => $invoice->getUuid(),
             ]
         );
     }

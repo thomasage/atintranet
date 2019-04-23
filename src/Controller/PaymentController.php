@@ -149,39 +149,6 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Payment                $payment
-     * @param bool                   $lock
-     *
-     * @return Response
-     *
-     * @Route("/{uuid}/lock/{lock}",
-     *     name="app_payment_lock",
-     *     methods={"GET"})
-     */
-    public function lock(
-        EntityManagerInterface $em,
-        TranslatorInterface $translator,
-        Payment $payment,
-        bool $lock
-    ): Response {
-        $payment->setLocked($lock);
-
-        $em->flush();
-
-        if ($payment->getLocked()) {
-            $message = 'notification.payment_locked';
-        } else {
-            $message = 'notification.payment_unlocked';
-        }
-
-        $this->addFlash('success', $translator->trans($message));
-
-        return $this->redirectToRoute('app_payment_show', ['uuid' => $payment->getUuid()]);
-    }
-
-    /**
      * @param Request           $request
      * @param SearchManager     $sm
      * @param PaymentRepository $repository

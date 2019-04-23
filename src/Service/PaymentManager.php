@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class PaymentManager.
- */
 class PaymentManager implements ServiceSubscriberInterface
 {
     /**
@@ -28,19 +25,11 @@ class PaymentManager implements ServiceSubscriberInterface
      */
     private $container;
 
-    /**
-     * PaymentManager constructor.
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedServices(): array
     {
         return [
@@ -50,9 +39,6 @@ class PaymentManager implements ServiceSubscriberInterface
         ];
     }
 
-    /**
-     * @return StreamedResponse|null
-     */
     public function download(): ?StreamedResponse
     {
         /** @var PaymentRepository $repository */
@@ -85,8 +71,7 @@ class PaymentManager implements ServiceSubscriberInterface
             $sheet->getColumnDimension('E')->setWidth(20);
             $sheet->getColumnDimension('F')->setWidth(30);
             $sheet->getColumnDimension('G')->setWidth(30);
-            $sheet->getColumnDimension('H')->setWidth(10);
-            $sheet->getColumnDimension('I')->setWidth(30);
+            $sheet->getColumnDimension('H')->setWidth(30);
 
             $sheet->setCellValue('A1', $translator->trans('field.operation_date'));
             $sheet->setCellValue('B1', $translator->trans('field.value_date'));
@@ -95,10 +80,9 @@ class PaymentManager implements ServiceSubscriberInterface
             $sheet->setCellValue('E1', $translator->trans('field.payment_method'));
             $sheet->setCellValue('F1', $translator->trans('field.third_party'));
             $sheet->setCellValue('G1', $translator->trans('field.bank_name'));
-            $sheet->setCellValue('H1', $translator->trans('field.locked'));
-            $sheet->setCellValue('I1', $translator->trans('field.comment'));
-            $sheet->getStyle('A1:I1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A1:I1')->getFont()->setBold(true);
+            $sheet->setCellValue('H1', $translator->trans('field.comment'));
+            $sheet->getStyle('A1:H1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1:H1')->getFont()->setBold(true);
 
             $rownum = 1;
 
@@ -113,8 +97,7 @@ class PaymentManager implements ServiceSubscriberInterface
                 $sheet->setCellValue('E'.$rownum, $payment->getMethod());
                 $sheet->setCellValue('F'.$rownum, $payment->getThirdPartyName());
                 $sheet->setCellValue('G'.$rownum, $payment->getBankName());
-                $sheet->setCellValue('H'.$rownum, $translator->trans($payment->getLocked() ? 'yes' : 'no'));
-                $sheet->setCellValue('I'.$rownum, $payment->getComment());
+                $sheet->setCellValue('H'.$rownum, $payment->getComment());
             }
 
             $sheet
@@ -129,7 +112,7 @@ class PaymentManager implements ServiceSubscriberInterface
                 ->getStyle('C2:C'.$rownum)
                 ->getNumberFormat()
                 ->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2);
-            $sheet->getStyle('I2:I'.$rownum)->getAlignment()->setWrapText(true);
+            $sheet->getStyle('H2:H'.$rownum)->getAlignment()->setWrapText(true);
 
             $spreadsheet->setActiveSheetIndex(0);
 

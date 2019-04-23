@@ -19,27 +19,14 @@
         <span class="fa fa-copy"></span>
         <span class="d-none d-md-inline">{{ 'action.duplicate'|trans }}</span>
     </a>
-    {% if invoice.locked %}
-        <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:0}) }}"
-           class="btn btn-outline-danger">
-            <span class="fa fa-unlock"></span>
-            <span class="d-none d-md-inline">{{ 'action.unlock'|trans }}</span>
-        </a>
-    {% else %}
-        <a href="{{ path('app_invoice_lock',{uuid:invoice.uuid,lock:1}) }}"
-           class="btn btn-outline-info">
-            <span class="fa fa-lock"></span>
-            <span class="d-none d-md-inline">{{ 'action.lock'|trans }}</span>
-        </a>
-        <a href="{{ path('app_invoice_edit',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
-            <span class="fa fa-pencil"></span>
-            <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
-        </a>
-        <a href="{{ path('app_invoice_delete',{uuid:invoice.uuid}) }}" class="btn btn-outline-danger">
-            <span class="fa fa-trash"></span>
-            <span class="d-none d-md-inline">{{ 'action.delete'|trans }}</span>
-        </a>
-    {% endif %}
+    <a href="{{ path('app_invoice_edit',{uuid:invoice.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-pencil"></span>
+        <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
+    </a>
+    <a href="{{ path('app_invoice_delete',{uuid:invoice.uuid}) }}" class="btn btn-outline-danger">
+        <span class="fa fa-trash"></span>
+        <span class="d-none d-md-inline">{{ 'action.delete'|trans }}</span>
+    </a>
 {% endblock %}
 
 {% block body %}
@@ -57,24 +44,6 @@
                 <div class="text-muted small">{{ 'field.client'|trans }}</div>
                 <div>
                     <a href="{{ path('app_client_show',{uuid:invoice.client.uuid}) }}">{{ invoice.client.name }}</a>
-                </div>
-            </div>
-
-            <div class="mt-2">
-                <div class="text-muted small">{{ 'field.status'|trans }}</div>
-                <div>
-                    {% if invoice.locked %}
-                        <span class="badge badge-success"><span class="fa fa-lock"></span> locked</span>
-                    {% else %}
-                        <span class="badge badge-danger"><span class="fa fa-unlock"></span> unlocked</span>
-                    {% endif %}
-                    {% if invoice.closed %}
-                        <span class="ml-2 badge badge-success">
-                            <span class="fa fa-check-square-o"></span> closed
-                        </span>
-                    {% else %}
-                        <span class="ml-2 badge badge-secondary"><span class="fa fa-square-o"></span> open</span>
-                    {% endif %}
                 </div>
             </div>
 

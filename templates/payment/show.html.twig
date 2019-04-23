@@ -7,21 +7,10 @@
         <span class="fa fa-plus"></span>
         <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
     </a>
-    {% if payment.locked==false %}
-        <a href="{{ path('app_payment_edit',{uuid:payment.uuid}) }}" class="btn btn-outline-primary">
-            <span class="fa fa-pencil"></span>
-            <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
-        </a>
-        <a href="{{ path('app_payment_lock',{uuid:payment.uuid,lock:1}) }}" class="btn btn-outline-success">
-            <span class="fa fa-lock"></span>
-            <span class="d-none d-md-inline">{{ 'action.lock'|trans }}</span>
-        </a>
-    {% else %}
-        <a href="{{ path('app_payment_lock',{uuid:payment.uuid,lock:0}) }}" class="btn btn-outline-danger">
-            <span class="fa fa-lock"></span>
-            <span class="d-none d-md-inline">{{ 'action.unlock'|trans }}</span>
-        </a>
-    {% endif %}
+    <a href="{{ path('app_payment_edit',{uuid:payment.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-pencil"></span>
+        <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
+    </a>
     <a href="{{ path('app_payment_index') }}" class="btn btn-outline-secondary">
         <span class="fa fa-list"></span>
         <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
@@ -42,21 +31,6 @@
                     <div>{{ payment.valueDate|localizeddate('long','none') }}</div>
                 </div>
             {% endif %}
-            <div class="mt-2">
-                <div class="text-muted small">{{ 'field.status'|trans }}</div>
-                <div>
-                    {% if payment.locked %}
-                        <span class="badge badge-success">
-                                <span class="fa fa-lock"></span> {{ 'locked'|trans }}
-                            </span>
-                    {% else %}
-                        <span class="badge badge-danger">
-                            <span class="fa fa-unlock"></span> {{ 'unlocked'|trans }}
-                        </span>
-                    {% endif %}
-
-                </div>
-            </div>
         </div>
         <div class="col-12 col-md-3">
             <div class="mt-2">

@@ -70,13 +70,6 @@ class Payment
     private $currency;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $locked;
-
-    /**
      * @var Collection|PaymentInvoice[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\PaymentInvoice",
@@ -112,7 +105,6 @@ class Payment
         $this->IdTraitConstruct();
         $this->amount = '0.0';
         $this->currency = 'EUR';
-        $this->locked = false;
         $this->operationDate = new \DateTime();
         $this->paymentInvoices = new ArrayCollection();
     }
@@ -192,18 +184,6 @@ class Payment
     public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
-
-        return $this;
-    }
-
-    public function getLocked(): bool
-    {
-        return $this->locked;
-    }
-
-    public function setLocked(bool $locked): self
-    {
-        $this->locked = $locked;
 
         return $this;
     }

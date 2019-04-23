@@ -52,9 +52,6 @@
                         <span class="mr-1 d-sm-none">{{ invoice.type|trans|first }}</span>
                         {{- invoice.numberComplete -}}
                     </a>
-                    {%- if invoice.locked -%}
-                        <span class="fa fa-lock ml-1 text-success"></span>
-                    {%- endif -%}
                 </td>
                 <td class="d-none d-sm-table-cell">{{ invoice.type|trans }}</td>
                 <td class="d-none d-md-table-cell">{{ invoice.issueDate|localizeddate('short','none') }}</td>

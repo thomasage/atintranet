@@ -225,25 +225,9 @@
         <source>notification.invoice_updated</source>
         <target>La facture est modifiée.</target>
       </trans-unit>
-      <trans-unit id="eSzPfN3" resname="notification.invoice_locked">
-        <source>notification.invoice_locked</source>
-        <target>La facture %number% est verrouillée.</target>
-      </trans-unit>
-      <trans-unit id="QBzZboj" resname="notification.invoice_unlocked">
-        <source>notification.invoice_unlocked</source>
-        <target>La facture %number% est déverrouillée.</target>
-      </trans-unit>
       <trans-unit id="ed2r.6f" resname="notification.invoice_removed">
         <source>notification.invoice_removed</source>
         <target>La facture est supprimée.</target>
-      </trans-unit>
-      <trans-unit id="N83xcKA" resname="notification.payment_locked">
-        <source>notification.payment_locked</source>
-        <target>Le règlement est verrouillé.</target>
-      </trans-unit>
-      <trans-unit id="uNiESnx" resname="notification.payment_unlocked">
-        <source>notification.payment_unlocked</source>
-        <target>Le règlement est déverrouillé.</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
@@ -449,14 +433,6 @@
         <source>credit</source>
         <target>Avoir</target>
       </trans-unit>
-      <trans-unit id="JxLSm0F" resname="field.closed">
-        <source>field.closed</source>
-        <target>Clôturé</target>
-      </trans-unit>
-      <trans-unit id="Em3At3q" resname="field.locked">
-        <source>field.locked</source>
-        <target>Verrouillé</target>
-      </trans-unit>
       <trans-unit id="NmAxWpr" resname="page">
         <source>page</source>
         <target>Page</target>
@@ -572,14 +548,6 @@
       <trans-unit id="LkCWmzM" resname="field.bank_name">
         <source>field.bank_name</source>
         <target>Banque</target>
-      </trans-unit>
-      <trans-unit id="FEk.X1R" resname="locked">
-        <source>locked</source>
-        <target>verrouillé</target>
-      </trans-unit>
-      <trans-unit id=".Vs5bEw" resname="unlocked">
-        <source>unlocked</source>
-        <target>ouvert</target>
       </trans-unit>
       <trans-unit id="fAKPzY2" resname="title.payment_edit">
         <source>title.payment_edit</source>

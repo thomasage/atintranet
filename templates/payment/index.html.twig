@@ -49,9 +49,6 @@
                     <a href="{{ path('app_payment_show',{uuid:payment.uuid}) }}">
                         {{ payment.operationDate|localizeddate('short','none') }}
                     </a>
-                    {% if payment.locked %}
-                        <span class="fa fa-lock text-success ml-1"></span>
-                    {% endif %}
                 </td>
                 <td class="d-none d-md-table-cell">
                     {% if payment.valueDate is not null %}
