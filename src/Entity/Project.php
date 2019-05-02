@@ -193,7 +193,7 @@ class Project
         foreach ($rates as $r => $rate) {
             if ($rate->getStartedAt()->format('Y-m-d') > $date->format('Y-m-d')) {
                 if ($r > 0) {
-                    return $this->rates[$r - 1];
+                    return $rates[$r - 1];
                 }
                 break;
             }

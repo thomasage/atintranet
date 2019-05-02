@@ -10,6 +10,7 @@ use App\Repository\ClientRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\TaskRepository;
 use App\Service\TrackerManager;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class StatController extends AbstractController
                 return $this->redirectToRoute('app_stat_report_time');
             }
 
-            $month = \DateTime::createFromFormat('Y-m-d H:i:s', $request->query->get('month').'-01 00:00:00');
+            $month = DateTime::createFromFormat('Y-m-d H:i:s', $request->query->get('month').'-01 00:00:00');
 
             $response = $tm->export($month, $client);
 
