@@ -657,6 +657,18 @@
         <source>field.supplier_number</source>
         <target>N° fournisseur</target>
       </trans-unit>
+      <trans-unit id="s8sqHxN" resname="rollerworks_password.strength_level.">
+        <source>rollerworks_password.strength_level.</source>
+        <target>__rollerworks_password.strength_level.</target>
+      </trans-unit>
+      <trans-unit id="76TpCt1" resname="rollerworks_password.tip.">
+        <source>rollerworks_password.tip.</source>
+        <target>__rollerworks_password.tip.</target>
+      </trans-unit>
+      <trans-unit id="aV85IpU" resname="notification.invoice_copied">
+        <source>notification.invoice_copied</source>
+        <target>La facture a été copiée.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

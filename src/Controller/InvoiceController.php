@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Address;
 use App\Entity\Client;
 use App\Entity\Invoice;
+use App\Entity\InvoiceDetail;
 use App\Form\Type\InvoiceDeleteType;
 use App\Form\Type\InvoiceSearchType;
 use App\Form\Type\InvoiceType;
 use App\Model\InvoicePDF;
 use App\Repository\InvoiceRepository;
 use App\Service\SearchManager;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -29,10 +33,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvoiceController extends AbstractController
 {
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Invoice                $invoice
+     * @param TranslatorInterface $translator
+     * @param Invoice $invoice
      *
      * @return Response
      *
@@ -69,10 +73,10 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param TranslatorInterface    $translator
+     * @param Request $request
+     * @param TranslatorInterface $translator
      * @param EntityManagerInterface $em
-     * @param Invoice                $invoice
+     * @param Invoice $invoice
      *
      * @return Response
      *
@@ -108,8 +112,8 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request           $request
-     * @param SearchManager     $sm
+     * @param Request $request
+     * @param SearchManager $sm
      * @param InvoiceRepository $invoiceRepository
      *
      * @return Response
@@ -141,9 +145,9 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request                $request
+     * @param Request $request
      * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
+     * @param TranslatorInterface $translator
      *
      * @return Response
      *
@@ -155,7 +159,7 @@ class InvoiceController extends AbstractController
     {
         try {
             $invoice = new Invoice();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('danger', $translator->trans('notification.unable_to_create_invoice'));
 
             return $this->redirectToRoute('app_invoice_index');
@@ -181,9 +185,9 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @param InvoicePDF          $generator
+     * @param InvoicePDF $generator
      * @param TranslatorInterface $translator
-     * @param Invoice             $invoice
+     * @param Invoice $invoice
      *
      * @return BinaryFileResponse
      *
@@ -217,16 +221,82 @@ class InvoiceController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param TranslatorInterface $translator
      * @param Invoice $invoice
      *
      * @return Response
      *
-     * @Route("/{uuid}",
-     *     name="app_invoice_show",
-     *     methods={"GET"})
+     * @Route("/{uuid}", name="app_invoice_show", methods={"GET"})
      */
-    public function show(Invoice $invoice): Response
-    {
+    public function show(
+        Request $request,
+        EntityManagerInterface $em,
+        TranslatorInterface $translator,
+        Invoice $invoice
+    ): Response {
+        if ($request->query->has('copy')) {
+
+            try {
+
+                /** @var Address $address */
+                $address = $invoice->getAddress();
+
+                $copyAddress = new Address();
+                $copyAddress
+                    ->setAddress($address->getAddress())
+                    ->setCity($address->getCity())
+                    ->setCountry($address->getCountry())
+                    ->setName($address->getName())
+                    ->setPostcode($address->getPostcode());
+                $em->persist($copyAddress);
+
+                $copyInvoice = new Invoice();
+                $copyInvoice
+                    ->setAddress($copyAddress)
+                    ->setAmountExcludingTax($invoice->getAmountExcludingTax())
+                    ->setAmountIncludingTax($invoice->getAmountIncludingTax())
+                    ->setAmountPaid($invoice->getAmountPaid())
+                    ->setClient($invoice->getClient())
+                    ->setCredit($invoice->getCredit())
+                    ->setComment($invoice->getComment())
+                    ->setCommentInternal($invoice->getCommentInternal())
+                    ->setDueDate(new DateTime('+30 days'))
+                    ->setIssueDate(new DateTime())
+                    ->setOrderNumber($invoice->getOrderNumber())
+                    ->setTaxRate($invoice->getTaxRate())
+                    ->setType($invoice->getType())
+                    ->updateAmounts();
+                $em->persist($copyInvoice);
+
+                foreach ($invoice->getDetails() as $detail) {
+
+                    $copyDetail = new InvoiceDetail();
+                    $copyDetail
+                        ->setAmountTotal($detail->getAmountTotal())
+                        ->setAmountUnit($detail->getAmountUnit())
+                        ->setDesignation($detail->getDesignation())
+                        ->setInvoice($copyInvoice)
+                        ->setQuantity($detail->getQuantity());
+                    $em->persist($copyDetail);
+
+                }
+
+                $em->flush();
+
+                $this->addFlash('success', $translator->trans('notification.invoice_copied'));
+
+                return $this->redirectToRoute('app_invoice_edit', ['uuid' => $copyInvoice->getUuid()]);
+
+            } catch (Exception $e) {
+
+                return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
+
+            }
+
+        }
+
         return $this->render(
             'invoice/show.html.twig',
             [
