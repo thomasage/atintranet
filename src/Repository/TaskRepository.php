@@ -16,27 +16,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Exception;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class TaskRepository.
- */
 class TaskRepository extends ServiceEntityRepository
 {
-    /**
-     * TaskRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Task::class);
     }
 
-    /**
-     * @param User   $user
-     * @param string $period
-     *
-     * @return array
-     */
     public function findStatByPeriodGroupByProject(User $user, string $period = 'd'): array
     {
         $data = [
@@ -134,12 +120,6 @@ class TaskRepository extends ServiceEntityRepository
         ];
     }
 
-    /**
-     * @param Client            $client
-     * @param DateTimeInterface $month
-     *
-     * @return array
-     */
     public function summaryByClientAndMonth(Client $client, DateTimeInterface $month): array
     {
         $monthStart = DateTime::createFromFormat('Y-m-d H:i:s', $month->format('Y-m-01 00:00:00'));
@@ -213,9 +193,6 @@ class TaskRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return array
-     */
     public function findReports(): array
     {
         return $this
@@ -234,11 +211,6 @@ class TaskRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param User $user
-     *
-     * @return array
-     */
     public function findTimesThisMonth(User $user): array
     {
         $builder = $this
@@ -263,18 +235,15 @@ class TaskRepository extends ServiceEntityRepository
         return $builder->getQuery()->getResult();
     }
 
-    /**
-     * @param User $user
-     *
-     * @return array
-     */
     public function findTimesThisWeek(User $user): array
     {
         $builder = $this
             ->createQueryBuilder('task')
             ->innerJoin('task.project', 'project')
             ->innerJoin('project.client', 'client')
+            ->andWhere('DATE_FORMAT( task.start, \'%Y\' ) = :year')
             ->andWhere('DATE_FORMAT( task.start, \'%v\' ) = :week')
+            ->setParameter('year', date('Y'))
             ->setParameter('week', date('W'))
             ->addGroupBy('project.id')
             ->addOrderBy('client.name', 'ASC')
@@ -292,9 +261,6 @@ class TaskRepository extends ServiceEntityRepository
         return $builder->getQuery()->getResult();
     }
 
-    /**
-     * @return Paginator
-     */
     public function findBySearch(): Paginator
     {
         $builder = $this
