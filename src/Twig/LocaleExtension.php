@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use Symfony\Component\Intl\Intl;
+use DateTime;
+use Exception;
+use Symfony\Component\Intl\Countries;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * Class LocaleExtension.
- */
 class LocaleExtension extends AbstractExtension
 {
-    /**
-     * @return array
-     */
     public function getFilters(): array
     {
         return [
@@ -24,11 +20,6 @@ class LocaleExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param int|null $value
-     *
-     * @return string|null
-     */
     public function localizedDuration(?int $value): ?string
     {
         if (null === $value) {
@@ -36,9 +27,9 @@ class LocaleExtension extends AbstractExtension
         }
 
         try {
-            $from = new \DateTime('@0');
-            $to = new \DateTime('@'.$value);
-        } catch (\Exception $e) {
+            $from = new DateTime('@0');
+            $to = new DateTime('@'.$value);
+        } catch (Exception $e) {
             return null;
         }
 
@@ -50,23 +41,18 @@ class LocaleExtension extends AbstractExtension
 
         return sprintf(
             '%s:%s:%s',
-            str_pad((string) $hours, 2, '0', STR_PAD_LEFT),
-            str_pad((string) $minutes, 2, '0', STR_PAD_LEFT),
-            str_pad((string) $seconds, 2, '0', STR_PAD_LEFT)
+            str_pad((string)$hours, 2, '0', STR_PAD_LEFT),
+            str_pad((string)$minutes, 2, '0', STR_PAD_LEFT),
+            str_pad((string)$seconds, 2, '0', STR_PAD_LEFT)
         );
     }
 
-    /**
-     * @param string|null $country
-     *
-     * @return string|null
-     */
     public function localizedCountry(?string $country): ?string
     {
         if (null === $country) {
             return null;
         }
 
-        return Intl::getRegionBundle()->getCountryName($country);
+        return Countries::getName($country);
     }
 }
