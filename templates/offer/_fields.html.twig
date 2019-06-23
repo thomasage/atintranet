@@ -1,0 +1,245 @@
+{% block _offer_address_label %}
+    <label for="{{ id }}" class="{% if required %}required{% endif %}">{{ label|trans }}</label>
+{% endblock %}
+
+{%- block _offer_client_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_type_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_comment_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_commentInternal_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_supplierNumber_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_issueDate_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_validityDate_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_numberComplete_row -%}
+    <div class="mb-3 row align-items-center">
+        <div class="col-12 col-md-4">
+            <label for="{{ form.vars.id }}" class="col-form-label {% if form.vars.required %} required{% endif %}">
+                {{ form.vars.label|trans }}
+            </label>
+        </div>
+        <div class="col-12 col-md-8">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_details_widget -%}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    {% set attr=attr|merge({'data-index':form.children|length}) %}
+    <div {{ block('widget_attributes') }}>
+        {%- for child in form -%}
+            {{ form_row(child) }}
+        {%- endfor -%}
+    </div>
+{%- endblock -%}
+
+{%- block _offer_amountExcludingTax_row -%}
+    <div class="col-12">
+        <div class="row align-items-center mt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-2">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_amountIncludingTax_row -%}
+    <div class="col-12">
+        <div class="row align-items-center mt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-2">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_taxAmount_row -%}
+    <div class="col-12">
+        <div class="row align-items-center mt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-2">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_taxRate_row -%}
+    <div class="col-12">
+        <div class="row align-items-center mt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-2">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_details_entry_amountTotal_row -%}
+    <div class="col-12 col-md-4">
+        <div class="row align-items-center mt-2 mt-md-0">
+            <div class="col-5 d-md-none">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-12">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_details_entry_amountUnit_row -%}
+    <div class="col-12 col-md-4">
+        <div class="row align-items-center mt-2 mt-md-0">
+            <div class="col-5 d-md-none">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-12">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{%- block _offer_details_entry_quantity_row -%}
+    <div class="col-12 col-md-4">
+        <div class="row align-items-center mt-2 mt-md-0">
+            <div class="col-5 d-md-none">{{ form_label(form) }}</div>
+            <div class="col-7 col-md-12">{{ form_widget(form) }}</div>
+        </div>
+    </div>
+{%- endblock -%}
+
+{% block _offer_amountExcludingTax_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_amountIncludingTax_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_taxAmount_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_taxRate_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_details_entry_amountTotal_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_details_entry_amountUnit_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{% block _offer_details_entry_quantity_label %}
+    <label for="{{ id }}">{{ label|trans }}</label>
+{% endblock %}
+
+{%- block _offer_details_entry_row -%}
+    {% filter spaceless %}
+        <div class="row mt-4" id="{{ id }}">
+            <div class="col-12 col-md-6">{{ form_widget(form.designation) }}</div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    {{ form_row(form.quantity) }}
+                    {{ form_row(form.amountUnit) }}
+                    {{ form_row(form.amountTotal) }}
+                    <div class="col-12 mt-2 text-right">
+                        <div class="dropdown">
+                            <button type="button"
+                                    class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                    data-toggle="dropdown">
+                                <span class="fa fa-cog"></span>
+                                {{ 'actions'|trans }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <button type="button" class="dropdown-item js-detail-copy">
+                                    <span class="fa fa-fw fa-copy"></span>
+                                    {{ 'action.copy'|trans }}
+                                </button>
+                                <button type="button" class="dropdown-item text-danger js-detail-delete">
+                                    <span class="fa fa-fw fa-trash"></span>
+                                    {{ 'action.delete'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfilter %}
+{% endblock %}

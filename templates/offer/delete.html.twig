@@ -1,0 +1,30 @@
+{% extends 'offer/base.html.twig' %}
+
+{% block page_title %}{{ 'offer'|trans }} {{ offer.number }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_offer_show',{uuid:offer.uuid}) }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(formDelete) }}
+    <div class="mt-5">
+        {{ form_widget(formDelete.confirmation) }}
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">
+            <span class="fa fa-trash"></span>
+            {{ 'action.delete'|trans }}
+        </button>
+        <a href="{{ path('app_offer_show',{uuid:offer.uuid}) }}" class="btn btn-outline-secondary">
+            <span class="fa fa-times"></span>
+            {{ 'action.cancel'|trans }}
+        </a>
+    </div>
+    {{ form_end(formDelete) }}
+
+{% endblock %}

@@ -93,12 +93,18 @@ class Client implements \JsonSerializable
      */
     private $rates;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="client", orphanRemoval=true)
+     */
+    private $offers;
+
     public function __construct()
     {
         $this->IdTraitConstruct();
         $this->active = false;
         $this->invoices = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -289,6 +295,37 @@ class Client implements \JsonSerializable
             // set the owning side to null (unless already changed)
             if ($rate->getClient() === $this) {
                 $rate->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offer[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            // set the owning side to null (unless already changed)
+            if ($offer->getClient() === $this) {
+                $offer->setClient(null);
             }
         }
 

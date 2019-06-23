@@ -1,0 +1,68 @@
+{% extends 'offer/base.html.twig' %}
+
+{% block page_title %}{{ 'title.offer_list'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target=".filters">
+        <span class="fa fa-filter"></span>
+        <span class="d-none d-md-inline">{{ 'filters'|trans }}</span>
+        {% if search.filter|length>0 %}
+            <small>({{ search.filter|length }})</small>
+        {% endif %}
+    </a>
+    <a href="{{ path('app_offer_new') }}" class="btn btn-outline-primary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                {%- include '_sort.html.twig' with {code:'number',name:'field.number',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'issueDate',name:'field.issue_date',search:search} only -%}
+            </th>
+            <th class="d-none d-md-table-cell">
+                {%- include '_sort.html.twig' with {code:'amountExcludingTax',name:'field.amount_excluding_tax',search:search} only -%}
+            </th>
+            <th>
+                {%- include '_sort.html.twig' with {code:'amountIncludingTax',name:'field.amount_including_tax',search:search} only -%}
+            </th>
+            <th class="d-none d-sm-table-cell">
+                {%- include '_sort.html.twig' with {code:'client',name:'field.client',search:search} only -%}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for offer in offers %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_offer_show',{uuid:offer.uuid}) }}">{{ offer.numberComplete }}</a>
+                </td>
+                <td class="d-none d-md-table-cell">{{ offer.issueDate|localizeddate('short','none') }}</td>
+                <td class="d-none d-md-table-cell">{{ offer.amountExcludingTax|localizedcurrency(currency) }}</td>
+                <td>{{ offer.amountIncludingTax|localizedcurrency(currency) }}</td>
+                <td class="d-none d-sm-table-cell">
+                    <a href="{{ path('app_client_show',{uuid:offer.client.uuid}) }}">
+                        {{ offer.client }}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="p-5 text-center text-muted">{{ 'no_results_for_your_search'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include '_pagination.html.twig' with {search:search,results:offers|length} only %}
+
+    {% include '_filters.html.twig' with {formSearch:formSearch,search:search} only %}
+
+{% endblock %}

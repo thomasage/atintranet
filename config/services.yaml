@@ -32,9 +32,17 @@ services:
         arguments:
             $togglApiKey: '%env(TOGGL_API_KEY)%'
 
+    App\EventListener\OfferListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
     App\EventListener\InvoiceListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
+    App\Model\OfferPDF:
+        arguments:
+            $currency: '%currency%'
 
     App\Model\InvoicePDF:
         arguments:

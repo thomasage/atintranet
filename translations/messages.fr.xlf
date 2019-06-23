@@ -137,6 +137,10 @@
         <source>menu.invoices</source>
         <target>Factures</target>
       </trans-unit>
+      <trans-unit id="d9WYADE" resname="menu.offers">
+        <source>menu.offers</source>
+        <target>Devis</target>
+      </trans-unit>
       <trans-unit id="WB7UNTN" resname="field.issue_date">
         <source>field.issue_date</source>
         <target>Date d'émission</target>
@@ -221,9 +225,17 @@
         <source>notification.invoice_updated</source>
         <target>La facture est modifiée.</target>
       </trans-unit>
+      <trans-unit id="SRWuGk6" resname="notification.offer_updated">
+        <source>notification.offer_updated</source>
+        <target>Le devis est modifié.</target>
+      </trans-unit>
       <trans-unit id="ed2r.6f" resname="notification.invoice_removed">
         <source>notification.invoice_removed</source>
         <target>La facture est supprimée.</target>
+      </trans-unit>
+      <trans-unit id="noPlAgU" resname="notification.offer_removed">
+        <source>notification.offer_removed</source>
+        <target>Le devis est supprimé.</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
@@ -265,6 +277,10 @@
         <source>title.invoice_add</source>
         <target>Ajouter une facture</target>
       </trans-unit>
+      <trans-unit id="_3.5lXh" resname="title.offer_add">
+        <source>title.offer_add</source>
+        <target>Ajouter un devis</target>
+      </trans-unit>
       <trans-unit id="uFYQ.qu" resname="field.internal_comment">
         <source>field.internal_comment</source>
         <target>Commentaire interne</target>
@@ -292,6 +308,10 @@
       <trans-unit id="jUEFyTp" resname="title.invoice_edit">
         <source>title.invoice_edit</source>
         <target>Modifier une facture</target>
+      </trans-unit>
+      <trans-unit id="OLnss8i" resname="title.offer_edit">
+        <source>title.offer_edit</source>
+        <target>Modifier un devis</target>
       </trans-unit>
       <trans-unit id="MBLYGnj" resname="field.designation">
         <source>field.designation</source>
@@ -389,6 +409,10 @@
         <source>last_invoices</source>
         <target>Dernières factures</target>
       </trans-unit>
+      <trans-unit id="N9JHfV4" resname="last_offers">
+        <source>last_offers</source>
+        <target>Derniers devis</target>
+      </trans-unit>
       <trans-unit id="Ty0yIrX" resname="field.vat_number">
         <source>field.vat_number</source>
         <target>N° T.V.A.</target>
@@ -421,6 +445,10 @@
         <source>invoice</source>
         <target>Facture</target>
       </trans-unit>
+      <trans-unit id="mIGAvwy" resname="offer">
+        <source>offer</source>
+        <target>Devis</target>
+      </trans-unit>
       <trans-unit id="7MSHOha" resname="credit">
         <source>credit</source>
         <target>Avoir</target>
@@ -436,6 +464,10 @@
       <trans-unit id="CIXyKo9" resname="invoice_number">
         <source>invoice_number</source>
         <target>N° facture</target>
+      </trans-unit>
+      <trans-unit id="Ap8Mg_T" resname="offer_number">
+        <source>offer_number</source>
+        <target>N° devis</target>
       </trans-unit>
       <trans-unit id="dbYJOrp" resname="field.roles">
         <source>field.roles</source>
@@ -465,6 +497,10 @@
         <source>confirmation.delete_invoice</source>
         <target>Je souhaite supprimer définitivement cette facture</target>
       </trans-unit>
+      <trans-unit id="dp5aWKd" resname="confirmation.delete_offer">
+        <source>confirmation.delete_offer</source>
+        <target>Je souhaite supprimer définitivement ce devis</target>
+      </trans-unit>
       <trans-unit id="NGooIBs" resname="danger_zone">
         <source>danger_zone</source>
         <target>Zone dangereuse</target>
@@ -488,6 +524,10 @@
       <trans-unit id="5ODSxhK" resname="notification.invoice_added">
         <source>notification.invoice_added</source>
         <target>La facture est créée</target>
+      </trans-unit>
+      <trans-unit id="yqasmAx" resname="notification.offer_added">
+        <source>notification.offer_added</source>
+        <target>Le devis est créé</target>
       </trans-unit>
       <trans-unit id="Npm5EiI" resname="action.download">
         <source>action.download</source>
@@ -532,6 +572,10 @@
       <trans-unit id="bG4IweY" resname="title.invoice_list">
         <source>title.invoice_list</source>
         <target>Factures</target>
+      </trans-unit>
+      <trans-unit id="Q6sqUje" resname="title.offer_list">
+        <source>title.offer_list</source>
+        <target>Devis</target>
       </trans-unit>
       <trans-unit id="TjanFYQ" resname="title.project_list">
         <source>title.project_list</source>
@@ -625,6 +669,10 @@
         <source>notification.unable_to_create_invoice</source>
         <target>Impossible de créer une facture</target>
       </trans-unit>
+      <trans-unit id="SqE8GzK" resname="notification.unable_to_create_offer">
+        <source>notification.unable_to_create_offer</source>
+        <target>Impossible de créer un devis</target>
+      </trans-unit>
       <trans-unit id="SBcJfBW" resname="action.duplicate">
         <source>action.duplicate</source>
         <target>Dupliquer</target>
@@ -668,6 +716,14 @@
       <trans-unit id="aV85IpU" resname="notification.invoice_copied">
         <source>notification.invoice_copied</source>
         <target>La facture a été copiée.</target>
+      </trans-unit>
+      <trans-unit id="GIrK6uo" resname="notification.offer_copied">
+        <source>notification.offer_copied</source>
+        <target>Le devis a été copié.</target>
+      </trans-unit>
+      <trans-unit id="dVjoFh7" resname="field.validity_date">
+        <source>field.validity_date</source>
+        <target>Date de validité</target>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,155 @@
+{% extends 'offer/base.html.twig' %}
+
+{% block page_title %}{{ 'offer'|trans }} {{ offer.numberComplete }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_offer_index') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-list"></span>
+        <span class="d-none d-md-inline">{{ 'action.back'|trans }}</span>
+    </a>
+    <a href="{{ path('app_offer_new') }}" class="btn btn-outline-secondary">
+        <span class="fa fa-plus"></span>
+        <span class="d-none d-md-inline">{{ 'action.add'|trans }}</span>
+    </a>
+    <a href="{{ path('app_offer_print',{uuid:offer.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-print"></span>
+        <span class="d-none d-md-inline">{{ 'action.print'|trans }}</span>
+    </a>
+    <a href="{{ path('app_offer_show',{uuid:offer.uuid,'copy':1}) }}" class="btn btn-outline-info">
+        <span class="fa fa-copy"></span>
+        <span class="d-none d-md-inline">{{ 'action.duplicate'|trans }}</span>
+    </a>
+    <a href="{{ path('app_offer_edit',{uuid:offer.uuid}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-pencil"></span>
+        <span class="d-none d-md-inline">{{ 'action.edit'|trans }}</span>
+    </a>
+    <a href="{{ path('app_offer_delete',{uuid:offer.uuid}) }}" class="btn btn-outline-danger">
+        <span class="fa fa-trash"></span>
+        <span class="d-none d-md-inline">{{ 'action.delete'|trans }}</span>
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+
+        <div class="col-12 col-md-4">
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.number'|trans }}</div>
+                <div>{{ 'field.number'|trans }} {{ offer.numberComplete }}</div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.client'|trans }}</div>
+                <div>
+                    <a href="{{ path('app_client_show',{uuid:offer.client.uuid}) }}">{{ offer.client.name }}</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <div class="mt-2 mt-md-0">
+                <div class="text-muted small">{{ 'field.issue_date'|trans }}</div>
+                <div>{{ offer.issueDate|localizeddate('full','none')|capitalize }}</div>
+            </div>
+
+            <div class="mt-2">
+                <div class="text-muted small">{{ 'field.validity_date'|trans }}</div>
+                <div>{{ offer.validityDate|localizeddate('full','none')|capitalize }}</div>
+            </div>
+
+            {% if offer.client.supplierNumber %}
+                <div class="mt-2">
+                    <div class="text-muted small">{{ 'field.supplier_number'|trans }}</div>
+                    <div>{{ offer.client.supplierNumber }}</div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="col-12 col-md-4 mt-2 mt-md-0">
+            <div class="text-muted small">{{ 'field.address'|trans }}</div>
+            <div>
+                {{ offer.address.name }}<br/>
+                {{ offer.address.address|nl2br }}<br/>
+                {{ offer.address.postcode }} {{ offer.address.city }}<br/>
+                {{ offer.address.country|localizedcountry }}
+            </div>
+        </div>
+
+        {% if offer.comment|length>0 %}
+            <div class="col-12 mt-2">
+                <div class="text-muted small">{{ 'field.comment'|trans }}</div>
+                <div>{{ offer.comment|nl2br }}</div>
+            </div>
+        {% endif %}
+
+        {% if offer.commentInternal|length>0 %}
+            <div class="col-12 mt-2">
+                <div class="text-muted small">{{ 'field.internal_comment'|trans }}</div>
+                <div>{{ offer.commentInternal|nl2br }}</div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="mt-4">
+        <div class="d-none d-md-flex row mt-5">
+            <div class="col-6"><strong>{{ 'field.designation'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.quantity'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.amount_unit'|trans }}</strong></div>
+            <div class="col-2 text-right"><strong>{{ 'field.amount_excluding_tax'|trans }}</strong></div>
+        </div>
+        {% for detail in offer.details %}
+            <div class="mt-2 row border-top pt-2">
+                <div class="col-12 col-md-6 text-truncate-under-md">{{ detail.designation|nl2br }}</div>
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.quantity'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.quantity }}</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.amount_unit'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.amountUnit|localizedcurrency(currency) }}</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="row">
+                        <div class="col-6 d-md-none">{{ 'field.amount_excluding_tax'|trans }}</div>
+                        <div class="col-6 col-md-12 text-right">{{ detail.amountTotal|localizedcurrency(currency) }}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row border-top mt-2 pt-2">
+            <div class="col-5 col-md-10 text-md-right">{{ 'field.amount_excluding_tax'|trans }}</div>
+            <div class="col-7 col-md-2 text-right">{{ offer.amountExcludingTax|localizedcurrency(currency) }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                {{ 'field.tax_amount'|trans }}
+                <span class="d-none d-md-inline">({{ offer.taxRate|localizednumber('percent') }})</span>
+            </div>
+            <div class="col-6 col-md-2 text-right">{{ offer.taxAmount|localizedcurrency(currency) }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                <strong>{{ 'field.amount_including_tax'|trans }}</strong>
+            </div>
+            <div class="col-6 col-md-2 text-right">
+                <strong>{{ offer.amountIncludingTax|localizedcurrency(currency) }}</strong>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-10 text-md-right">
+                {{ 'field.amount_paid'|trans }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

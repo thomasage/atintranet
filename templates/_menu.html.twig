@@ -27,6 +27,11 @@
                         {{ 'menu.tracker'|trans }}
                     </a>
                 </li>
+                <li class="nav-item{% if 'offer'==menuActive %} active{% endif %}">
+                    <a href="{{ path('app_offer_index') }}" class="nav-link">
+                        {{ 'menu.offers'|trans }}
+                    </a>
+                </li>
                 <li class="nav-item{% if 'invoice'==menuActive %} active{% endif %}">
                     <a href="{{ path('app_invoice_index') }}" class="nav-link">
                         {{ 'menu.invoices'|trans }}

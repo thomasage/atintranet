@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use App\Entity\Invoice;
+use App\Entity\Offer;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
-class InvoiceListener
+class OfferListener
 {
     public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
-        if (!$entity instanceof Invoice) {
+        if (!$entity instanceof Offer) {
             return;
         }
 
         $em = $args->getObjectManager();
-        $number = $em->getRepository(Invoice::class)->findNextNumber($entity);
+        $number = $em->getRepository(Offer::class)->findNextNumber($entity);
 
         $entity->setNumber($number);
     }

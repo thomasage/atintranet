@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Helper\IdTrait;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -156,8 +157,8 @@ class Invoice
         $this->amountIncludingTax = '0.0';
         $this->amountPaid = '0.0';
         $this->details = new ArrayCollection();
-        $this->dueDate = new \DateTime('+1 month');
-        $this->issueDate = new \DateTime();
+        $this->dueDate = new DateTime('+1 month');
+        $this->issueDate = new DateTime();
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
@@ -198,12 +199,12 @@ class Invoice
         return $this;
     }
 
-    public function getIssueDate(): \DateTimeInterface
+    public function getIssueDate(): DateTimeInterface
     {
         return $this->issueDate;
     }
 
-    public function setIssueDate(\DateTimeInterface $issueDate): self
+    public function setIssueDate(DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
         $this->year = (int)$issueDate->format('Y');
@@ -211,12 +212,12 @@ class Invoice
         return $this;
     }
 
-    public function getDueDate(): \DateTimeInterface
+    public function getDueDate(): DateTimeInterface
     {
         return $this->dueDate;
     }
 
-    public function setDueDate(\DateTimeInterface $dueDate): self
+    public function setDueDate(DateTimeInterface $dueDate): self
     {
         $this->dueDate = $dueDate;
 
