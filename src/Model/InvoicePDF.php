@@ -10,10 +10,14 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceDetail;
 use App\Entity\Param;
 use App\Repository\ParamRepository;
-use Symfony\Component\Intl\Intl;
+use IntlDateFormatter;
+use Locale;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Currencies;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use TCPDF;
 
-class InvoicePDF extends \TCPDF
+class InvoicePDF extends TCPDF
 {
     private const FONT_FAMILY = 'helvetica';
 
@@ -43,7 +47,7 @@ class InvoicePDF extends \TCPDF
     private $footer;
 
     /**
-     * @var \IntlDateFormatter
+     * @var IntlDateFormatter
      */
     private $intl;
 
@@ -76,9 +80,9 @@ class InvoicePDF extends \TCPDF
             }
         }
 
-        $this->currency = Intl::getCurrencyBundle()->getCurrencySymbol($currency);
-        $this->intl = new \IntlDateFormatter(
-            \Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE
+        $this->currency = Currencies::getSymbol($currency);
+        $this->intl = new IntlDateFormatter(
+            Locale::getDefault(), IntlDateFormatter::LONG, IntlDateFormatter::NONE
         );
         $this->translator = $translator;
     }
@@ -117,7 +121,7 @@ class InvoicePDF extends \TCPDF
                 $address->getAddress(),
                 $address->getPostcode(),
                 $address->getCity(),
-                Intl::getRegionBundle()->getCountryName($address->getCountry())
+                Countries::getName($address->getCountry())
             ),
             0,
             'L'
