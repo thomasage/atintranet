@@ -14,91 +14,53 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Task
 {
-    use IdTrait {
-        IdTrait::__construct as protected IdTraitConstruct;
-    }
-    use TimestampableEntity;
+    use IdTrait, TimestampableEntity;
 
     /**
-     * @var Project
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="tasks")
      */
     private $project;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @var \DateTimeInterface
-     *
      * @ORM\Column(type="datetime")
      */
     private $start;
 
     /**
-     * @var \DateTimeInterface|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $stop;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $onSite;
+    private $onSite = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $expected;
+    private $unexpected = false;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $externalReference;
 
-    /**
-     * Task constructor.
-     */
-    public function __construct()
-    {
-        $this->IdTraitConstruct();
-        $this->expected = true;
-        $this->onSite = false;
-    }
-
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return Task
-     */
     public function setName(?string $name): self
     {
         $this->name = $name;
@@ -106,19 +68,11 @@ class Task
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
     public function getStart(): ?\DateTimeInterface
     {
         return $this->start;
     }
 
-    /**
-     * @param \DateTimeInterface $start
-     *
-     * @return Task
-     */
     public function setStart(\DateTimeInterface $start): self
     {
         $this->start = $start;
@@ -126,19 +80,11 @@ class Task
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
     public function getStop(): ?\DateTimeInterface
     {
         return $this->stop;
     }
 
-    /**
-     * @param \DateTimeInterface|null $stop
-     *
-     * @return Task
-     */
     public function setStop(?\DateTimeInterface $stop): self
     {
         $this->stop = $stop;
@@ -146,19 +92,11 @@ class Task
         return $this;
     }
 
-    /**
-     * @return Project|null
-     */
     public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    /**
-     * @param Project|null $project
-     *
-     * @return Task
-     */
     public function setProject(?Project $project): self
     {
         $this->project = $project;
@@ -166,19 +104,11 @@ class Task
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getOnSite(): bool
     {
         return $this->onSite;
     }
 
-    /**
-     * @param bool $onSite
-     *
-     * @return Task
-     */
     public function setOnSite(bool $onSite): self
     {
         $this->onSite = $onSite;
@@ -186,39 +116,23 @@ class Task
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getExpected(): bool
+    public function getUnexpected(): bool
     {
-        return $this->expected;
+        return $this->unexpected;
     }
 
-    /**
-     * @param bool $expected
-     *
-     * @return Task
-     */
-    public function setExpected(bool $expected): self
+    public function setUnexpected(bool $unexpected): self
     {
-        $this->expected = $expected;
+        $this->unexpected = $unexpected;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getExternalReference(): ?string
     {
         return $this->externalReference;
     }
 
-    /**
-     * @param string|null $externalReference
-     *
-     * @return Task
-     */
     public function setExternalReference(?string $externalReference): self
     {
         $this->externalReference = $externalReference;
@@ -226,9 +140,6 @@ class Task
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getDuration(): int
     {
         return $this->stop->getTimestamp() - $this->start->getTimestamp();

@@ -165,7 +165,7 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client            $client
+     * @param Client $client
      * @param DateTimeInterface $month
      *
      * @return Task[]
@@ -265,6 +265,10 @@ class TaskRepository extends ServiceEntityRepository
     {
         $builder = $this
             ->createQueryBuilder('task')
+            ->innerJoin('task.project', 'project')
+            ->innerJoin('project.client', 'client')
+            ->addSelect('client')
+            ->addSelect('project')
             ->addOrderBy('task.start', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(50);

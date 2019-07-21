@@ -5,9 +5,21 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="tpyeTyd" resname="field.username">
-        <source>field.username</source>
-        <target>Identifiant</target>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Ajouter</target>
+      </trans-unit>
+      <trans-unit id="Eb7Ygpo" resname="action.back">
+        <source>action.back</source>
+        <target>Retour</target>
+      </trans-unit>
+      <trans-unit id="uJxPe9E" resname="action.login">
+        <source>action.login</source>
+        <target>Ouvrir une session</target>
+      </trans-unit>
+      <trans-unit id="CvNi3GD" resname="action.refresh">
+        <source>action.refresh</source>
+        <target>Recharger</target>
       </trans-unit>
       <trans-unit id="utzcVoZ" resname="field.password">
         <source>field.password</source>
@@ -17,13 +29,17 @@
         <source>field.remember_me</source>
         <target>Se souvenir de moi</target>
       </trans-unit>
-      <trans-unit id="uJxPe9E" resname="action.login">
-        <source>action.login</source>
-        <target>Ouvrir une session</target>
+      <trans-unit id="cehO.Lm" resname="field.unexpected">
+        <source>field.unexpected</source>
+        <target>Imprévu</target>
       </trans-unit>
-      <trans-unit id="GyNiJAi" resname="menu.home">
-        <source>menu.home</source>
-        <target>Accueil</target>
+      <trans-unit id="tpyeTyd" resname="field.username">
+        <source>field.username</source>
+        <target>Identifiant</target>
+      </trans-unit>
+      <trans-unit id="dVjoFh7" resname="field.validity_date">
+        <source>field.validity_date</source>
+        <target>Date de validité</target>
       </trans-unit>
       <trans-unit id="5kxNYmo" resname="menu.clients">
         <source>menu.clients</source>
@@ -33,17 +49,13 @@
         <source>menu.logout</source>
         <target>Déconnexion</target>
       </trans-unit>
+      <trans-unit id="GyNiJAi" resname="menu.home">
+        <source>menu.home</source>
+        <target>Accueil</target>
+      </trans-unit>
       <trans-unit id="ItBX3Jh" resname="menu.tracker">
         <source>menu.tracker</source>
         <target>Temps passés</target>
-      </trans-unit>
-      <trans-unit id="jdbtx6z" resname="action.add">
-        <source>action.add</source>
-        <target>Ajouter</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Retour</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
@@ -720,10 +732,6 @@
       <trans-unit id="GIrK6uo" resname="notification.offer_copied">
         <source>notification.offer_copied</source>
         <target>Le devis a été copié.</target>
-      </trans-unit>
-      <trans-unit id="dVjoFh7" resname="field.validity_date">
-        <source>field.validity_date</source>
-        <target>Date de validité</target>
       </trans-unit>
     </body>
   </file>

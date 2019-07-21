@@ -1,12 +1,19 @@
 {% extends 'tracker/base.html.twig' %}
 
+{% block page_title %}{{ 'menu.tracker'|trans }}{% endblock %}
+
+{% block page_menu %}
+    <a href="{{ path('app_tracker_index',{refresh:1}) }}" class="btn btn-outline-primary">
+        <span class="fa fa-refresh"></span>
+        <span class="d-none d-md-inline">{{ 'action.refresh'|trans }}</span>
+    </a>
+{% endblock %}
+
 {% block body %}
 
     <div id="page-tracker-index">
 
-        <h1>{{ 'menu.tracker'|trans }}</h1>
-
-        <table class="table table-responsive mt-4">
+        <table class="table table-responsive-sm mt-4">
             <thead>
             <tr>
                 <th>{{ 'field.name'|trans }}</th>
@@ -16,7 +23,7 @@
                 <th>{{ 'field.start'|trans }}</th>
                 <th>{{ 'field.stop'|trans }}</th>
                 <th>{{ 'field.duration'|trans }}</th>
-                <th>{{ 'field.expected'|trans }}</th>
+                <th>{{ 'field.unexpected'|trans }}</th>
                 <th>{{ 'field.on_site'|trans }}</th>
             </tr>
             </thead>
@@ -31,8 +38,8 @@
                     <td>{{ task.stop|localizeddate('none','short') }}</td>
                     <td>{{ task.duration|localizedduration('short') }}</td>
                     <td class="text-center">
-                        {% if task.expected %}
-                            <span class="fa fa-calendar"></span>
+                        {% if task.unexpected %}
+                            <span class="fa fa-warning"></span>
                         {% endif %}
                     </td>
                     <td class="text-center">
