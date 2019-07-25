@@ -110,7 +110,7 @@ class InvoicePDF extends TCPDF
         // Client
         $this->SetFont(self::FONT_FAMILY, 'B', 12);
         $this->SetXY(110, 40);
-        $this->MultiCell(0, 6, $client->getName(), 0, 'L');
+        $this->MultiCell(0, 6, $address->getName(), 0, 'L');
         $this->SetFont(self::FONT_FAMILY, '', 12);
         $this->SetX(110);
         $this->MultiCell(
