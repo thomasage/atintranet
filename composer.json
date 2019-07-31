@@ -27,6 +27,7 @@
     "symfony/http-client": "4.3.*",
     "symfony/monolog-bundle": "^3.1",
     "symfony/orm-pack": "*",
+    "symfony/phpunit-bridge": "*@dev",
     "symfony/process": "4.3.*",
     "symfony/security-bundle": "4.3.*",
     "symfony/serializer-pack": "*",
@@ -95,6 +96,12 @@
     "symfony": {
       "allow-contrib": false,
       "require": "4.3.*"
+    }
+  },
+  "repositories": {
+    "phpunit-bridge": {
+      "type": "path",
+      "url": "/home/thomas/web/atintranet/vendor/symfony/phpunit-bridge"
     }
   }
 }
