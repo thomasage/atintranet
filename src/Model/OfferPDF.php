@@ -112,8 +112,8 @@ class OfferPDF extends TCPDF
                 $address->getAddress(),
                 $address->getPostcode(),
                 $address->getCity(),
-                Countries::getName($address->getCountry()),
-                ),
+                Countries::getName($address->getCountry())
+            ),
             0,
             'L'
         );
