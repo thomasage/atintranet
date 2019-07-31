@@ -64,6 +64,7 @@ class TrackerManager implements ServiceSubscriberInterface
     public function export(\DateTime $month, Client $client): ?Response
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+
         /** @var TaskRepository $repository */
         $repository = $this->container->get(TaskRepository::class);
         $translator = $this->container->get(TranslatorInterface::class);
@@ -247,7 +248,14 @@ class TrackerManager implements ServiceSubscriberInterface
             );
             $response->headers->set(
                 'Content-Disposition',
-                HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, 'Document.xlsx')
+                HeaderUtils::makeDisposition(
+                    HeaderUtils::DISPOSITION_ATTACHMENT,
+                    sprintf(
+                        '%s - %s.xlsx',
+                        $month->format('Y-m'),
+                        $client->getCode() ?? iconv('UTF-8', 'ASCII//TRANSLIT', mb_strtoupper($client->getName()))
+                    )
+                )
             );
             $response->headers->set('Cache-Control', 'max-age=0');
 
@@ -442,7 +450,7 @@ class TrackerManager implements ServiceSubscriberInterface
 
             return true;
 
-        } catch (ExceptionInterface $e) {
+        } catch (ExceptionInterface|\Exception $e) {
 
             return false;
 
