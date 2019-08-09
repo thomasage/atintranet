@@ -43,7 +43,10 @@ class OfferRepository extends ServiceEntityRepository
                 $builder->addOrderBy('o.number', $reverse ? 'DESC' : 'ASC');
             }
         }
-        $builder->addOrderBy('o.id', 'DESC');
+        $builder
+            ->addOrderBy('o.year', 'DESC')
+            ->addOrderBy('o.number', 'DESC')
+            ->addOrderBy('o.id', 'DESC');
 
         if (null !== $search->getResultsPerPage()) {
             $builder
