@@ -31,3 +31,5 @@ yarn-error.log
 ###> deployer/deployer ###
 /deploy/hosts.yaml
 ###< deployer/deployer ###
+
+.phpunit.result.cache
