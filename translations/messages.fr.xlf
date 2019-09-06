@@ -373,9 +373,9 @@
         <source>field.year</source>
         <target>Année</target>
       </trans-unit>
-      <trans-unit id="2ISTwmP" resname="field.from_start">
-        <source>field.from_start</source>
-        <target>Depuis le début</target>
+      <trans-unit id="ogIM523" resname="field.from_the">
+        <source>field.from_the</source>
+        <target>Depuis le</target>
       </trans-unit>
       <trans-unit id="Bacay8k" resname="field.task">
         <source>field.task</source>

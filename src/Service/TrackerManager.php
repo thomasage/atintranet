@@ -65,6 +65,13 @@ class TrackerManager implements ServiceSubscriberInterface
     {
         $intl = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
 
+        $first = $this->container->get(TaskRepository::class)->findOneBy([], ['start' => 'ASC']);
+        if ($first instanceof Task) {
+            $first = $first->getStart();
+        } else {
+            $first = new \DateTime();
+        }
+
         /** @var TaskRepository $repository */
         $repository = $this->container->get(TaskRepository::class);
         $translator = $this->container->get(TranslatorInterface::class);
@@ -102,7 +109,10 @@ class TrackerManager implements ServiceSubscriberInterface
             $sheet->setCellValue('B1', $translator->trans('field.hours'));
             $sheet->setCellValue('B2', ucfirst($formatter->format($month)));
             $sheet->setCellValue('D2', $month->format('Y'));
-            $sheet->setCellValue('F2', $translator->trans('field.from_start'));
+            $sheet->setCellValue(
+                'F2',
+                sprintf('%s %s', $translator->trans('field.from_the'), $intl->format($first))
+            );
             $sheet->mergeCells('A1:A2');
             $sheet->mergeCells('B1:G1');
             $sheet->mergeCells('B2:C2');
