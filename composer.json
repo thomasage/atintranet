@@ -27,7 +27,6 @@
     "symfony/http-client": "4.3.*",
     "symfony/monolog-bundle": "^3.1",
     "symfony/orm-pack": "*",
-    "symfony/phpunit-bridge": "*@dev",
     "symfony/process": "4.3.*",
     "symfony/security-bundle": "4.3.*",
     "symfony/serializer-pack": "*",
@@ -49,6 +48,7 @@
     "roave/security-advisories": "dev-master",
     "symfony/debug-pack": "*",
     "symfony/maker-bundle": "^1.0",
+    "symfony/phpunit-bridge": "^4.3",
     "symfony/profiler-pack": "*",
     "symfony/test-pack": "*",
     "symfony/web-server-bundle": "4.3.*"
