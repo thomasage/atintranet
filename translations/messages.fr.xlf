@@ -185,6 +185,14 @@
         <source>action.delete</source>
         <target>Supprimer</target>
       </trans-unit>
+      <trans-unit id="aV85IpU" resname="notification.invoice_copied">
+        <source>notification.invoice_copied</source>
+        <target>La facture a été copiée.</target>
+      </trans-unit>
+      <trans-unit id="GIrK6uo" resname="notification.offer_copied">
+        <source>notification.offer_copied</source>
+        <target>Le devis a été copié.</target>
+      </trans-unit>
       <trans-unit id="qor2gCD" resname="notification.user_added">
         <source>notification.user_added</source>
         <target>L'utilisateur est ajouté.</target>
@@ -513,6 +521,10 @@
         <source>confirmation.delete_offer</source>
         <target>Je souhaite supprimer définitivement ce devis</target>
       </trans-unit>
+      <trans-unit id="L.q88ma" resname="confirmation.duplicate_invoice">
+        <source>confirmation.duplicate_invoice</source>
+        <target>Dupliquer la facture ?</target>
+      </trans-unit>
       <trans-unit id="NGooIBs" resname="danger_zone">
         <source>danger_zone</source>
         <target>Zone dangereuse</target>
@@ -724,14 +736,6 @@
       <trans-unit id="76TpCt1" resname="rollerworks_password.tip.">
         <source>rollerworks_password.tip.</source>
         <target>__rollerworks_password.tip.</target>
-      </trans-unit>
-      <trans-unit id="aV85IpU" resname="notification.invoice_copied">
-        <source>notification.invoice_copied</source>
-        <target>La facture a été copiée.</target>
-      </trans-unit>
-      <trans-unit id="GIrK6uo" resname="notification.offer_copied">
-        <source>notification.offer_copied</source>
-        <target>Le devis a été copié.</target>
       </trans-unit>
     </body>
   </file>

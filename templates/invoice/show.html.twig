@@ -15,7 +15,11 @@
         <span class="fa fa-print"></span>
         <span class="d-none d-md-inline">{{ 'action.print'|trans }}</span>
     </a>
-    <a href="{{ path('app_invoice_show',{uuid:invoice.uuid,'copy':1}) }}" class="btn btn-outline-info">
+    <a href="#"
+       class="btn btn-outline-info"
+       id="js-action-duplicate"
+       data-confirm="{{ 'confirmation.duplicate_invoice'|trans }}"
+       data-url="{{ path('app_invoice_show',{uuid:invoice.uuid,'copy':1}) }}">
         <span class="fa fa-copy"></span>
         <span class="d-none d-md-inline">{{ 'action.duplicate'|trans }}</span>
     </a>

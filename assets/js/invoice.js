@@ -132,4 +132,12 @@ $(function () {
         dueDate.val(value.toISOString().substr(0, 10));
     });
 
+    $('#js-action-duplicate').on('click', (e) => {
+        let $element = $(e.currentTarget);
+        if (!window.confirm($element.data('confirm'))) {
+            return;
+        }
+        window.location.href = $element.data('url');
+    });
+
 });
