@@ -6,19 +6,11 @@ namespace App\Repository;
 
 use App\Entity\ProjectRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-/**
- * Class ProjectRateRepository.
- */
 class ProjectRateRepository extends ServiceEntityRepository
 {
-    /**
-     * ProjectRateRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProjectRate::class);
     }

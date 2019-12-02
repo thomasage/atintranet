@@ -7,29 +7,16 @@ namespace App\Repository;
 use App\Entity\Search;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class UserRepository.
- */
 class UserRepository extends ServiceEntityRepository
 {
-    /**
-     * UserRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * @param Search $search
-     *
-     * @return Paginator
-     */
     public function findBySearch(Search $search): Paginator
     {
         $builder = $this

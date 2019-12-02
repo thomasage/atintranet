@@ -7,29 +7,16 @@ namespace App\Repository;
 use App\Entity\Client;
 use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class ClientRepository.
- */
 class ClientRepository extends ServiceEntityRepository
 {
-    /**
-     * ClientRepository constructor.
-     *
-     * @param RegistryInterface $registry
-     */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Client::class);
     }
 
-    /**
-     * @param Search $search
-     *
-     * @return Paginator
-     */
     public function findBySearch(Search $search): Paginator
     {
         $builder = $this

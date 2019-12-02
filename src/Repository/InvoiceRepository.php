@@ -7,14 +7,14 @@ namespace App\Repository;
 use App\Entity\Invoice;
 use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class InvoiceRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Invoice::class);
     }
@@ -44,9 +44,9 @@ class InvoiceRepository extends ServiceEntityRepository
         }
 
         foreach ($builder->getQuery()->getArrayResult() as $result) {
-            $series[0]['data'][] = (object) [
+            $series[0]['data'][] = (object)[
                 'name' => $result['client_name'],
-                'y' => (float) $result['amount'],
+                'y' => (float)$result['amount'],
             ];
         }
 
@@ -115,7 +115,7 @@ class InvoiceRepository extends ServiceEntityRepository
             }
 
             $c = array_search($result['period'], $categories, true);
-            $series[$result['client_name']]['data'][$c] = (float) $result['amount'];
+            $series[$result['client_name']]['data'][$c] = (float)$result['amount'];
         }
 
         return [
@@ -189,7 +189,7 @@ class InvoiceRepository extends ServiceEntityRepository
                 return '001';
             }
 
-            return str_pad((string) (substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
+            return str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
         } catch (NonUniqueResultException $e) {
             return null;
         }
