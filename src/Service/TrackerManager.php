@@ -385,8 +385,8 @@ class TrackerManager implements ServiceSubscriberInterface
 
             $em->flush();
 
-            $start = new \DateTimeImmutable('2019-01-01 00:00:00');
-            $stop = new \DateTimeImmutable('2019-12-31 23:59:59');
+            $start = new \DateTimeImmutable('-3 months');
+            $stop = new \DateTimeImmutable();
 
             $response = $httpClient->request(
                 'GET',
