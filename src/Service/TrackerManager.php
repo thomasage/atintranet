@@ -397,6 +397,7 @@ class TrackerManager implements ServiceSubscriberInterface
                     urlencode($stop->format('c'))
                 )
             );
+
             if (200 !== $response->getStatusCode()) {
                 return false;
             }
@@ -409,6 +410,11 @@ class TrackerManager implements ServiceSubscriberInterface
 
                 // Entry still in progress
                 if (!isset($timeEntry['stop'])) {
+                    continue;
+                }
+
+                // Unknown project
+                if (!isset($timeEntry['pid'])) {
                     continue;
                 }
 
