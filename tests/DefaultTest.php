@@ -7,9 +7,6 @@ namespace App\Tests;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-/**
- * Class DefaultTest.
- */
 class DefaultTest extends WebTestCase
 {
     public function testLoginRequired(): void
@@ -21,7 +18,7 @@ class DefaultTest extends WebTestCase
         $headers = $response->headers;
         self::assertInstanceOf(ResponseHeaderBag::class, $headers);
         $location = $headers->get('location');
-        self::assertInternalType('string', $location);
+        self::assertIsString('string', $location);
         $location = parse_url($location);
         self::assertArrayHasKey('path', $location);
         self::assertSame('/login', $location['path']);
