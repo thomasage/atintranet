@@ -7,3 +7,4 @@ twig:
     globals:
         application_name: '%env(APPLICATION_NAME)%'
         currency: '%currency%'
+    exception_controller: null

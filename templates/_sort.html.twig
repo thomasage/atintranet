@@ -1,4 +1,4 @@
-{% filter spaceless %}
+{% apply spaceless %}
 
     {% set firstOrderby=search.orderby|keys|first %}
     {% set firstReverse=search.orderby|first %}
@@ -15,4 +15,4 @@
         {%- endif -%}
     </a>
 
-{% endfilter %}
+{% endapply %}

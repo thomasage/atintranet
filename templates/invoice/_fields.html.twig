@@ -236,7 +236,7 @@
 {% endblock %}
 
 {%- block _invoice_details_entry_row -%}
-    {% filter spaceless %}
+    {% apply spaceless %}
         <div class="row mt-4" id="{{ id }}">
             <div class="col-12 col-md-6">{{ form_widget(form.designation) }}</div>
             <div class="col-12 col-md-6">
@@ -267,5 +267,5 @@
                 </div>
             </div>
         </div>
-    {% endfilter %}
+    {% endapply %}
 {% endblock %}

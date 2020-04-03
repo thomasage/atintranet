@@ -5,6 +5,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.8.14"
+    },
     "composer/semver": {
         "version": "1.5.0"
     },
@@ -104,9 +107,6 @@
     "egulias/email-validator": {
         "version": "2.1.7"
     },
-    "fig/link-util": {
-        "version": "1.0.0"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -196,6 +196,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "ramsey/collection": {
+        "version": "1.0.1"
     },
     "ramsey/uuid": {
         "version": "3.8.0"
@@ -307,6 +310,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.2.1"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.7"
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
