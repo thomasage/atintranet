@@ -8,80 +8,22 @@ use App\Entity\Address;
 use App\Entity\Client;
 use App\Entity\Offer;
 use App\Entity\OfferDetail;
-use App\Entity\Param;
-use App\Repository\ParamRepository;
-use IntlDateFormatter;
-use Locale;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\Intl\Currencies;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use TCPDF;
 
-class OfferPDF extends TCPDF
+final class OfferPDF extends AbstractPDF
 {
-    private const FONT_FAMILY = 'helvetica';
-
-    /**
-     * @var string
-     */
-    private $companyAddress;
-
-    /**
-     * @var string
-     */
-    private $companyName;
-
-    /**
-     * @var string
-     */
-    private $currency;
-
-    /**
-     * @var string
-     */
-    private $footer;
-
-    /**
-     * @var IntlDateFormatter
-     */
-    private $intl;
-
     /**
      * @var Offer
      */
     private $offer;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(ParamRepository $repository, TranslatorInterface $translator, string $currency)
-    {
-        parent::__construct();
-        $this->SetAuthor($this->companyName);
-
-        /** @var Param[] $params */
-        $params = $repository->findAll();
-        foreach ($params as $param) {
-            if ('company_address' === $param->getCode()) {
-                $this->companyAddress = $param->getValue();
-            } elseif ('company_name' === $param->getCode()) {
-                $this->companyName = $param->getValue();
-            } elseif ('offer_footer' === $param->getCode()) {
-                $this->footer = $param->getValue();
-            }
-        }
-
-        $this->currency = Currencies::getSymbol($currency);
-        $this->intl = new IntlDateFormatter(Locale::getDefault(), IntlDateFormatter::LONG, IntlDateFormatter::NONE);
-        $this->translator = $translator;
-    }
-
     public function Header(): void
     {
+        $translator = $this->getTranslator();
+
         /** @var Address $address */
         $address = $this->offer->getAddress();
+
         /** @var Client $client */
         $client = $this->offer->getClient();
 
@@ -120,21 +62,21 @@ class OfferPDF extends TCPDF
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string)$client->getSupplierNumber()) {
+        if ('' !== (string) $client->getSupplierNumber()) {
             $this->SetY(54);
-            $this->Cell(35, 6, $this->translator->trans('field.supplier_number'), 0, 0, 'L');
+            $this->Cell(35, 6, $translator->trans('field.supplier_number'), 0, 0, 'L');
             $this->Cell(0, 6, $client->getSupplierNumber(), 0, 1, 'L');
         } else {
             $this->SetY(60);
         }
         $this->SetY(66);
         $this->SetFont(self::FONT_FAMILY, 'B', 11);
-        $this->Cell(35, 6, $this->translator->trans('offer_number'), 0, 0, 'L');
+        $this->Cell(35, 6, $translator->trans('offer_number'), 0, 0, 'L');
         $this->Cell(0, 6, $this->offer->getNumberComplete(), 0, 1, 'L');
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        $this->Cell(35, 6, $this->translator->trans('field.issue_date'), 0, 0, 'L');
+        $this->Cell(35, 6, $translator->trans('field.issue_date'), 0, 0, 'L');
         $this->Cell(0, 6, $this->intl->format($this->offer->getIssueDate()), 0, 1, 'L');
-        $this->Cell(35, 6, $this->translator->trans('field.validity_date'), 0, 0, 'L');
+        $this->Cell(35, 6, $translator->trans('field.validity_date'), 0, 0, 'L');
         $this->Cell(0, 6, $this->intl->format($this->offer->getValidityDate()), 0, 1, 'L');
         $this->SetY($this->GetY() - 6);
         $this->MultiCell(
@@ -142,7 +84,7 @@ class OfferPDF extends TCPDF
             6,
             sprintf(
                 '%s %s / %s',
-                $this->translator->trans('page'),
+                $translator->trans('page'),
                 $this->getAliasNumPage(),
                 $this->getAliasNbPages()
             ),
@@ -153,10 +95,10 @@ class OfferPDF extends TCPDF
         // Headers of details
         $this->SetFont(self::FONT_FAMILY, '', 11);
         $this->SetY(90);
-        $this->Cell(110, 7, $this->translator->trans('field.designation'), 0, 0, 'L');
-        $this->Cell(20, 7, $this->translator->trans('field.quantity'), 0, 0, 'R');
-        $this->Cell(30, 7, $this->translator->trans('field.amount_unit'), 0, 0, 'R');
-        $this->Cell(30, 7, $this->translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
+        $this->Cell(110, 7, $translator->trans('field.designation'), 0, 0, 'L');
+        $this->Cell(20, 7, $translator->trans('field.quantity'), 0, 0, 'R');
+        $this->Cell(30, 7, $translator->trans('field.amount_unit'), 0, 0, 'R');
+        $this->Cell(30, 7, $translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
         $this->Line(10, $this->GetY() + 8, 200, $this->GetY() + 8);
 
         // Footer of details
@@ -165,15 +107,10 @@ class OfferPDF extends TCPDF
         $this->Ln(1);
     }
 
-    public function Footer(): void
-    {
-        $this->SetY(-20);
-        $this->SetFont(self::FONT_FAMILY, '', 8);
-        $this->MultiCell(0, 4, $this->footer, 0, 'C');
-    }
-
     public function build(Offer $offer): void
     {
+        $translator = $this->getTranslator();
+
         $this->offer = $offer;
 
         $this->AddPage();
@@ -196,7 +133,7 @@ class OfferPDF extends TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -208,7 +145,7 @@ class OfferPDF extends TCPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
+                            number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -220,7 +157,7 @@ class OfferPDF extends TCPDF
             }
         }
 
-        if ('' !== (string)$this->offer->getComment()) {
+        if ('' !== (string) $this->offer->getComment()) {
             $this->Ln();
             if ($this->GetY() > 235) {
                 $this->AddPage();
@@ -231,13 +168,13 @@ class OfferPDF extends TCPDF
 
         $this->SetFont(self::FONT_FAMILY, '', 11);
         $this->SetY(246);
-        $this->Cell(160, 7, $this->translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
+        $this->Cell(160, 7, $translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
         $this->Cell(
             30,
             7,
             sprintf(
                 '%s %s',
-                number_format((float)$this->offer->getAmountExcludingTax(), 2, '.', ' '),
+                number_format((float) $this->offer->getAmountExcludingTax(), 2, '.', ' '),
                 $this->currency
             ),
             0,
@@ -249,7 +186,7 @@ class OfferPDF extends TCPDF
             7,
             sprintf(
                 '%s %s%%',
-                $this->translator->trans('field.tax_amount'),
+                $translator->trans('field.tax_amount'),
                 number_format($this->offer->getTaxRate() * 100, 2, '.', ' ')
             ),
             0,
@@ -261,7 +198,7 @@ class OfferPDF extends TCPDF
             7,
             sprintf(
                 '%s %s',
-                number_format((float)$this->offer->getTaxAmount(), 2, '.', ' '),
+                number_format((float) $this->offer->getTaxAmount(), 2, '.', ' '),
                 $this->currency
             ),
             0,
@@ -269,42 +206,18 @@ class OfferPDF extends TCPDF
             'R'
         );
         $this->SetFont(self::FONT_FAMILY, 'B', 12);
-        $this->Cell(160, 7, $this->translator->trans('field.amount_including_tax'), 0, 0, 'R');
+        $this->Cell(160, 7, $translator->trans('field.amount_including_tax'), 0, 0, 'R');
         $this->Cell(
             30,
             7,
             sprintf(
                 '%s %s',
-                number_format((float)$this->offer->getAmountIncludingTax(), 2, '.', ' '),
+                number_format((float) $this->offer->getAmountIncludingTax(), 2, '.', ' '),
                 $this->currency
             ),
             0,
             1,
             'R'
         );
-    }
-
-    public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false): void
-    {
-        parent::AddPage($orientation, $format, $keepmargins, $tocpage);
-        $this->SetY(99);
-    }
-
-    private function stringToArray(string $input, int $maxWidth): array
-    {
-        $output = [''];
-        $index = 0;
-        foreach (explode("\n", $input) as $paragraph) {
-            foreach (explode("\n", wordwrap($paragraph, 1)) as $w => $word) {
-                if (ceil($this->GetStringWidth(trim($output[$index].' '.$word))) > $maxWidth) {
-                    $output[++$index] = '';
-                }
-                $output[$index] = trim($output[$index].' '.$word);
-            }
-            $output[++$index] = '';
-        }
-        array_pop($output);
-
-        return $output;
     }
 }

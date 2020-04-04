@@ -38,10 +38,14 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
-    App\Model\OfferPDF:
+    App\Model\AbstractPDF:
         arguments:
             $currency: '%currency%'
 
     App\Model\InvoicePDF:
+        arguments:
+            $currency: '%currency%'
+
+    App\Model\OfferPDF:
         arguments:
             $currency: '%currency%'
