@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceDetailRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class InvoiceDetail
+class InvoiceDetail implements RecordDetailInterface
 {
     use IdTrait {
         IdTrait::__construct as IdTraitConstruct;

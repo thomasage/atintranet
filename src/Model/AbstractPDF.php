@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Entity\Address;
+use App\Entity\RecordDetailInterface;
 use App\Repository\ParamRepository;
 use IntlDateFormatter;
 use Locale;
@@ -83,35 +84,11 @@ abstract class AbstractPDF extends TCPDF implements ServiceSubscriberInterface
         ];
     }
 
-    public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false): void
-    {
-        parent::AddPage($orientation, $format, $keepmargins, $tocpage);
-        $this->SetY(99);
-    }
-
     public function Footer(): void
     {
         $this->SetY(-20);
         $this->SetFont(self::FONT_FAMILY, '', 8);
         $this->MultiCell(0, 4, $this->footer, 0, 'C');
-    }
-
-    protected function stringToArray(string $input, int $maxWidth): array
-    {
-        $output = [''];
-        $index = 0;
-        foreach (explode("\n", $input) as $paragraph) {
-            foreach (explode("\n", wordwrap($paragraph, 1)) as $w => $word) {
-                if (ceil($this->GetStringWidth(trim($output[$index].' '.$word))) > $maxWidth) {
-                    $output[++$index] = '';
-                }
-                $output[$index] = trim($output[$index].' '.$word);
-            }
-            $output[++$index] = '';
-        }
-        array_pop($output);
-
-        return $output;
     }
 
     protected function writeHeaderCompany(): void
@@ -164,5 +141,68 @@ abstract class AbstractPDF extends TCPDF implements ServiceSubscriberInterface
     protected function getTranslator(): TranslatorInterface
     {
         return $this->container->get(TranslatorInterface::class);
+    }
+
+    protected function writeDetail(RecordDetailInterface $detail): void
+    {
+        $designation = $this->stringToArray($detail->getDesignation(), 90);
+        foreach ($designation as $k => $v) {
+            if ($this->GetY() > 215) {
+                $this->AddPage();
+            }
+            $this->Cell(110, 6, $v, 0, 0, 'L');
+            if (0 === $k) {
+                $this->Cell(20, 6, $detail->getQuantity(), 0, 0, 'R');
+                $this->Cell(
+                    30,
+                    6,
+                    sprintf(
+                        '%s %s',
+                        number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
+                        $this->currency
+                    ),
+                    0,
+                    0,
+                    'R'
+                );
+                $this->Cell(
+                    30,
+                    6,
+                    sprintf(
+                        '%s %s',
+                        number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
+                        $this->currency
+                    ),
+                    0,
+                    0,
+                    'R'
+                );
+            }
+            $this->Ln();
+        }
+    }
+
+    protected function stringToArray(string $input, int $maxWidth): array
+    {
+        $output = [''];
+        $index = 0;
+        foreach (explode("\n", $input) as $paragraph) {
+            foreach (explode("\n", wordwrap($paragraph, 1)) as $w => $word) {
+                if (ceil($this->GetStringWidth(trim($output[$index].' '.$word))) > $maxWidth) {
+                    $output[++$index] = '';
+                }
+                $output[$index] = trim($output[$index].' '.$word);
+            }
+            $output[++$index] = '';
+        }
+        array_pop($output);
+
+        return $output;
+    }
+
+    public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false): void
+    {
+        parent::AddPage($orientation, $format, $keepmargins, $tocpage);
+        $this->SetY(99);
     }
 }

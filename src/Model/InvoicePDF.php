@@ -7,7 +7,6 @@ namespace App\Model;
 use App\Entity\Address;
 use App\Entity\Client;
 use App\Entity\Invoice;
-use App\Entity\InvoiceDetail;
 
 final class InvoicePDF extends AbstractPDF
 {
@@ -35,14 +34,14 @@ final class InvoicePDF extends AbstractPDF
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string)$client->getSupplierNumber()) {
+        if ('' !== (string) $client->getSupplierNumber()) {
             $this->SetY(54);
             $this->Cell(35, 6, $translator->trans('field.supplier_number'), 0, 0, 'L');
             $this->Cell(0, 6, $client->getSupplierNumber(), 0, 1, 'L');
         } else {
             $this->SetY(60);
         }
-        if ('' !== (string)$this->invoice->getOrderNumber()) {
+        if ('' !== (string) $this->invoice->getOrderNumber()) {
             $this->SetY(60);
             $this->Cell(35, 6, $translator->trans('field.order_number'), 0, 0, 'L');
             $this->Cell(0, 6, $this->invoice->getOrderNumber(), 0, 1, 'L');
@@ -96,47 +95,10 @@ final class InvoicePDF extends AbstractPDF
 
         $this->SetFont(self::FONT_FAMILY, '', 11);
         foreach ($this->invoice->getDetails() as $detail) {
-            if (!$detail instanceof InvoiceDetail) {
-                continue;
-            }
-            $designation = $this->stringToArray($detail->getDesignation(), 90);
-            foreach ($designation as $k => $v) {
-                if ($this->GetY() > 215) {
-                    $this->AddPage();
-                }
-                $this->Cell(110, 6, $v, 0, 0, 'L');
-                if (0 === $k) {
-                    $this->Cell(20, 6, $detail->getQuantity(), 0, 0, 'R');
-                    $this->Cell(
-                        30,
-                        6,
-                        sprintf(
-                            '%s %s',
-                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
-                            $this->currency
-                        ),
-                        0,
-                        0,
-                        'R'
-                    );
-                    $this->Cell(
-                        30,
-                        6,
-                        sprintf(
-                            '%s %s',
-                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
-                            $this->currency
-                        ),
-                        0,
-                        0,
-                        'R'
-                    );
-                }
-                $this->Ln();
-            }
+            $this->writeDetail($detail);
         }
 
-        if ('' !== (string)$this->invoice->getComment()) {
+        if ('' !== (string) $this->invoice->getComment()) {
             $this->Ln();
             if ($this->GetY() > 215) {
                 $this->AddPage();
