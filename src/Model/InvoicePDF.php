@@ -8,7 +8,6 @@ use App\Entity\Address;
 use App\Entity\Client;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDetail;
-use Symfony\Component\Intl\Countries;
 
 final class InvoicePDF extends AbstractPDF
 {
@@ -30,46 +29,20 @@ final class InvoicePDF extends AbstractPDF
         $this->SetDrawColor(0, 0, 0);
         $this->SetLineWidth(0.2);
 
-        // Company
-        $this->Rect(10, 10, 60, 25, 'D');
-        $this->Rect(10, 10, 60, 25, 'D');
-        $this->SetXY(11, 13);
-        $this->SetFont(self::FONT_FAMILY, 'B', 11);
-        $this->MultiCell(60, 5, $this->companyName, 0, 'C');
-        $this->SetXY(11, 19);
-        $this->SetFont(self::FONT_FAMILY, '', 10);
-        $this->MultiCell(60, 4.5, $this->companyAddress, 0, 'C');
+        $this->writeHeaderCompany();
 
-        // Client
-        $this->SetFont(self::FONT_FAMILY, 'B', 12);
-        $this->SetXY(110, 40);
-        $this->MultiCell(0, 6, $address->getName(), 0, 'L');
-        $this->SetFont(self::FONT_FAMILY, '', 12);
-        $this->SetX(110);
-        $this->MultiCell(
-            0,
-            6,
-            sprintf(
-                "%s\n%s %s\n%s",
-                $address->getAddress(),
-                $address->getPostcode(),
-                $address->getCity(),
-                Countries::getName($address->getCountry())
-            ),
-            0,
-            'L'
-        );
+        $this->writeHeaderAddress($address);
 
         // Number, date, page
         $this->SetFont(self::FONT_FAMILY, '', 11);
-        if ('' !== (string) $client->getSupplierNumber()) {
+        if ('' !== (string)$client->getSupplierNumber()) {
             $this->SetY(54);
             $this->Cell(35, 6, $translator->trans('field.supplier_number'), 0, 0, 'L');
             $this->Cell(0, 6, $client->getSupplierNumber(), 0, 1, 'L');
         } else {
             $this->SetY(60);
         }
-        if ('' !== (string) $this->invoice->getOrderNumber()) {
+        if ('' !== (string)$this->invoice->getOrderNumber()) {
             $this->SetY(60);
             $this->Cell(35, 6, $translator->trans('field.order_number'), 0, 0, 'L');
             $this->Cell(0, 6, $this->invoice->getOrderNumber(), 0, 1, 'L');
@@ -98,14 +71,7 @@ final class InvoicePDF extends AbstractPDF
             'R'
         );
 
-        // Headers of details
-        $this->SetFont(self::FONT_FAMILY, '', 11);
-        $this->SetY(90);
-        $this->Cell(110, 7, $translator->trans('field.designation'), 0, 0, 'L');
-        $this->Cell(20, 7, $translator->trans('field.quantity'), 0, 0, 'R');
-        $this->Cell(30, 7, $translator->trans('field.amount_unit'), 0, 0, 'R');
-        $this->Cell(30, 7, $translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
-        $this->Line(10, $this->GetY() + 8, 200, $this->GetY() + 8);
+        $this->writeDetailsHeader();
 
         // Footer of details
         $this->SetY(225);
@@ -146,7 +112,7 @@ final class InvoicePDF extends AbstractPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float) $detail->getAmountUnit(), 2, '.', ' '),
+                            number_format((float)$detail->getAmountUnit(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -158,7 +124,7 @@ final class InvoicePDF extends AbstractPDF
                         6,
                         sprintf(
                             '%s %s',
-                            number_format((float) $detail->getAmountTotal(), 2, '.', ' '),
+                            number_format((float)$detail->getAmountTotal(), 2, '.', ' '),
                             $this->currency
                         ),
                         0,
@@ -170,7 +136,7 @@ final class InvoicePDF extends AbstractPDF
             }
         }
 
-        if ('' !== (string) $this->invoice->getComment()) {
+        if ('' !== (string)$this->invoice->getComment()) {
             $this->Ln();
             if ($this->GetY() > 215) {
                 $this->AddPage();

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Entity\Address;
 use App\Repository\ParamRepository;
 use IntlDateFormatter;
 use Locale;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Currencies;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -94,11 +96,6 @@ abstract class AbstractPDF extends TCPDF implements ServiceSubscriberInterface
         $this->MultiCell(0, 4, $this->footer, 0, 'C');
     }
 
-    protected function getTranslator(): TranslatorInterface
-    {
-        return $this->container->get(TranslatorInterface::class);
-    }
-
     protected function stringToArray(string $input, int $maxWidth): array
     {
         $output = [''];
@@ -115,5 +112,57 @@ abstract class AbstractPDF extends TCPDF implements ServiceSubscriberInterface
         array_pop($output);
 
         return $output;
+    }
+
+    protected function writeHeaderCompany(): void
+    {
+        $this->Rect(10, 10, 60, 25, 'D');
+        $this->Rect(10, 10, 60, 25, 'D');
+        $this->SetXY(11, 13);
+        $this->SetFont(self::FONT_FAMILY, 'B', 11);
+        $this->MultiCell(60, 5, $this->companyName, 0, 'C');
+        $this->SetXY(11, 19);
+        $this->SetFont(self::FONT_FAMILY, '', 10);
+        $this->MultiCell(60, 4.5, $this->companyAddress, 0, 'C');
+    }
+
+    protected function writeHeaderAddress(Address $address): void
+    {
+        $this->SetFont(self::FONT_FAMILY, 'B', 12);
+        $this->SetXY(110, 40);
+        $this->MultiCell(0, 6, $address->getName(), 0, 'L');
+        $this->SetFont(self::FONT_FAMILY, '', 12);
+        $this->SetX(110);
+        $this->MultiCell(
+            0,
+            6,
+            sprintf(
+                "%s\n%s %s\n%s",
+                $address->getAddress(),
+                $address->getPostcode(),
+                $address->getCity(),
+                Countries::getName($address->getCountry())
+            ),
+            0,
+            'L'
+        );
+    }
+
+    protected function writeDetailsHeader(): void
+    {
+        $translator = $this->getTranslator();
+
+        $this->SetFont(self::FONT_FAMILY, '', 11);
+        $this->SetY(90);
+        $this->Cell(110, 7, $translator->trans('field.designation'), 0, 0, 'L');
+        $this->Cell(20, 7, $translator->trans('field.quantity'), 0, 0, 'R');
+        $this->Cell(30, 7, $translator->trans('field.amount_unit'), 0, 0, 'R');
+        $this->Cell(30, 7, $translator->trans('field.amount_excluding_tax'), 0, 0, 'R');
+        $this->Line(10, $this->GetY() + 8, 200, $this->GetY() + 8);
+    }
+
+    protected function getTranslator(): TranslatorInterface
+    {
+        return $this->container->get(TranslatorInterface::class);
     }
 }
