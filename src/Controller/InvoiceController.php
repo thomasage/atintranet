@@ -30,7 +30,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * @Route("/invoice")
  * @IsGranted("ROLE_ADMIN")
  */
-class InvoiceController extends AbstractController
+final class InvoiceController extends AbstractController
 {
     /**
      * @param Request $request
@@ -213,7 +213,7 @@ class InvoiceController extends AbstractController
                 $invoice->getIssueDate()->format('Y-m-d'),
                 $translator->trans($invoice->getType()),
                 $invoice->getNumberComplete(),
-                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', $client->getCode()))
+                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', (string)$client->getCode()))
             )
         );
 
