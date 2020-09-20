@@ -17,12 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrackerController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param TaskRepository $repository
-     *
-     * @param TrackerManager $trackerManager
-     * @return Response
-     *
      * @Route("/",
      *     name="app_tracker_index",
      *     methods={"GET"})
@@ -30,11 +24,9 @@ class TrackerController extends AbstractController
     public function index(Request $request, TaskRepository $repository, TrackerManager $trackerManager): Response
     {
         if ($request->query->has('refresh')) {
-
             $trackerManager->importFromToggl();
 
             return $this->redirectToRoute('app_tracker_index');
-
         }
 
         $tasks = $repository->findBySearch();

@@ -23,10 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -87,10 +83,6 @@ class UserType extends AbstractType
             );
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string        $role
-     */
     private function setupClientField(FormInterface $form, string $role): void
     {
         if ('ROLE_CLIENT' !== $role) {
@@ -115,9 +107,6 @@ class UserType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(

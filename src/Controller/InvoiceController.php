@@ -33,13 +33,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class InvoiceController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Invoice $invoice
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/delete",
      *     name="app_invoice_delete",
      *     methods={"GET", "POST"})
@@ -50,7 +43,6 @@ final class InvoiceController extends AbstractController
         TranslatorInterface $translator,
         Invoice $invoice
     ): Response {
-
         $formDelete = $this->createForm(InvoiceDeleteType::class, $invoice);
         $formDelete->handleRequest($request);
 
@@ -73,13 +65,6 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $em
-     * @param Invoice $invoice
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/edit",
      *     name="app_invoice_edit",
      *     methods={"GET", "POST"})
@@ -90,7 +75,6 @@ final class InvoiceController extends AbstractController
         EntityManagerInterface $em,
         Invoice $invoice
     ): Response {
-
         $formEdit = $this->createForm(InvoiceType::class, $invoice);
         $formEdit->handleRequest($request);
 
@@ -112,12 +96,6 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
-     * @param InvoiceRepository $invoiceRepository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_invoice_index",
      *     methods={"GET", "POST"})
@@ -145,12 +123,6 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     *
      * @Route("/new",
      *     name="app_invoice_new",
      *     methods={"GET", "POST"})
@@ -185,12 +157,6 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @param InvoicePDF $generator
-     * @param TranslatorInterface $translator
-     * @param Invoice $invoice
-     *
-     * @return BinaryFileResponse
-     *
      * @Route("/{uuid}/print",
      *     name="app_invoice_print",
      *     methods={"GET"})
@@ -213,7 +179,7 @@ final class InvoiceController extends AbstractController
                 $invoice->getIssueDate()->format('Y-m-d'),
                 $translator->trans($invoice->getType()),
                 $invoice->getNumberComplete(),
-                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', (string)$client->getCode()))
+                strtoupper(iconv('UTF-8', 'ASCII//TRANSLIT', (string) $client->getCode()))
             )
         );
 
@@ -221,13 +187,6 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Invoice $invoice
-     *
-     * @return Response
-     *
      * @Route("/{uuid}", name="app_invoice_show", methods={"GET"})
      */
     public function show(
@@ -237,9 +196,7 @@ final class InvoiceController extends AbstractController
         Invoice $invoice
     ): Response {
         if ($request->query->has('copy')) {
-
             try {
-
                 /** @var Address $address */
                 $address = $invoice->getAddress();
 
@@ -271,7 +228,6 @@ final class InvoiceController extends AbstractController
                 $em->persist($copyInvoice);
 
                 foreach ($invoice->getDetails() as $detail) {
-
                     $copyDetail = new InvoiceDetail();
                     $copyDetail
                         ->setAmountTotal($detail->getAmountTotal())
@@ -280,7 +236,6 @@ final class InvoiceController extends AbstractController
                         ->setInvoice($copyInvoice)
                         ->setQuantity($detail->getQuantity());
                     $em->persist($copyDetail);
-
                 }
 
                 $em->flush();
@@ -288,13 +243,9 @@ final class InvoiceController extends AbstractController
                 $this->addFlash('success', $translator->trans('notification.invoice_copied'));
 
                 return $this->redirectToRoute('app_invoice_edit', ['uuid' => $copyInvoice->getUuid()]);
-
             } catch (Exception $e) {
-
                 return $this->redirectToRoute('app_invoice_show', ['uuid' => $invoice->getUuid()]);
-
             }
-
         }
 
         return $this->render(

@@ -28,7 +28,6 @@ class ParamCollectionType extends AbstractType
         $params = $this->repository->findAll();
 
         foreach ($params as $param) {
-
             $builder->add(
                 $param->getCode(),
                 TextareaType::class,
@@ -39,7 +38,6 @@ class ParamCollectionType extends AbstractType
                     'required' => true,
                 ]
             );
-
         }
     }
 }

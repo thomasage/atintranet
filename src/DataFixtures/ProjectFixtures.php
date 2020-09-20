@@ -16,9 +16,6 @@ use Faker\Factory;
  */
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
-    /**
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -38,9 +35,6 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return [

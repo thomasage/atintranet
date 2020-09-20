@@ -22,8 +22,6 @@ class ClientChoiceType extends AbstractType
 
     /**
      * ClientChoiceType constructor.
-     *
-     * @param ClientRepository $repo
      */
     public function __construct(ClientRepository $repo)
     {
@@ -36,17 +34,11 @@ class ClientChoiceType extends AbstractType
         }
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['choices' => $this->choices]);
     }
 
-    /**
-     * @return string
-     */
     public function getParent(): string
     {
         return ChoiceType::class;

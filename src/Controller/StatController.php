@@ -24,14 +24,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class StatController extends AbstractController
 {
     /**
-     * @param Request             $request
-     * @param TaskRepository      $taskRepository
-     * @param ClientRepository    $clientRepository
-     * @param TrackerManager      $tm
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     *
      * @Route("/report/time",
      *     name="app_stat_report_time",
      *     methods={"GET"})
@@ -73,11 +65,6 @@ class StatController extends AbstractController
     }
 
     /**
-     * @param TaskRepository $repository
-     * @param string         $period
-     *
-     * @return Response
-     *
      * @Route("/time/chart/{period}",
      *     name="app_stat_time_chart",
      *     methods={"GET"},
@@ -98,11 +85,6 @@ class StatController extends AbstractController
     }
 
     /**
-     * @param Request           $request
-     * @param InvoiceRepository $repository
-     *
-     * @return Response
-     *
      * @Route("/turnover/client",
      *     name="app_stat_turnover_client",
      *     methods={"GET"})
@@ -129,11 +111,6 @@ class StatController extends AbstractController
     }
 
     /**
-     * @param InvoiceRepository $repository
-     * @param string            $period
-     *
-     * @return Response
-     *
      * @Route("/turnover/period/{period}",
      *     name="app_stat_turnover_period",
      *     methods={"GET"},

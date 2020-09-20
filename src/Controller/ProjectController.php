@@ -25,13 +25,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProjectController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Project $project
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/edit",
      *     name="app_project_edit",
      *     methods={"GET", "POST"})
@@ -63,10 +56,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param ProjectRepository $repository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_project_index",
      *     methods={"GET"})
@@ -84,12 +73,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     *
      * @Route("/new",
      *     name="app_project_new",
      *     methods={"GET", "POST"})
@@ -119,13 +102,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ProjectRate $rate
-     *
-     * @return Response
-     *
      * @Route("/rate/{uuid}/delete",
      *     name="app_project_rate_delete",
      *     methods={"GET", "POST"})
@@ -161,13 +137,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param ProjectRate $rate
-     *
-     * @return Response
-     *
      * @Route("/rate/{uuid}/edit",
      *     name="app_project_rate_edit",
      *     methods={"GET", "POST"})
@@ -202,13 +171,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Project $project
-     *
-     * @return Response
-     *
      * @Route("/rate/new/{uuid}",
      *     name="app_project_rate_new",
      *     methods={"GET", "POST"})
@@ -244,10 +206,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @param Project $project
-     *
-     * @return Response
-     *
      * @Route("/{uuid}",
      *     name="app_project_show",
      *     methods={"GET"})

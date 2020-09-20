@@ -24,7 +24,7 @@ class ClientRateType extends AbstractType
                 'client',
                 TextType::class,
                 [
-                    'data' => $rate instanceof ClientRate ? (string)$rate->getClient() : '',
+                    'data' => $rate instanceof ClientRate ? (string) $rate->getClient() : '',
                     'disabled' => true,
                     'label' => 'field.client',
                     'mapped' => false,

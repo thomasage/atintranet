@@ -25,7 +25,6 @@ deploy-prod: ## Deploy application to production
 
 install: composer.lock docker-compose.yaml yarn.lock ## Install vendors and build Docker container
 	@$(EXEC_SYMFONY) composer install
-	@yarn install
 	@$(EXEC_DOCKER_COMPOSE) up -d && sleep 10 && $(EXEC_DOCKER_COMPOSE) stop
 
 prepare: ## Prepare database (run make start before)
@@ -38,8 +37,8 @@ restart: docker-compose.yaml ## Restart local web server
 
 start: docker-compose.yaml ## Run local web server
 	@$(EXEC_DOCKER_COMPOSE) up -d \
-	&& $(EXEC_SYMFONY) serve -d \
-	&& $(EXEC_SYMFONY) run -d yarn dev-server
+	&& $(EXEC_SYMFONY) run yarn build \
+	&& $(EXEC_SYMFONY) serve -d
 
 stop: docker-compose.yaml ## Stop local web server
 	@$(EXEC_SYMFONY) server:stop \

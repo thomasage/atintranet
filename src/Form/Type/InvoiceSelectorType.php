@@ -22,34 +22,22 @@ class InvoiceSelectorType extends AbstractType
 
     /**
      * InvoiceSelector constructor.
-     *
-     * @param InvoiceToNumberTransformer $transformer
      */
     public function __construct(InvoiceToNumberTransformer $transformer)
     {
         $this->transformer = $transformer;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->transformer);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['invalid_message' => 'The selected invoice does not exist']);
     }
 
-    /**
-     * @return string
-     */
     public function getParent(): string
     {
         return TextType::class;

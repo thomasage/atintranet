@@ -15,9 +15,6 @@ use Faker\Factory;
  */
 class ClientFixtures extends Fixture
 {
-    /**
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');

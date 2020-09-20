@@ -42,10 +42,6 @@ class UserAddCommand extends Command
 
     /**
      * UserAddCommand constructor.
-     *
-     * @param UserPasswordEncoderInterface $encoder
-     * @param UserRepository               $repository
-     * @param EntityManagerInterface       $em
      */
     public function __construct(
         UserPasswordEncoderInterface $encoder,
@@ -63,12 +59,6 @@ class UserAddCommand extends Command
         $this->setDescription('Add an user');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -12,10 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
-     * @param TaskRepository $taskRepository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_homepage",
      *     methods={"GET"})

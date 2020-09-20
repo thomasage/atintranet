@@ -270,13 +270,9 @@ class TrackerManager implements ServiceSubscriberInterface
             $response->headers->set('Cache-Control', 'max-age=0');
 
             return $response;
-
         } catch (\Exception $e) {
-
             return null;
-
         }
-
     }
 
     public function importFromToggl(): bool
@@ -284,7 +280,6 @@ class TrackerManager implements ServiceSubscriberInterface
         $httpClient = HttpClient::create(['auth_basic' => sprintf('%s:api_token', $this->togglApiKey)]);
 
         try {
-
             $response = $httpClient->request('GET', sprintf('%s/me', self::TOGGL_API_URL));
 
             if (200 !== $response->getStatusCode()) {
@@ -307,7 +302,6 @@ class TrackerManager implements ServiceSubscriberInterface
             $repoClient = $this->container->get(ClientRepository::class);
 
             foreach ($workspaces as $workspace) {
-
                 $response = $httpClient->request(
                     'GET',
                     sprintf('%s/workspaces/%d/clients', self::TOGGL_API_URL, $workspace['id'])
@@ -319,10 +313,8 @@ class TrackerManager implements ServiceSubscriberInterface
                 $clients = $response->toArray();
 
                 foreach ($clients as $client) {
-
                     $localClient = $repoClient->findOneBy(['externalReference' => $client['id']]);
                     if (!$localClient instanceof Client) {
-
                         $address = new Address();
                         $address
                             ->setCity('-')
@@ -333,14 +325,11 @@ class TrackerManager implements ServiceSubscriberInterface
                         $localClient = new Client();
                         $localClient
                             ->setAddressPrimary($address)
-                            ->setExternalReference((string)$client['id'])
+                            ->setExternalReference((string) $client['id'])
                             ->setName($client['name']);
                         $em->persist($localClient);
-
                     }
-
                 }
-
             }
 
             $em->flush();
@@ -348,7 +337,6 @@ class TrackerManager implements ServiceSubscriberInterface
             $repoProject = $this->container->get(ProjectRepository::class);
 
             foreach ($workspaces as $workspace) {
-
                 $response = $httpClient->request(
                     'GET',
                     sprintf('%s/workspaces/%d/projects', self::TOGGL_API_URL, $workspace['id'])
@@ -360,11 +348,9 @@ class TrackerManager implements ServiceSubscriberInterface
                 $projects = $response->toArray();
 
                 foreach ($projects as $project) {
-
                     $localProject = $repoProject->findOneBy(['externalReference' => $project['id']]);
 
                     if (!$localProject instanceof Project) {
-
                         $localClient = $repoClient->findOneBy(['externalReference' => $project['cid']]);
                         if (!$localClient instanceof Client) {
                             return false;
@@ -373,14 +359,11 @@ class TrackerManager implements ServiceSubscriberInterface
                         $localProject = new Project();
                         $localProject
                             ->setClient($localClient)
-                            ->setExternalReference((string)$project['id'])
+                            ->setExternalReference((string) $project['id'])
                             ->setName($project['name']);
                         $em->persist($localProject);
-
                     }
-
                 }
-
             }
 
             $em->flush();
@@ -407,7 +390,6 @@ class TrackerManager implements ServiceSubscriberInterface
             $repoTask = $this->container->get(TaskRepository::class);
 
             foreach ($timeEntries as $timeEntry) {
-
                 // Entry still in progress
                 if (!isset($timeEntry['stop'])) {
                     continue;
@@ -420,7 +402,6 @@ class TrackerManager implements ServiceSubscriberInterface
 
                 $task = $repoTask->findOneBy(['externalReference' => $timeEntry['id']]);
                 if (!$task instanceof Task) {
-
                     $localProject = $repoProject->findOneBy(['externalReference' => $timeEntry['pid']]);
                     if (!$localProject instanceof Project) {
                         return false;
@@ -428,11 +409,10 @@ class TrackerManager implements ServiceSubscriberInterface
 
                     $task = new Task();
                     $task
-                        ->setExternalReference((string)$timeEntry['id'])
+                        ->setExternalReference((string) $timeEntry['id'])
                         ->setProject($localProject);
 
                     $em->persist($task);
-
                 }
 
                 // Fix timezone
@@ -459,18 +439,13 @@ class TrackerManager implements ServiceSubscriberInterface
                         }
                     }
                 }
-
             }
 
             $em->flush();
 
             return true;
-
-        } catch (ExceptionInterface|\Exception $e) {
-
+        } catch (ExceptionInterface | \Exception $e) {
             return false;
-
         }
-
     }
 }

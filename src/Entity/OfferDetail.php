@@ -111,7 +111,7 @@ class OfferDetail implements RecordDetailInterface
 
     private function updateAmounts(): void
     {
-        $this->amountTotal = bcmul($this->amountUnit, (string)$this->quantity, 5);
+        $this->amountTotal = bcmul($this->amountUnit, (string) $this->quantity, 5);
         if ($this->offer instanceof Offer) {
             $this->offer->updateAmounts();
         }

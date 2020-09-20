@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -125,7 +126,7 @@ class Offer
         $this->details = new ArrayCollection();
         $this->issueDate = new DateTime();
         $this->validityDate = new DateTime('+1 months');
-        $this->year = (int)$this->issueDate->format('Y');
+        $this->year = (int) $this->issueDate->format('Y');
     }
 
     public function getClient(): ?Client
@@ -148,7 +149,7 @@ class Offer
     public function setIssueDate(DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
-        $this->year = (int)$issueDate->format('Y');
+        $this->year = (int) $issueDate->format('Y');
 
         return $this;
     }
@@ -215,7 +216,7 @@ class Offer
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 

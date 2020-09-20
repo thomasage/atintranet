@@ -15,10 +15,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @param AuthenticationUtils $authenticationUtils
-     *
-     * @return Response
-     *
      * @Route("/login",
      *     name="app_security_login",
      *     methods={"GET", "POST"})

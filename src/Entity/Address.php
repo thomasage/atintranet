@@ -71,6 +71,7 @@ class Address implements \JsonSerializable
 
     /**
      * Address constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -79,25 +80,17 @@ class Address implements \JsonSerializable
         $this->country = 'FR';
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
-     *
      * @return Address
      */
     public function setName(string $name): self
@@ -107,17 +100,12 @@ class Address implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAddress(): ?string
     {
         return $this->address;
     }
 
     /**
-     * @param string|null $address
-     *
      * @return Address
      */
     public function setAddress(?string $address): self
@@ -127,17 +115,12 @@ class Address implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
     /**
-     * @param string $postcode
-     *
      * @return Address
      */
     public function setPostcode(string $postcode): self
@@ -147,17 +130,12 @@ class Address implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
     /**
-     * @param string $city
-     *
      * @return Address
      */
     public function setCity(string $city): self
@@ -167,17 +145,12 @@ class Address implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCountry(): string
     {
         return $this->country;
     }
 
     /**
-     * @param string $country
-     *
      * @return Address
      */
     public function setCountry(string $country): self
@@ -187,9 +160,6 @@ class Address implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return [

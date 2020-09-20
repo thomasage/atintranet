@@ -27,7 +27,7 @@ class InvoiceToNumberTransformer implements DataTransformerInterface
             return '';
         }
 
-        return (string)$value->getNumberComplete();
+        return (string) $value->getNumberComplete();
     }
 
     public function reverseTransform($value): ?Invoice

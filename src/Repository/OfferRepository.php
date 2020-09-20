@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -72,7 +73,7 @@ class OfferRepository extends ServiceEntityRepository
                 return '001';
             }
 
-            return str_pad((string)(substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
+            return str_pad((string) (substr($result, -3) + 1), 3, '0', STR_PAD_LEFT);
         } catch (NonUniqueResultException $e) {
             return null;
         }

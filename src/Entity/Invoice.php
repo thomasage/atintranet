@@ -162,12 +162,12 @@ class Invoice
         $this->taxRate = 0.2;
         $this->taxAmount = '0.0';
         $this->type = 'invoice';
-        $this->year = (int)$this->issueDate->format('Y');
+        $this->year = (int) $this->issueDate->format('Y');
     }
 
     public function __toString(): string
     {
-        return (string)$this->number;
+        return (string) $this->number;
     }
 
     public function getId(): ?int
@@ -207,7 +207,7 @@ class Invoice
     public function setIssueDate(DateTimeInterface $issueDate): self
     {
         $this->issueDate = $issueDate;
-        $this->year = (int)$issueDate->format('Y');
+        $this->year = (int) $issueDate->format('Y');
 
         return $this;
     }
@@ -322,7 +322,7 @@ class Invoice
         foreach ($this->details as $detail) {
             $this->amountExcludingTax = bcadd($this->amountExcludingTax, $detail->getAmountTotal(), 5);
         }
-        $this->taxAmount = bcmul($this->amountExcludingTax, (string)$this->taxRate, 5);
+        $this->taxAmount = bcmul($this->amountExcludingTax, (string) $this->taxRate, 5);
         $this->amountIncludingTax = bcadd($this->amountExcludingTax, $this->taxAmount, 5);
     }
 

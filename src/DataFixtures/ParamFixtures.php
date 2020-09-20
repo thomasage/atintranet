@@ -66,9 +66,9 @@ SAS au capital de %d € - RCS %s %s - SIRET %s - NAF %d%d%d%d%s - N° TVA %s %s
             ->setDescription('Account of your bank (for invoice)')
             ->setValue(
                 sprintf(
-                    "Banque : %s %s
+                    'Banque : %s %s
 IBAN : %sXX XXXX XXXX XXXX XXXX XXXX XXX - BIC/SWIFT : XXXXXXXXXX
-Code banque : %d - Code guichet : %d - Compte : %s - Clé : %d",
+Code banque : %d - Code guichet : %d - Compte : %s - Clé : %d',
                     $faker->company,
                     $faker->city,
                     $faker->countryCode,

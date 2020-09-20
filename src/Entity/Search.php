@@ -66,25 +66,17 @@ class Search
      */
     private $resultsPerPage = 20;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRoute(): ?string
     {
         return $this->route;
     }
 
     /**
-     * @param string $route
-     *
      * @return Search
      */
     public function setRoute(string $route): self
@@ -94,17 +86,12 @@ class Search
         return $this;
     }
 
-    /**
-     * @return User|null
-     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
     /**
-     * @param User $user
-     *
      * @return Search
      */
     public function setUser(User $user): self
@@ -114,17 +101,12 @@ class Search
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPage(): int
     {
         return $this->page;
     }
 
     /**
-     * @param int $page
-     *
      * @return Search
      */
     public function setPage(int $page): self
@@ -135,8 +117,6 @@ class Search
     }
 
     /**
-     * @param string|null $name
-     *
      * @return mixed
      */
     public function getFilter(?string $name = null)
@@ -149,8 +129,6 @@ class Search
     }
 
     /**
-     * @param array $filter
-     *
      * @return Search
      */
     public function setFilter(array $filter): self
@@ -160,17 +138,12 @@ class Search
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getOrderby(): array
     {
         return $this->orderby;
     }
 
     /**
-     * @param array $orderby
-     *
      * @return Search
      */
     public function setOrderby(array $orderby): self
@@ -180,27 +153,17 @@ class Search
         return $this;
     }
 
-    /**
-     * @param int $results
-     *
-     * @return int
-     */
     public function getPages(int $results): int
     {
         return (int) ceil($results / $this->resultsPerPage);
     }
 
-    /**
-     * @return int|null
-     */
     public function getResultsPerPage(): ?int
     {
         return $this->resultsPerPage;
     }
 
     /**
-     * @param int|null $resultsPerPage
-     *
      * @return Search
      */
     public function setResultsPerPage(?int $resultsPerPage): self
@@ -211,8 +174,7 @@ class Search
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return Search
      */
@@ -228,8 +190,6 @@ class Search
     }
 
     /**
-     * @param string $name
-     *
      * @return Search
      */
     public function removeFilter(string $name): self
@@ -240,9 +200,6 @@ class Search
     }
 
     /**
-     * @param string $code
-     * @param bool   $asc
-     *
      * @return Search
      */
     public function addOrderby(string $code, bool $asc = true): self

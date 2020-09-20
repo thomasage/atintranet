@@ -165,9 +165,6 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Client $client
-     * @param DateTimeInterface $month
-     *
      * @return Task[]
      */
     public function detailByClientAndMonth(Client $client, DateTimeInterface $month): array

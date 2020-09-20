@@ -29,13 +29,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ClientController extends AbstractController
 {
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Client                 $client
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/delete",
      *     name="app_client_delete",
      *     methods={"GET", "POST"})
@@ -72,13 +65,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Client                 $client
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/edit",
      *     name="app_client_edit",
      *     methods={"GET", "POST"})
@@ -110,12 +96,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request          $request
-     * @param SearchManager    $sm
-     * @param ClientRepository $clientRepository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_client_index",
      *     methods={"GET", "POST"})
@@ -143,11 +123,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request          $request
-     * @param ClientRepository $repository
-     *
-     * @return Response
-     *
      * @Route("/info",
      *     name="app_client_info",
      *     methods={"GET"})
@@ -160,11 +135,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request             $request
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     *
      * @Route("/new",
      *     name="app_client_new", methods={"GET", "POST"})
      */
@@ -198,13 +168,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param ClientRate             $rate
-     *
-     * @return Response
-     *
      * @Route("/rate/{uuid}/delete",
      *     name="app_client_rate_delete",
      *     methods={"GET", "POST"})
@@ -240,13 +203,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param ClientRate             $rate
-     *
-     * @return Response
-     *
      * @Route("/rate/{uuid}/edit",
      *     name="app_client_rate_edit",
      *     methods={"GET", "POST"})
@@ -281,13 +237,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param Client                 $client
-     *
-     * @return Response
-     *
      * @Route("/rate/new/{uuid}",
      *     name="app_client_rate_new",
      *     methods={"GET", "POST"})
@@ -323,10 +272,6 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @param Client $client
-     *
-     * @return Response
-     *
      * @Route("/{uuid}",
      *     name="app_client_show",
      *     methods={"GET"})

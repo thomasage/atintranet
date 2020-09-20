@@ -12,9 +12,6 @@ use Twig\TwigFilter;
  */
 class InternalExtension extends AbstractExtension
 {
-    /**
-     * @return array
-     */
     public function getFilters(): array
     {
         return [
@@ -23,9 +20,6 @@ class InternalExtension extends AbstractExtension
     }
 
     /**
-     * @param array  $data
-     * @param string $column
-     *
      * @return float|int
      */
     public function arraySumColumn(array $data, string $column)

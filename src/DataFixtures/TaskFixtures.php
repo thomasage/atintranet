@@ -18,7 +18,6 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         for ($i = 0; $i < 10; ++$i) {
-
             /** @var Project $project */
             $project = $this->getReference('project'.$i);
 

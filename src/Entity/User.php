@@ -87,25 +87,16 @@ class User implements UserInterface
         $this->uuid = Uuid::uuid4();
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->username;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return UuidInterface
-     */
     public function getUuid(): UuidInterface
     {
         return $this->uuid;
@@ -118,25 +109,17 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         return ['ROLE_USER', $this->role];
     }
 
-    /**
-     * @return string|null
-     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
-     * @param string $password
-     *
      * @return User
      */
     public function setPassword(string $password): self
@@ -162,17 +145,12 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
     }
 
-    /**
-     * @return string|null
-     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
     /**
-     * @param string $username
-     *
      * @return User
      */
     public function setUsername(string $username): self
@@ -182,17 +160,12 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
     /**
-     * @param bool $enabled
-     *
      * @return User
      */
     public function setEnabled(bool $enabled): self
@@ -202,17 +175,12 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Client|null
-     */
     public function getClient(): ?Client
     {
         return $this->client;
     }
 
     /**
-     * @param Client|null $client
-     *
      * @return User
      */
     public function setClient(?Client $client): self
@@ -222,17 +190,12 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRole(): ?string
     {
         return $this->role;
     }
 
     /**
-     * @param string $role
-     *
      * @return User
      */
     public function setRole(string $role): self

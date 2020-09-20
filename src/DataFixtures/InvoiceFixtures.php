@@ -58,7 +58,7 @@ class InvoiceFixtures extends Fixture implements DependentFixtureInterface
             while ($j < $countDetails) {
                 $detail = new InvoiceDetail();
                 $detail
-                    ->setAmountUnit((string)$faker->randomFloat(2, 50, 100))
+                    ->setAmountUnit((string) $faker->randomFloat(2, 50, 100))
                     ->setDesignation(ucfirst($faker->words(3, true)))
                     ->setQuantity($faker->numberBetween(1, 10));
                 $manager->persist($detail);

@@ -111,7 +111,7 @@ class InvoiceDetail implements RecordDetailInterface
 
     private function updateAmounts(): void
     {
-        $this->amountTotal = bcmul($this->amountUnit, (string)$this->quantity, 5);
+        $this->amountTotal = bcmul($this->amountUnit, (string) $this->quantity, 5);
         if ($this->invoice instanceof Invoice) {
             $this->invoice->updateAmounts();
         }

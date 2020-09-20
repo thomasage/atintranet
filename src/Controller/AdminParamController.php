@@ -21,11 +21,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AdminParamController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @return Response
-     *
      * @Route("/",
      *     name="app_admin_param_index",
      *     methods={"GET", "POST"})
@@ -36,7 +31,6 @@ class AdminParamController extends AbstractController
         $formEdit->handleRequest($request);
 
         if ($formEdit->isSubmitted() && $formEdit->isValid()) {
-
             $repository = $em->getRepository(Param::class);
             foreach ($formEdit->getData() as $key => $value) {
                 $param = $repository->findOneBy(['code' => $key]);
@@ -51,7 +45,6 @@ class AdminParamController extends AbstractController
             $this->addFlash('success', $translator->trans('notification.param_updated'));
 
             return $this->redirectToRoute('app_admin_param_index');
-
         }
 
         return $this->render(

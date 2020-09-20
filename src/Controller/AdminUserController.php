@@ -27,13 +27,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AdminUserController extends AbstractController
 {
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param User                   $user
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/delete",
      *     name="app_admin_user_delete",
      *     methods={"GET", "POST"})
@@ -71,13 +64,6 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface    $translator
-     * @param User                   $user
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/edit",
      *     name="app_admin_user_edit",
      *     methods={"GET", "POST"})
@@ -109,10 +95,6 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @Route("/client-select",
      *     name="app_admin_user_client_select",
      *     methods={"GET"})
@@ -135,12 +117,6 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request        $request
-     * @param SearchManager  $sm
-     * @param UserRepository $repository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_admin_user_index",
      *     methods={"GET"})
@@ -168,13 +144,6 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param Request                      $request
-     * @param EntityManagerInterface       $em
-     * @param TranslatorInterface          $translator
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
-     * @return Response
-     *
      * @Route("/new",
      *     name="app_admin_user_new",
      *     methods={"GET", "POST"})
@@ -214,10 +183,6 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @param User $user
-     *
-     * @return Response
-     *
      * @Route("/{uuid}",
      *     name="app_admin_user_show",
      *     methods={"GET"})

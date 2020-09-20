@@ -33,13 +33,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OfferController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Offer $offer
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/delete",
      *     name="app_offer_delete",
      *     methods={"GET", "POST"})
@@ -50,7 +43,6 @@ class OfferController extends AbstractController
         TranslatorInterface $translator,
         Offer $offer
     ): Response {
-
         $formDelete = $this->createForm(OfferDeleteType::class, $offer);
         $formDelete->handleRequest($request);
 
@@ -73,13 +65,6 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $em
-     * @param Offer $offer
-     *
-     * @return Response
-     *
      * @Route("/{uuid}/edit",
      *     name="app_offer_edit",
      *     methods={"GET", "POST"})
@@ -90,7 +75,6 @@ class OfferController extends AbstractController
         EntityManagerInterface $em,
         Offer $offer
     ): Response {
-
         $formEdit = $this->createForm(OfferType::class, $offer);
         $formEdit->handleRequest($request);
 
@@ -112,12 +96,6 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param SearchManager $sm
-     * @param OfferRepository $offerRepository
-     *
-     * @return Response
-     *
      * @Route("/",
      *     name="app_offer_index",
      *     methods={"GET", "POST"})
@@ -145,12 +123,6 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     *
      * @Route("/new",
      *     name="app_offer_new",
      *     methods={"GET", "POST"})
@@ -185,12 +157,6 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @param OfferPDF $generator
-     * @param TranslatorInterface $translator
-     * @param Offer $offer
-     *
-     * @return BinaryFileResponse
-     *
      * @Route("/{uuid}/print",
      *     name="app_offer_print",
      *     methods={"GET"})
@@ -221,13 +187,6 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param TranslatorInterface $translator
-     * @param Offer $offer
-     *
-     * @return Response
-     *
      * @Route("/{uuid}", name="app_offer_show", methods={"GET"})
      */
     public function show(
@@ -237,9 +196,7 @@ class OfferController extends AbstractController
         Offer $offer
     ): Response {
         if ($request->query->has('copy')) {
-
             try {
-
                 /** @var Address $address */
                 $address = $offer->getAddress();
 
@@ -271,7 +228,6 @@ class OfferController extends AbstractController
                 $em->persist($copyOffer);
 
                 foreach ($offer->getDetails() as $detail) {
-
                     $copyDetail = new OfferDetail();
                     $copyDetail
                         ->setAmountTotal($detail->getAmountTotal())
@@ -280,7 +236,6 @@ class OfferController extends AbstractController
                         ->setOffer($copyOffer)
                         ->setQuantity($detail->getQuantity());
                     $em->persist($copyDetail);
-
                 }
 
                 $em->flush();
@@ -288,13 +243,9 @@ class OfferController extends AbstractController
                 $this->addFlash('success', $translator->trans('notification.offer_copied'));
 
                 return $this->redirectToRoute('app_offer_edit', ['uuid' => $copyOffer->getUuid()]);
-
             } catch (Exception $e) {
-
                 return $this->redirectToRoute('app_offer_show', ['uuid' => $offer->getUuid()]);
-
             }
-
         }
 
         return $this->render(

@@ -24,17 +24,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * UserFixtures constructor.
-     *
-     * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -47,7 +42,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($user);
 
         for ($i = 0; $i < 3; ++$i) {
-
             /** @var Client $client */
             $client = $this->getReference('client'.$i);
 
@@ -58,15 +52,11 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ->setRole('ROLE_CLIENT')
                 ->setUsername($faker->userName);
             $manager->persist($user);
-
         }
 
         $manager->flush();
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return [
